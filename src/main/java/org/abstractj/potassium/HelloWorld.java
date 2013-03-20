@@ -1,4 +1,4 @@
-package org.abstractj.halite;
+package org.abstractj.potassium;
 
 import jnr.ffi.Library;
 
@@ -9,7 +9,7 @@ public class HelloWorld {
     }
 
     static public void main(String argv[]) {
-        CTest ctest = Library.loadLibrary("/Users/abstractj/hd2/opensource/security/halite/ext/libctest.so", CTest.class);
+        CTest ctest = Library.loadLibrary("/Users/abstractj/hd2/opensource/security/potassium/ext/libctest.so", CTest.class);
         ctest.helloFromC();
     }
 }
