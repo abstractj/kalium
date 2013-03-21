@@ -9,7 +9,6 @@ public class HelloWorld {
     }
 
     public static void main(String argv[]) {
-//        CTest ctest = Loader.lib("/Users/abstractj/hd2/opensource/security/potassium/ext/libctest.so", CTest.class);
         CTest ctest = Loader.lib("ctest", CTest.class);
         ctest.helloFromC();
     }
