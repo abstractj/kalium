@@ -1,9 +1,7 @@
-package org.abstractj.potassium.util;
+package org.abstractj.kalium.util;
 
 import jnr.ffi.LibraryLoader;
 import jnr.ffi.provider.FFIProvider;
-
-import java.io.File;
 
 public class Loader {
 

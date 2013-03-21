@@ -1,6 +1,6 @@
-package org.abstractj.potassium;
+package org.abstractj.kalium;
 
-import org.abstractj.potassium.util.Loader;
+import org.abstractj.kalium.util.Loader;
 
 public class HelloWorld {
 
