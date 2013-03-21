@@ -15,4 +15,15 @@
             <version>1.0.2</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/ext</directory>
+                <includes>
+                    <include>**/*.so</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
 </project>

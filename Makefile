@@ -1,6 +1,6 @@
-libctest.so: ext/ctest.c
-	gcc -shared -o ext/$@ $<
+libctest.so: src/main/ext/ctest.c
+	gcc -shared -o src/main/ext/bin/$@ $<
 
 clean:
-	-rm ext/*.so
+	-rm src/main/ext/bin/*.so
 
