@@ -1,6 +1,7 @@
 package org.abstractj.kalium;
 
-import org.abstractj.kalium.util.Loader;
+import jnr.ffi.LibraryLoader;
+import jnr.ffi.provider.FFIProvider;
 
 public class Sodium {
 
@@ -8,11 +9,19 @@ public class Sodium {
 
     public interface CSodium {
         public String sodium_version_string();
+
         public int crypto_hash_sha256_ref(byte[] buffer, String message, long sizeof);
+
         public int crypto_hash_sha512_ref(byte[] buffer, String message, long sizeof);
     }
 
     public static CSodium getInstance() {
-        return Loader.lib(LIBNAME, CSodium.class);
+        return lib(LIBNAME, CSodium.class);
+    }
+
+    private static <T> T lib(String libname, Class<T> interfaceClass) {
+        LibraryLoader<T> loader = FFIProvider.getSystemProvider().createLibraryLoader(interfaceClass);
+        loader.library(libname);
+        return loader.load();
     }
 }

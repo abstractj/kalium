@@ -6,10 +6,14 @@ import org.abstractj.kalium.util.Hex;
 
 public class Hash {
 
-    private static final CSodium sodium = Sodium.getInstance();
-
     public static final int SHA256BYTES = 32;
     public static final int SHA512BYTES = 64;
+
+    private final CSodium sodium;
+
+    public Hash(){
+        this.sodium = Sodium.getInstance();
+    }
 
     private static byte[] buffer;
 
