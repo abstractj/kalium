@@ -1,15 +1,12 @@
 package org.abstractj.kalium;
 
+import jnr.ffi.LibraryLoader;
 import jnr.ffi.provider.FFIProvider;
 
-public interface NaCl {
+public class NaCl {
 
-    String LIBRARY_NAME = "sodium";
-
-    public static final Sodium SODIUM_INSTANCE = FFIProvider.getSystemProvider()
-            .createLibraryLoader(Sodium.class)
-            .library(LIBRARY_NAME)
-            .load();
+    public static final Sodium SODIUM_INSTANCE;
+    private static final String LIBRARY_NAME = "sodium";
 
     public interface Sodium {
 
@@ -18,5 +15,12 @@ public interface NaCl {
         public int crypto_hash_sha256_ref(byte[] buffer, String message, long sizeof);
 
         public int crypto_hash_sha512_ref(byte[] buffer, String message, long sizeof);
+    }
+
+    static {
+        LibraryLoader<Sodium> libraryLoader = FFIProvider.getSystemProvider()
+                .createLibraryLoader(Sodium.class)
+                .library(LIBRARY_NAME);
+        SODIUM_INSTANCE = libraryLoader.load();
     }
 }
