@@ -1,0 +1,3 @@
+# README
+
+brew install libsodium

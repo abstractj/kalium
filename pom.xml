@@ -4,15 +4,55 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.abstractj.potassium</groupId>
-    <artifactId>potassium</artifactId>
+    <groupId>org.abstractj.kalium</groupId>
+    <artifactId>kalium</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>kalium</name>
+    <url>http://github.com/abstractj/kalium</url>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>abstractj</id>
+            <name>Bruno Oliveira</name>
+            <url>http://abstractj.org</url>
+            <email>bruno@abstractj.org</email>
+            <roles>
+                <role>Software Developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>qmx</id>
+            <name>Douglas Campos</name>
+            <url>http://github.com/qmx</url>
+            <email>qmx@qmx.me</email>
+            <roles>
+                <role>Project Leader and Dictator</role>
+                <role>Software Developer</role>
+            </roles>
+        </developer>
+    </developers>
 
     <dependencies>
         <dependency>
             <groupId>com.github.jnr</groupId>
             <artifactId>jnr-ffi</artifactId>
             <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>
