@@ -8,6 +8,9 @@ public class NaCl {
     public static final Sodium SODIUM_INSTANCE;
     private static final String LIBRARY_NAME = "sodium";
 
+    private NaCl() {
+    }
+
     public interface Sodium {
 
         public String sodium_version_string();
