@@ -7,6 +7,40 @@
     <groupId>org.abstractj.kalium</groupId>
     <artifactId>kalium</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>kalium</name>
+    <url>http://github.com/abstractj/kalium</url>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>abstractj</id>
+            <name>Bruno Oliveira</name>
+            <url>http://abstractj.org</url>
+            <email>bruno@abstractj.org</email>
+            <roles>
+                <role>Software Developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>qmx</id>
+            <name>Douglas Campos</name>
+            <url>http://github.com/qmx</url>
+            <email>qmx@qmx.me</email>
+            <roles>
+                <role>Project Leader and Dictator</role>
+                <role>Software Developer</role>
+            </roles>
+        </developer>
+    </developers>
 
     <dependencies>
         <dependency>
