@@ -65,9 +65,8 @@ public class Hex {
      * @return A byte array containing binary data decoded from the supplied char array.
      * @throws DecoderException Thrown if an odd number or illegal of characters is supplied
      */
-    public static byte[] decodeHex(final String value) {
+    public static byte[] decodeHex(final char[] data) {
 
-        char[] data = value.toCharArray();
         final int len = data.length;
 
         if ((len & 0x01) != 0) {
@@ -86,6 +85,12 @@ public class Hex {
         }
 
         return out;
+    }
+
+    public static byte[] decodeHex(final String value) {
+
+        char[] data = value.toCharArray();
+        return decodeHex(data);
     }
 
     /**

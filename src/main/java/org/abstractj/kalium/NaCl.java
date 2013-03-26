@@ -18,6 +18,8 @@ public class NaCl {
         public int crypto_hash_sha256_ref(byte[] buffer, String message, long sizeof);
 
         public int crypto_hash_sha512_ref(byte[] buffer, String message, long sizeof);
+
+        public int crypto_box_curve25519xsalsa20poly1305_ref_keypair(byte[] pk, byte[] sk);
     }
 
     static {
