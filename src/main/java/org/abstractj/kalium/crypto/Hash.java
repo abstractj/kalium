@@ -1,7 +1,7 @@
 package org.abstractj.kalium.crypto;
 
 import org.abstractj.kalium.NaCl.Sodium;
-import org.abstractj.kalium.util.Hex;
+import org.abstractj.kalium.encoders.Hex;
 
 import static org.abstractj.kalium.NaCl.SODIUM_INSTANCE;
 

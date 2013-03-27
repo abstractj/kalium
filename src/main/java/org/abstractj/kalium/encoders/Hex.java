@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.abstractj.kalium.util;
+package org.abstractj.kalium.encoders;
 
 import java.nio.charset.Charset;
 

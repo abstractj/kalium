@@ -20,6 +20,13 @@ public class NaCl {
         public int crypto_hash_sha512_ref(byte[] buffer, String message, long sizeof);
 
         public int crypto_box_curve25519xsalsa20poly1305_ref_keypair(byte[] pk, byte[] sk);
+
+        //TODO
+        public int crypto_box_curve25519xsalsa20poly1305_ref_afternm(byte[] ct, byte[] msg, int length, byte[] nonce, byte[] beforenm);
+        //TODO
+        public int crypto_box_curve25519xsalsa20poly1305_ref_beforenm(byte[] k, byte[] publicKey, byte[] privateKey);
+
+        public void randombytes(byte[] buffer, long size);
     }
 
     static {

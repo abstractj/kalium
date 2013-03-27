@@ -1,6 +1,6 @@
 package org.abstractj.kalium.keys;
 
-import org.abstractj.kalium.util.Hex;
+import org.abstractj.kalium.encoders.Hex;
 
 public class PublicKey {
 
@@ -8,6 +8,10 @@ public class PublicKey {
 
     public PublicKey(byte[] publicKey) {
         this.publicKey = publicKey;
+    }
+
+    public byte[] getBytes(){
+        return publicKey;
     }
 
     public String toHex(){

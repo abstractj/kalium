@@ -1,6 +1,6 @@
 package org.abstractj.kalium.keys;
 
-import org.abstractj.kalium.util.Hex;
+import org.abstractj.kalium.encoders.Hex;
 
 import java.io.UnsupportedEncodingException;
 
@@ -25,6 +25,10 @@ public class PrivateKey {
         secretKey = new byte[SECRETKEY_BYTES];
         sodium.crypto_box_curve25519xsalsa20poly1305_ref_keypair(publicKey, secretKey);
         return new PrivateKey();
+    }
+
+    public byte[] getBytes(){
+        return secretKey;
     }
 
     public String toHex(){
