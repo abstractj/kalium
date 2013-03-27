@@ -41,8 +41,7 @@ public class NaCl {
 
         public int crypto_box_curve25519xsalsa20poly1305_ref_afternm(byte[] ct, byte[] msg, int length, byte[] nonce, byte[] beforenm);
 
-        public int crypto_box_curve25519xsalsa20poly1305_ref_open_afternm();
-
+        public int crypto_box_curve25519xsalsa20poly1305_ref_open_afternm(byte[] message, byte[] ct, int length, byte[] nonce, byte[] beforenm);
         public void randombytes(byte[] buffer, long size);
     }
 

@@ -18,6 +18,10 @@ public class Util {
         return buffer;
     }
 
+    public static byte[] prependZeros(int n, byte[] message) {
+        return new byte[n + message.length];
+    }
+
     public static byte[] removeZeros(int n, byte[] message) {
         byte[] buffer = Arrays.copyOfRange(message, n, message.length);
         return buffer;

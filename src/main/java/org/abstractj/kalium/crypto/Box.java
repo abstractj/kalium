@@ -1,17 +1,16 @@
 package org.abstractj.kalium.crypto;
 
 import org.abstractj.kalium.NaCl.Sodium;
+import org.abstractj.kalium.encoders.Hex;
 import org.abstractj.kalium.keys.PrivateKey;
 import org.abstractj.kalium.keys.PublicKey;
 
-import java.io.UnsupportedEncodingException;
-
 import static org.abstractj.kalium.NaCl.SODIUM_INSTANCE;
+import static org.abstractj.kalium.NaCl.Sodium.BOXZERO_BYTES;
+import static org.abstractj.kalium.NaCl.Sodium.CURVE25519_XSALSA20_POLY1305_BOX_BEFORE_NMBYTES;
 import static org.abstractj.kalium.NaCl.Sodium.NONCE_BYTES;
 import static org.abstractj.kalium.NaCl.Sodium.PUBLICKEY_BYTES;
 import static org.abstractj.kalium.NaCl.Sodium.SECRETKEY_BYTES;
-import static org.abstractj.kalium.NaCl.Sodium.CURVE25519_XSALSA20_POLY1305_BOX_BEFORE_NMBYTES;
-import static org.abstractj.kalium.NaCl.Sodium.BOXZERO_BYTES;
 import static org.abstractj.kalium.NaCl.Sodium.ZERO_BYTES;
 
 /**
@@ -31,24 +30,31 @@ public class Box {
         Util.checkLength(privateKey.getBytes(), SECRETKEY_BYTES);
     }
 
-    public Box(byte[] privateKey, byte[] publicKey) {
-        this.publicKey = publicKey;
-        this.privateKey = privateKey;
-        Util.checkLength(publicKey, PUBLICKEY_BYTES);
-        Util.checkLength(privateKey, SECRETKEY_BYTES);
+    public Box(String privateKey, String publicKey) {
+        this.publicKey = Hex.decodeHex(publicKey);
+        this.privateKey = Hex.decodeHex(privateKey);
+        Util.checkLength(this.publicKey, PUBLICKEY_BYTES);
+        Util.checkLength(this.privateKey, SECRETKEY_BYTES);
     }
 
     public byte[] encrypt(byte[] nonce, String message) {
         Util.checkLength(nonce, NONCE_BYTES);
         byte[] msg = Util.prependZeros(ZERO_BYTES, message);
         byte[] ct = new byte[msg.length];
-        sodium.crypto_box_curve25519xsalsa20poly1305_ref_afternm(ct, msg, msg.length, nonce, beforenm());
+        int i = sodium.crypto_box_curve25519xsalsa20poly1305_ref_afternm(ct, msg, msg.length, nonce, beforenm());
+        System.out.println("Encrypt? " + i);
         return Util.removeZeros(BOXZERO_BYTES, ct);
     }
 
-    public byte[] decrypt(byte[] nonce, String ciphertext){
+    //TODO
+    public byte[] decrypt(byte[] nonce, String ciphertext) {
         Util.checkLength(nonce, NONCE_BYTES);
-        return null;
+        byte[] ct = Util.prependZeros(BOXZERO_BYTES, ciphertext);
+        byte[] message = new byte[ct.length];
+        int i = sodium.crypto_box_curve25519xsalsa20poly1305_ref_open_afternm(message, ct, ct.length, nonce, beforenm());
+        System.out.println("Decrypt? " + i);
+        return message;
+        //return Util.removeZeros(ZERO_BYTES, message);
     }
 
     private byte[] beforenm() {
