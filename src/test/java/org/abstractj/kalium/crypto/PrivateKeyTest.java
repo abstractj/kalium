@@ -10,7 +10,7 @@ public class PrivateKeyTest {
     @Test
     public void testGenerate() throws Exception {
         PrivateKey key = PrivateKey.generate();
-        assertEquals("Invalid private key size", 64, key.toHex().length());
-        assertEquals("Invalid public key size", 64, key.getPublicKey().toHex().length());
+        assertEquals("Invalid private key size", 32, key.getBytes().length);
+        assertEquals("Invalid public key size", 32, key.getPublicKey().getBytes().length);
     }
 }

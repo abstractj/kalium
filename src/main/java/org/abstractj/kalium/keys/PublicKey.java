@@ -10,11 +10,11 @@ public class PublicKey {
         this.publicKey = publicKey;
     }
 
-    public byte[] getBytes(){
-        return publicKey;
+    public PublicKey(String publicKey) {
+        this.publicKey = Hex.decodeHex(publicKey);
     }
 
-    public String toHex(){
-        return Hex.encodeHexString(publicKey);
+    public byte[] getBytes() {
+        return publicKey;
     }
 }
