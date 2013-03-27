@@ -31,8 +31,8 @@ public class Util {
         return removeZeros(DEFAULT_SIZE, message);
     }
 
-    public static void checkLength(byte[] publicKey, int publickeyBytes) {
-        if (publicKey.length != publickeyBytes)
+    public static void checkLength(byte[] data, int size) {
+        if (data.length != size)
             throw new RuntimeException("Invalid key size");
     }
 

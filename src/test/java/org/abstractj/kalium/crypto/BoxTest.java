@@ -16,6 +16,6 @@ public class BoxTest {
         PrivateKey bobKey = new PrivateKey(bobPrivate);
         PublicKey aliceKey = new PublicKey(alicePublic);
         box = new Box(bobKey, aliceKey);
-        byte[] value = box.encrypt(Random.randomBytes(32), "sodium");
+        byte[] value = box.encrypt(Random.randomBytes(24), "sodium");
     }
 }

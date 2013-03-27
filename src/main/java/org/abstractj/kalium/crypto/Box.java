@@ -7,6 +7,7 @@ import org.abstractj.kalium.keys.PublicKey;
 import java.io.UnsupportedEncodingException;
 
 import static org.abstractj.kalium.NaCl.SODIUM_INSTANCE;
+import static org.abstractj.kalium.NaCl.Sodium.NONCE_BYTES;
 import static org.abstractj.kalium.NaCl.Sodium.PUBLICKEY_BYTES;
 import static org.abstractj.kalium.NaCl.Sodium.SECRETKEY_BYTES;
 import static org.abstractj.kalium.NaCl.Sodium.CURVE25519_XSALSA20_POLY1305_BOX_BEFORE_NMBYTES;
@@ -38,10 +39,16 @@ public class Box {
     }
 
     public byte[] encrypt(byte[] nonce, String message) {
+        Util.checkLength(nonce, NONCE_BYTES);
         byte[] msg = Util.prependZeros(ZERO_BYTES, message);
         byte[] ct = new byte[msg.length];
         sodium.crypto_box_curve25519xsalsa20poly1305_ref_afternm(ct, msg, msg.length, nonce, beforenm());
         return Util.removeZeros(BOXZERO_BYTES, ct);
+    }
+
+    public byte[] decrypt(byte[] nonce, String ciphertext){
+        Util.checkLength(nonce, NONCE_BYTES);
+        return null;
     }
 
     private byte[] beforenm() {
