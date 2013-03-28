@@ -7,6 +7,10 @@ import org.junit.Test;
 
 import static org.abstractj.kalium.fixture.TestVectors.ALICE_PUBLIC_KEY;
 import static org.abstractj.kalium.fixture.TestVectors.BOB_PRIVATE_KEY;
+import static org.abstractj.kalium.fixture.TestVectors.BOX_CIPHERTEXT;
+import static org.abstractj.kalium.fixture.TestVectors.BOX_MESSAGE;
+import static org.abstractj.kalium.fixture.TestVectors.BOX_NONCE;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 
@@ -56,5 +60,15 @@ public class BoxTest {
         String key = "hello";
         new Box(new PublicKey(ALICE_PUBLIC_KEY), new PrivateKey(key));
         fail("Should raise an exception");
+    }
+
+    @Test
+    public void testEncrypt() throws Exception {
+        Box box = new Box(new PublicKey(ALICE_PUBLIC_KEY), new PrivateKey(BOB_PRIVATE_KEY));
+        byte[] nonce = Hex.decodeHexString(BOX_NONCE);
+        byte[] message = Hex.decodeHexString(BOX_MESSAGE);
+        byte[] ciphertext = Hex.decodeHexString(BOX_CIPHERTEXT);
+
+        assertEquals("failed to generate ciphertext", box.encrypt(nonce, message), ciphertext);
     }
 }
