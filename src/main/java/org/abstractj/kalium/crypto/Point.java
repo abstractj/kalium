@@ -11,9 +11,14 @@ import static org.abstractj.kalium.NaCl.Sodium.SCALAR_BYTES;
 public class Point {
 
     private static final Sodium sodium = SODIUM_INSTANCE;
+    private static final String STANDARD_GROUP_ELEMENT = "0900000000000000000000000000000000000000000000000000000000000000";
 
-    private final byte[] point;
+    private byte[] point;
     private byte[] result;
+
+    public Point() {
+        this.point = Hex.decodeHexString(STANDARD_GROUP_ELEMENT);
+    }
 
     public Point(String point) {
         this.point =  Hex.decodeHexString(point);
