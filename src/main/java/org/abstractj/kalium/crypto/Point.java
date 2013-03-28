@@ -31,7 +31,15 @@ public class Point {
         return this;
     }
 
-    public String toHex() {
+    public String value(){
         return Hex.encodeHexString(result);
+    }
+
+    public String toHex() {
+        return Hex.encodeHexString(point);
+    }
+
+    public byte[] toBytes() {
+        return point;
     }
 }
