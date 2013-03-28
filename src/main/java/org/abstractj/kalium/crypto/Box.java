@@ -23,14 +23,15 @@ public class Box {
     private final byte[] privateKey;
     private final byte[] publicKey;
 
-    public Box(PrivateKey privateKey, PublicKey publicKey) {
+
+    public Box(PublicKey publicKey, PrivateKey privateKey) {
         this.publicKey = publicKey.getBytes();
         this.privateKey = privateKey.getBytes();
         Util.checkLength(publicKey.getBytes(), PUBLICKEY_BYTES);
         Util.checkLength(privateKey.getBytes(), SECRETKEY_BYTES);
     }
 
-    public Box(String privateKey, String publicKey) {
+    public Box(String publicKey, String privateKey) {
         this.publicKey = Hex.decodeHexString(publicKey);
         this.privateKey = Hex.decodeHexString(privateKey);
         Util.checkLength(this.publicKey, PUBLICKEY_BYTES);
@@ -45,7 +46,6 @@ public class Box {
         return Util.removeZeros(BOXZERO_BYTES, ct);
     }
 
-    //TODO
     public byte[] decrypt(byte[] nonce, byte[] ciphertext) {
         Util.checkLength(nonce, NONCE_BYTES);
         byte[] ct = Util.prependZeros(BOXZERO_BYTES, ciphertext);

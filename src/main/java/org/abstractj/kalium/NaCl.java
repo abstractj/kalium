@@ -3,8 +3,6 @@ package org.abstractj.kalium;
 import jnr.ffi.LibraryLoader;
 import jnr.ffi.provider.FFIProvider;
 
-import java.nio.ByteBuffer;
-
 public class NaCl {
 
     public static final Sodium SODIUM_INSTANCE;

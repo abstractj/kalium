@@ -3,38 +3,58 @@ package org.abstractj.kalium.crypto;
 import org.abstractj.kalium.encoders.Hex;
 import org.abstractj.kalium.keys.PrivateKey;
 import org.abstractj.kalium.keys.PublicKey;
-import org.apache.commons.codec.binary.BinaryCodec;
-import org.apache.commons.codec.binary.StringUtils;
 import org.junit.Test;
+
+import static org.abstractj.kalium.fixture.TestVectors.ALICE_PUBLIC_KEY;
+import static org.abstractj.kalium.fixture.TestVectors.BOB_PRIVATE_KEY;
+import static org.junit.Assert.fail;
+
 
 public class BoxTest {
 
-    String alicePrivate = "77076d0a7318a57d3c16c17251b26645df4c2f87ebc0992ab177fba51db92c2a";
-    String alicePublic = "8520f0098930a754748b7ddcb43ef75a0dbf3a0d26381af4eba4a98eaa9b4e6a";
-    String bobPrivate = "5dab087e624a8a4b79e17f8b83800ee66f3bb1292618b6fd1c2f8b27ff88e0eb";
-    String bobPublic = "de9edb7d7b7dc1b4d35b61c2ece435373f8343c85b78674dadfc7e146f882b4f";
+    @Test
+    public void testAcceptStrings() throws Exception {
+        try {
+            new Box(ALICE_PUBLIC_KEY, BOB_PRIVATE_KEY);
+        } catch (Exception e) {
+            fail("Box should accept strings");
+        }
+    }
 
     @Test
-    public void testEncrypt() throws Exception {
-//        PrivateKey bobpk = PrivateKey.generate();
-//        PrivateKey alicepk = PrivateKey.generate();
-//        Box box1 = new Box(bobpk, alicepk.getPublicKey());
-//        byte[] nonce1 = Random.randomBytes(24);
-//        byte[] value = box1.encrypt(nonce1, "sodium".getBytes());
-//
-//        Box box2 = new Box(alicepk, bobpk.getPublicKey());
-//        byte[] data = box2.decrypt(nonce1, value);
-//
-//        for (byte b : data) {
-//            char c = (char)(((b&0x00FF)<<8) + (b&0x00FF));
-//
-//            System.out.println(c);
-//        }
-//
-//        System.out.println("Shazam: " + StringUtils.newStringUsAscii(data));
-        byte[] encoded = new BinaryCodec().encode("meh".getBytes());
-        System.out.println(encoded);
-        System.out.println(new BinaryCodec().decode(encoded));
+    public void testAcceptKeyPairs() throws Exception {
+        try {
+            new Box(new PublicKey(ALICE_PUBLIC_KEY), new PrivateKey(BOB_PRIVATE_KEY));
+        } catch (Exception e) {
+            fail("Box should accept key pairs");
+        }
+    }
 
+    @Test(expected = RuntimeException.class)
+    public void testNullPublicKey() throws Exception {
+        String key = null;
+        new Box(new PublicKey(key), new PrivateKey(BOB_PRIVATE_KEY));
+        fail("Should raise an exception");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testInvalidPublicKey() throws Exception {
+        String key = "hello";
+        new Box(new PublicKey(key), new PrivateKey(BOB_PRIVATE_KEY));
+        fail("Should raise an exception");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testNullSecretKey() throws Exception {
+        String key = null;
+        new Box(new PublicKey(ALICE_PUBLIC_KEY), new PrivateKey(key));
+        fail("Should raise an exception");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testInvalidSecretKey() throws Exception {
+        String key = "hello";
+        new Box(new PublicKey(ALICE_PUBLIC_KEY), new PrivateKey(key));
+        fail("Should raise an exception");
     }
 }

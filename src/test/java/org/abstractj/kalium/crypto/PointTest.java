@@ -6,10 +6,8 @@ import org.junit.Test;
 import static org.abstractj.kalium.fixture.TestVectors.ALICE_MULT_BOB;
 import static org.abstractj.kalium.fixture.TestVectors.ALICE_PRIVATE_KEY;
 import static org.abstractj.kalium.fixture.TestVectors.ALICE_PUBLIC_KEY;
-import static org.abstractj.kalium.fixture.TestVectors.BOB_PRIVATE_KEY;
 import static org.abstractj.kalium.fixture.TestVectors.BOB_PUBLIC_KEY;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 public class PointTest {
 

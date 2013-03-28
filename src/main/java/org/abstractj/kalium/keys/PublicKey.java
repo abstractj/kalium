@@ -2,6 +2,7 @@ package org.abstractj.kalium.keys;
 
 import org.abstractj.kalium.crypto.Util;
 import org.abstractj.kalium.encoders.Hex;
+
 import static org.abstractj.kalium.NaCl.Sodium.PUBLICKEY_BYTES;
 
 public class PublicKey {

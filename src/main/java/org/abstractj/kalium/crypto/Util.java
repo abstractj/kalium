@@ -40,7 +40,7 @@ public class Util {
             throw new RuntimeException("Invalid key size");
     }
 
-    public static byte[] zeros(int n){
+    public static byte[] zeros(int n) {
         return new byte[n];
     }
 

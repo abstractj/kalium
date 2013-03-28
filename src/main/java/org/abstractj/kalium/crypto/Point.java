@@ -3,7 +3,6 @@ package org.abstractj.kalium.crypto;
 import org.abstractj.kalium.NaCl.Sodium;
 import org.abstractj.kalium.encoders.Hex;
 import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.StringUtils;
 
 import static org.abstractj.kalium.NaCl.SODIUM_INSTANCE;
 import static org.abstractj.kalium.NaCl.Sodium.SCALAR_BYTES;
@@ -21,7 +20,7 @@ public class Point {
     }
 
     public Point(String point) {
-        this.point =  Hex.decodeHexString(point);
+        this.point = Hex.decodeHexString(point);
     }
 
     public Point mult(String n) throws DecoderException {
@@ -31,7 +30,7 @@ public class Point {
         return this;
     }
 
-    public String value(){
+    public String value() {
         return Hex.encodeHexString(result);
     }
 
