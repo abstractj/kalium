@@ -31,30 +31,27 @@ public class Box {
     }
 
     public Box(String privateKey, String publicKey) {
-        this.publicKey = Hex.decodeHex(publicKey);
-        this.privateKey = Hex.decodeHex(privateKey);
+        this.publicKey = Hex.decodeHexString(publicKey);
+        this.privateKey = Hex.decodeHexString(privateKey);
         Util.checkLength(this.publicKey, PUBLICKEY_BYTES);
         Util.checkLength(this.privateKey, SECRETKEY_BYTES);
     }
 
-    public byte[] encrypt(byte[] nonce, String message) {
+    public byte[] encrypt(byte[] nonce, byte[] message) {
         Util.checkLength(nonce, NONCE_BYTES);
         byte[] msg = Util.prependZeros(ZERO_BYTES, message);
         byte[] ct = new byte[msg.length];
-        int i = sodium.crypto_box_curve25519xsalsa20poly1305_ref_afternm(ct, msg, msg.length, nonce, beforenm());
-        System.out.println("Encrypt? " + i);
+        sodium.crypto_box_curve25519xsalsa20poly1305_ref_afternm(ct, msg, msg.length, nonce, beforenm());
         return Util.removeZeros(BOXZERO_BYTES, ct);
     }
 
     //TODO
-    public byte[] decrypt(byte[] nonce, String ciphertext) {
+    public byte[] decrypt(byte[] nonce, byte[] ciphertext) {
         Util.checkLength(nonce, NONCE_BYTES);
         byte[] ct = Util.prependZeros(BOXZERO_BYTES, ciphertext);
         byte[] message = new byte[ct.length];
         int i = sodium.crypto_box_curve25519xsalsa20poly1305_ref_open_afternm(message, ct, ct.length, nonce, beforenm());
-        System.out.println("Decrypt? " + i);
-        return message;
-        //return Util.removeZeros(ZERO_BYTES, message);
+        return Util.removeZeros(ZERO_BYTES, message);
     }
 
     private byte[] beforenm() {

@@ -67,7 +67,7 @@ public class Hex {
      */
     public static byte[] decodeHex(final char[] data) {
 
-        final int len = data.length;
+        final int len = (data == null) ? 0 : data.length;
 
         if ((len & 0x01) != 0) {
             throw new RuntimeException("Odd number of characters.");
@@ -87,9 +87,9 @@ public class Hex {
         return out;
     }
 
-    public static byte[] decodeHex(final String value) {
+    public static byte[] decodeHexString(final String value) {
 
-        char[] data = value.toCharArray();
+        char[] data = value != null ? value.toCharArray() : new char[0];
         return decodeHex(data);
     }
 

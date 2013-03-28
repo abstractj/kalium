@@ -3,6 +3,7 @@ package org.abstractj.kalium.crypto;
 import org.abstractj.kalium.encoders.Hex;
 import org.abstractj.kalium.keys.PrivateKey;
 import org.abstractj.kalium.keys.PublicKey;
+import org.apache.commons.codec.binary.BinaryCodec;
 import org.apache.commons.codec.binary.StringUtils;
 import org.junit.Test;
 
@@ -15,22 +16,25 @@ public class BoxTest {
 
     @Test
     public void testEncrypt() throws Exception {
-
-        Box box1 = new Box(bobPrivate, alicePublic);
-        byte[] nonce1 = Random.randomBytes(24);
-        byte[] value = box1.encrypt(nonce1, "sodium");
-
-        Box box2 = new Box(alicePrivate, bobPublic);
-        byte[] nonce2 = Random.randomBytes(24);
-        byte[] data = box2.decrypt(nonce1, new String(value));
-
+//        PrivateKey bobpk = PrivateKey.generate();
+//        PrivateKey alicepk = PrivateKey.generate();
+//        Box box1 = new Box(bobpk, alicepk.getPublicKey());
+//        byte[] nonce1 = Random.randomBytes(24);
+//        byte[] value = box1.encrypt(nonce1, "sodium".getBytes());
+//
+//        Box box2 = new Box(alicepk, bobpk.getPublicKey());
+//        byte[] data = box2.decrypt(nonce1, value);
+//
 //        for (byte b : data) {
 //            char c = (char)(((b&0x00FF)<<8) + (b&0x00FF));
 //
 //            System.out.println(c);
 //        }
 //
-//        System.out.println("Shazam: " + Hex.decodeHex(StringUtils.newStringUsAscii(data)));
+//        System.out.println("Shazam: " + StringUtils.newStringUsAscii(data));
+        byte[] encoded = new BinaryCodec().encode("meh".getBytes());
+        System.out.println(encoded);
+        System.out.println(new BinaryCodec().decode(encoded));
 
     }
 }

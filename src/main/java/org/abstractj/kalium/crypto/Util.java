@@ -36,8 +36,12 @@ public class Util {
     }
 
     public static void checkLength(byte[] data, int size) {
-        if (data.length != size)
+        if (data == null || data.length != size)
             throw new RuntimeException("Invalid key size");
+    }
+
+    public static byte[] zeros(int n){
+        return new byte[n];
     }
 
 

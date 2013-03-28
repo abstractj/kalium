@@ -28,21 +28,28 @@ public class NaCl {
         public static final int PUBLICKEY_BYTES = 32;
         public static final int SECRETKEY_BYTES = 32;
 
-        public int crypto_box_curve25519xsalsa20poly1305_ref_keypair(byte[] pk, byte[] sk);
+        public int crypto_box_curve25519xsalsa20poly1305_ref_keypair(byte[] publicKey, byte[] secretKey);
 
 
         public static final int CURVE25519_XSALSA20_POLY1305_BOX_NONCE_BYTES = 24;
         public static final int NONCE_BYTES = 24;
         public static final int ZERO_BYTES = 32;
-        public static final int BOXZERO_BYTES   = 16;
+        public static final int BOXZERO_BYTES = 16;
         public static final int CURVE25519_XSALSA20_POLY1305_BOX_BEFORE_NMBYTES = 32;
+
+        public void randombytes(byte[] buffer, long size);
 
         public int crypto_box_curve25519xsalsa20poly1305_ref_beforenm(byte[] k, byte[] publicKey, byte[] privateKey);
 
         public int crypto_box_curve25519xsalsa20poly1305_ref_afternm(byte[] ct, byte[] msg, int length, byte[] nonce, byte[] beforenm);
 
         public int crypto_box_curve25519xsalsa20poly1305_ref_open_afternm(byte[] message, byte[] ct, int length, byte[] nonce, byte[] beforenm);
-        public void randombytes(byte[] buffer, long size);
+
+        public static final int SCALAR_BYTES = 32;
+
+        public int crypto_scalarmult_curve25519_ref(byte[] result, byte[] intValue, byte[] point);
+
+
     }
 
     static {
