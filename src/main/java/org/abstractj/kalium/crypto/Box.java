@@ -55,7 +55,7 @@ public class Box {
     }
 
     private byte[] beforenm() {
-        byte[] k = new byte[CURVE25519_XSALSA20_POLY1305_BOX_BEFORE_NMBYTES];
+        byte[] k = Util.zeros(CURVE25519_XSALSA20_POLY1305_BOX_BEFORE_NMBYTES);
         sodium.crypto_box_curve25519xsalsa20poly1305_ref_beforenm(k, publicKey, privateKey);
         return k;
     }
