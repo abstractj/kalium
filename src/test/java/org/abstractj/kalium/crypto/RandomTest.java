@@ -18,7 +18,7 @@ public class RandomTest {
     @Test
     public void testProducesDefaultRandomBytes() throws Exception {
         final int size = 32;
-        assertEquals("Invalid random bytes", size, Random.randomBytes(size).length);
+        assertEquals("Invalid random bytes", size, Random.randomBytes().length);
     }
 
     @Test
@@ -30,6 +30,6 @@ public class RandomTest {
     @Test
     public void testProducesDifferentDefaultRandomBytes() throws Exception {
         final int size = 32;
-        assertFalse("Should produce different random bytes", Arrays.equals(Random.randomBytes(size), Random.randomBytes(size)));
+        assertFalse("Should produce different random bytes", Arrays.equals(Random.randomBytes(), Random.randomBytes(size)));
     }
 }
