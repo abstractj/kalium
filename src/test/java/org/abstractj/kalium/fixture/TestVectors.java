@@ -42,4 +42,6 @@ public class TestVectors {
             "71d2c20f9b928fe2270d6fb863d51738b48eeee314a7cc8ab932164548e526ae" +
             "90224368517acfeabd6bb3732bc0e9da99832b61ca01b6de56244a9e88d5f9b3" +
             "7973f622a43d14a6599b1f654cb45a74e355a5";
+
+    public static final String SECRET_KEY = "1b27556473e985d462cd51197a9a46c76009549eac6474f206c4ee0844f68389";
 }
