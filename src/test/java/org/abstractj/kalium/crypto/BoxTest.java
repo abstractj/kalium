@@ -13,6 +13,7 @@ import static org.abstractj.kalium.fixture.TestVectors.BOX_CIPHERTEXT;
 import static org.abstractj.kalium.fixture.TestVectors.BOX_MESSAGE;
 import static org.abstractj.kalium.fixture.TestVectors.BOX_NONCE;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 
@@ -72,8 +73,6 @@ public class BoxTest {
         byte[] ciphertext = Hex.decodeHexString(BOX_CIPHERTEXT);
 
         byte[] result = box.encrypt(nonce, message);
-        System.out.println(Hex.encodeHex(result));
-        System.out.println(Hex.encodeHex(ciphertext));
-        assertEquals("failed to generate ciphertext", result, ciphertext);
+        assertTrue("failed to generate ciphertext", Arrays.equals(result, ciphertext));
     }
 }
