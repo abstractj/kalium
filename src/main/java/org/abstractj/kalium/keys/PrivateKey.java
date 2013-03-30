@@ -3,7 +3,6 @@ package org.abstractj.kalium.keys;
 import org.abstractj.kalium.crypto.Point;
 import org.abstractj.kalium.crypto.Util;
 import org.abstractj.kalium.encoders.Hex;
-import org.apache.commons.codec.DecoderException;
 
 import java.io.UnsupportedEncodingException;
 
@@ -47,7 +46,7 @@ public class PrivateKey {
         return Hex.encodeHexString(secretKey);
     }
 
-    public PublicKey getPublicKey() throws DecoderException {
+    public PublicKey getPublicKey() {
         Point point = new Point();
         byte[] key = publicKey != null ? publicKey : point.mult(Hex.encodeHexString(secretKey)).toBytes();
         return new PublicKey(key);
