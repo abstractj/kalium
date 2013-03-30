@@ -7,7 +7,7 @@ import static org.abstractj.kalium.NaCl.SODIUM_INSTANCE;
 public class Random {
 
     private static final Sodium sodium = SODIUM_INSTANCE;
-    public static final int DEFAULT_SIZE = 32;
+    private static final int DEFAULT_SIZE = 32;
 
     /**
      * Generate random bytes

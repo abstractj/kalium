@@ -93,8 +93,8 @@ public class BoxTest {
     public void testDecryptCorruptedCipherText() throws Exception {
         Box box = new Box(new PublicKey(ALICE_PUBLIC_KEY), new PrivateKey(BOB_PRIVATE_KEY));
         byte[] nonce = Hex.decodeHexString(BOX_NONCE);
-        byte[] expectedMessage = Hex.decodeHexString(BOX_MESSAGE);
-        byte[] ciphertext = box.encrypt(nonce, expectedMessage);
+        byte[] message = Hex.decodeHexString(BOX_MESSAGE);
+        byte[] ciphertext = box.encrypt(nonce, message);
         ciphertext[23] = ' ';
 
         Box pandora = new Box(new PublicKey(BOB_PUBLIC_KEY), new PrivateKey(ALICE_PRIVATE_KEY));
