@@ -47,5 +47,14 @@ public class Util {
         return new byte[n];
     }
 
+    public static void isValid(int status) {
+        if (status != 0)
+            throw new RuntimeException("Invalid key");
+    }
+
+    public static void isValid(int status, String message) {
+        if (status != 0)
+            throw new RuntimeException(message);
+    }
 
 }

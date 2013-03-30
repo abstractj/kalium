@@ -38,6 +38,7 @@ public class NaCl {
         public void randombytes(byte[] buffer, long size);
 
         public int crypto_box_curve25519xsalsa20poly1305_ref(byte[] ct, byte[] msg, int length, byte[] nonce, byte[] publicKey, byte[] privateKey);
+
         public int crypto_box_curve25519xsalsa20poly1305_ref_open(byte[] message, byte[] ct, int length, byte[] nonce, byte[] publicKey, byte[] privateKey);
 
         public static final int SCALAR_BYTES = 32;
