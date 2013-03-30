@@ -42,7 +42,7 @@ public class Box {
         Util.checkLength(nonce, NONCE_BYTES);
         byte[] msg = Util.prependZeros(ZERO_BYTES, message);
         byte[] ct = new byte[msg.length];
-        sodium.crypto_box_curve25519xsalsa20poly1305_ref_afternm(ct, msg, msg.length, nonce, beforenm());
+        sodium.crypto_box_curve25519xsalsa20poly1305_ref(ct, msg, msg.length, nonce, publicKey, privateKey);
         return Util.removeZeros(BOXZERO_BYTES, ct);
     }
 
@@ -50,13 +50,7 @@ public class Box {
         Util.checkLength(nonce, NONCE_BYTES);
         byte[] ct = Util.prependZeros(BOXZERO_BYTES, ciphertext);
         byte[] message = new byte[ct.length];
-        int i = sodium.crypto_box_curve25519xsalsa20poly1305_ref_open_afternm(message, ct, ct.length, nonce, beforenm());
+        sodium.crypto_box_curve25519xsalsa20poly1305_ref_open(message, ct, message.length, nonce, publicKey, privateKey);
         return Util.removeZeros(ZERO_BYTES, message);
-    }
-
-    private byte[] beforenm() {
-        byte[] k = Util.zeros(CURVE25519_XSALSA20_POLY1305_BOX_BEFORE_NMBYTES);
-        sodium.crypto_box_curve25519xsalsa20poly1305_ref_beforenm(k, publicKey, privateKey);
-        return k;
     }
 }
