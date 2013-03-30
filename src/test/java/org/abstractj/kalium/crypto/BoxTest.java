@@ -5,6 +5,8 @@ import org.abstractj.kalium.keys.PrivateKey;
 import org.abstractj.kalium.keys.PublicKey;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 import static org.abstractj.kalium.fixture.TestVectors.ALICE_PUBLIC_KEY;
 import static org.abstractj.kalium.fixture.TestVectors.BOB_PRIVATE_KEY;
 import static org.abstractj.kalium.fixture.TestVectors.BOX_CIPHERTEXT;
@@ -69,6 +71,9 @@ public class BoxTest {
         byte[] message = Hex.decodeHexString(BOX_MESSAGE);
         byte[] ciphertext = Hex.decodeHexString(BOX_CIPHERTEXT);
 
-        assertEquals("failed to generate ciphertext", box.encrypt(nonce, message), ciphertext);
+        byte[] result = box.encrypt(nonce, message);
+        System.out.println(Hex.encodeHex(result));
+        System.out.println(Hex.encodeHex(ciphertext));
+        assertEquals("failed to generate ciphertext", result, ciphertext);
     }
 }
