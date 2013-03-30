@@ -31,13 +31,13 @@ public class Random {
      * @param n number or random bytes
      * @return
      */
-    public static byte[] randomBytes(int n) {
+    public byte[] randomBytes(int n) {
         byte[] buffer = new byte[n];
         sodium.randombytes(buffer, n);
         return buffer;
     }
 
-    public static byte[] randomBytes() {
+    public byte[] randomBytes() {
         byte[] buffer = new byte[DEFAULT_SIZE];
         sodium.randombytes(buffer, DEFAULT_SIZE);
         return buffer;
