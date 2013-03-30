@@ -65,6 +65,13 @@ public class NaCl {
         int crypto_secretbox_xsalsa20poly1305_ref(byte[] ct, byte[] msg, int length, byte[] nonce, byte[] key);
 
         int crypto_secretbox_xsalsa20poly1305_ref_open(byte[] message, byte[] ct, int length, byte[] nonce, byte[] key);
+
+        public static final int SIGNATURE_BYTES = 64;
+
+        int crypto_sign_ed25519_ref_seed_keypair(byte[] publicKey, byte[] secretKey, byte[] seed);
+
+        int crypto_sign_ed25519_ref(byte[] buffer, byte[] bufferLen, byte[] message, int length, byte[] secretKey);
+
     }
 
     static {
