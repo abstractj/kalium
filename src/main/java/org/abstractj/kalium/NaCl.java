@@ -29,11 +29,9 @@ public class NaCl {
         public int crypto_box_curve25519xsalsa20poly1305_ref_keypair(byte[] publicKey, byte[] secretKey);
 
 
-        public static final int CURVE25519_XSALSA20_POLY1305_BOX_NONCE_BYTES = 24;
         public static final int NONCE_BYTES = 24;
         public static final int ZERO_BYTES = 32;
         public static final int BOXZERO_BYTES = 16;
-        public static final int CURVE25519_XSALSA20_POLY1305_BOX_BEFORE_NMBYTES = 32;
 
         public void randombytes(byte[] buffer, long size);
 
