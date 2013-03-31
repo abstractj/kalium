@@ -17,7 +17,10 @@
 package org.abstractj.kalium;
 
 import jnr.ffi.LibraryLoader;
-import jnr.ffi.provider.FFIProvider;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
 public class NaCl {
 
@@ -75,9 +78,24 @@ public class NaCl {
     }
 
     static {
-        LibraryLoader<Sodium> libraryLoader = FFIProvider.getSystemProvider()
-                .createLibraryLoader(Sodium.class)
-                .library(LIBRARY_NAME);
-        SODIUM_INSTANCE = libraryLoader.load();
+        Sodium sodium;
+        try {
+            sodium = LibraryLoader.create(Sodium.class)
+                    .search("/usr/local/lib")
+                    .search("/opt/local/lib")
+                    .load(LIBRARY_NAME);
+        
+        } catch (final UnsatisfiedLinkError ule) {
+            sodium = Sodium.class.cast(Proxy.newProxyInstance(Sodium.class.getClassLoader(),
+                    new Class[] { Sodium.class },
+                    new InvocationHandler() {
+                        @Override
+                        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                            throw ule;
+                        }
+                    }));
+        }
+        
+        SODIUM_INSTANCE = sodium;
     }
 }
