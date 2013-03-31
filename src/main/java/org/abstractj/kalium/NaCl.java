@@ -18,14 +18,13 @@ package org.abstractj.kalium;
 
 import jnr.ffi.LibraryLoader;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
-
 public class NaCl {
 
-    public static final Sodium SODIUM_INSTANCE;
     private static final String LIBRARY_NAME = "sodium";
+    public static final Sodium SODIUM_INSTANCE= LibraryLoader.create(Sodium.class)
+            .search("/usr/local/lib")
+            .search("/opt/local/lib")
+            .load(LIBRARY_NAME);
 
     private NaCl() {
     }
@@ -75,27 +74,5 @@ public class NaCl {
 
         int crypto_sign_ed25519_ref(byte[] buffer, byte[] bufferLen, byte[] message, int length, byte[] secretKey);
 
-    }
-
-    static {
-        Sodium sodium;
-        try {
-            sodium = LibraryLoader.create(Sodium.class)
-                    .search("/usr/local/lib")
-                    .search("/opt/local/lib")
-                    .load(LIBRARY_NAME);
-        
-        } catch (final UnsatisfiedLinkError ule) {
-            sodium = Sodium.class.cast(Proxy.newProxyInstance(Sodium.class.getClassLoader(),
-                    new Class[] { Sodium.class },
-                    new InvocationHandler() {
-                        @Override
-                        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                            throw ule;
-                        }
-                    }));
-        }
-        
-        SODIUM_INSTANCE = sodium;
     }
 }
