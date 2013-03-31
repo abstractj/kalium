@@ -22,13 +22,13 @@ import static org.abstractj.kalium.fixture.TestVectors.BOB_PRIVATE_KEY;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-public class PrivateKeyTest {
+public class KeyPairTest {
 
     @Test
     public void testGeneratePrivateKey() {
         try {
-            PrivateKey key = PrivateKey.generate();
-            assertTrue(key instanceof PrivateKey);
+            KeyPair key = KeyPair.generate();
+            assertTrue(key instanceof KeyPair);
         } catch (Exception e) {
             fail("Should return a valid key size");
         }
@@ -37,7 +37,7 @@ public class PrivateKeyTest {
     @Test
     public void testAcceptsValidKey() {
         try {
-            new PrivateKey(BOB_PRIVATE_KEY);
+            new KeyPair(BOB_PRIVATE_KEY);
         } catch (Exception e) {
             fail("Should not raise any exception");
         }
@@ -46,7 +46,7 @@ public class PrivateKeyTest {
     @Test
     public void testCreateHexValidKey() {
         try {
-            new PrivateKey(BOB_PRIVATE_KEY).toHex();
+            new KeyPair(BOB_PRIVATE_KEY).getPrivateKey().toHex();
         } catch (Exception e) {
             fail("Should not raise any exception");
         }
@@ -54,22 +54,22 @@ public class PrivateKeyTest {
 
     @Test(expected = RuntimeException.class)
     public void testRejectNullKey() throws Exception {
-        String key = null;
-        new PrivateKey(key);
+        String privateKey = null;
+        new KeyPair(privateKey);
         fail("Should reject null keys");
     }
 
     @Test(expected = RuntimeException.class)
     public void testRejectShortKey() throws Exception {
-        String key = "short";
-        new PrivateKey(key);
+        String privateKey = "short";
+        new KeyPair(privateKey);
         fail("Should reject null keys");
     }
 
     @Test
     public void testGeneratePublicKey() throws Exception {
         try {
-            PrivateKey key = new PrivateKey(BOB_PRIVATE_KEY);
+            KeyPair key = new KeyPair(BOB_PRIVATE_KEY);
             assertTrue(key.getPublicKey() instanceof PublicKey);
             key.getPublicKey().getBytes();
         } catch (Exception e) {

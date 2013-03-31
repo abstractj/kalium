@@ -18,6 +18,7 @@ package org.abstractj.kalium.crypto;
 
 import org.abstractj.kalium.NaCl.Sodium;
 import org.abstractj.kalium.encoders.Hex;
+import org.abstractj.kalium.keys.KeyPair;
 import org.abstractj.kalium.keys.PrivateKey;
 import org.abstractj.kalium.keys.PublicKey;
 
