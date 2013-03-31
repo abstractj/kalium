@@ -14,10 +14,8 @@
  *  limitations under the License.
  */
 
-package org.abstractj.kalium.crypto;
+package org.abstractj.kalium.keys;
 
-import org.abstractj.kalium.keys.PrivateKey;
-import org.abstractj.kalium.keys.PublicKey;
 import org.junit.Test;
 
 import static org.abstractj.kalium.fixture.TestVectors.BOB_PRIVATE_KEY;
