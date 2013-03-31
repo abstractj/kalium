@@ -18,6 +18,9 @@ package org.abstractj.kalium;
 
 import jnr.ffi.LibraryLoader;
 import jnr.ffi.provider.FFIProvider;
+import jnr.ffi.annotations.In;
+import jnr.ffi.annotations.Out;
+import jnr.ffi.types.u_int64_t;
 
 public class NaCl {
 
@@ -33,11 +36,11 @@ public class NaCl {
 
         public static final int SHA256BYTES = 32;
 
-        public int crypto_hash_sha256_ref(byte[] buffer, String message, long sizeof);
+        public int crypto_hash_sha256_ref(@Out byte[] buffer, String message, @u_int64_t long sizeof);
 
         public static final int SHA512BYTES = 64;
 
-        public int crypto_hash_sha512_ref(byte[] buffer, String message, long sizeof);
+        public int crypto_hash_sha512_ref(@Out byte[] buffer, String message, @u_int64_t long sizeof);
 
         public static final int PUBLICKEY_BYTES = 32;
         public static final int SECRETKEY_BYTES = 32;
@@ -49,15 +52,15 @@ public class NaCl {
         public static final int ZERO_BYTES = 32;
         public static final int BOXZERO_BYTES = 16;
 
-        public void randombytes(byte[] buffer, long size);
+        public void randombytes(@Out byte[] buffer, @u_int64_t long size);
 
-        public int crypto_box_curve25519xsalsa20poly1305_ref(byte[] ct, byte[] msg, int length, byte[] nonce, byte[] publicKey, byte[] privateKey);
+        public int crypto_box_curve25519xsalsa20poly1305_ref(@Out byte[] ct, @In byte[] msg, @u_int64_t long length, @In byte[] nonce, @In byte[] publicKey, @In byte[] privateKey);
 
-        public int crypto_box_curve25519xsalsa20poly1305_ref_open(byte[] message, byte[] ct, int length, byte[] nonce, byte[] publicKey, byte[] privateKey);
+        public int crypto_box_curve25519xsalsa20poly1305_ref_open(@Out byte[] message, @In byte[] ct, @u_int64_t long length, @In byte[] nonce, @In byte[] publicKey, @In byte[] privateKey);
 
         public static final int SCALAR_BYTES = 32;
 
-        public int crypto_scalarmult_curve25519_ref(byte[] result, byte[] intValue, byte[] point);
+        public int crypto_scalarmult_curve25519_ref(@Out byte[] result, @In byte[] intValue, byte[] point);
 
         public static final int XSALSA20_POLY1305_SECRETBOX_KEYBYTES = 32;
         public static final int XSALSA20_POLY1305_SECRETBOX_NONCEBYTES = 24;
