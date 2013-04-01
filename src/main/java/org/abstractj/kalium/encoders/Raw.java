@@ -16,7 +16,6 @@
 
 package org.abstractj.kalium.encoders;
 
-import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
 public class Raw {
@@ -24,12 +23,10 @@ public class Raw {
     private static final Charset charset = Charset.forName("US-ASCII");
 
     public static byte[] encode(String str) {
-        return charset.encode(str).array();
+        return str != null ? str.getBytes(charset) : null;
     }
 
-    public static char[] decode(byte[] buffer) {
-        ByteBuffer bf = ByteBuffer.allocate(buffer.length);
-        bf.put(buffer);
-        return charset.decode(bf).array().clone();
+    public static String decode(byte[] buffer) {
+        return buffer != null ? new String(buffer, charset) : null;
     }
 }
