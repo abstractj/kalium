@@ -17,15 +17,17 @@
 package org.abstractj.kalium;
 
 import jnr.ffi.LibraryLoader;
-import jnr.ffi.provider.FFIProvider;
+
 import jnr.ffi.annotations.In;
 import jnr.ffi.annotations.Out;
 import jnr.ffi.types.u_int64_t;
-
 public class NaCl {
 
-    public static final Sodium SODIUM_INSTANCE;
     private static final String LIBRARY_NAME = "sodium";
+    public static final Sodium SODIUM_INSTANCE= LibraryLoader.create(Sodium.class)
+            .search("/usr/local/lib")
+            .search("/opt/local/lib")
+            .load(LIBRARY_NAME);
 
     private NaCl() {
     }
@@ -75,12 +77,5 @@ public class NaCl {
 
         int crypto_sign_ed25519_ref(byte[] buffer, byte[] bufferLen, byte[] message, int length, byte[] secretKey);
 
-    }
-
-    static {
-        LibraryLoader<Sodium> libraryLoader = FFIProvider.getSystemProvider()
-                .createLibraryLoader(Sodium.class)
-                .library(LIBRARY_NAME);
-        SODIUM_INSTANCE = libraryLoader.load();
     }
 }
