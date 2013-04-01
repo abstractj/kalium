@@ -16,46 +16,55 @@
 
 package org.abstractj.kalium.encoders;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
 import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 public class RawTest {
 
     private static final Charset charset = Charset.forName("US-ASCII");
 
+    private Encoder encoder;
+
+    @Before
+    public void setUp() {
+        encoder = new Raw();
+    }
+
     @Test
     public void testEncode() throws Exception {
         String value = "hello";
-        assertTrue(Arrays.equals(value.getBytes(charset), Raw.encode(value)));
+        assertEquals(value, encoder.encode(value.getBytes()));
     }
 
     @Test
     public void testEncodeNullString() throws Exception {
-        String value = null;
+        byte[] value = null;
         try {
-            assertNull(Raw.encode(value));
+            assertNull(encoder.encode(value));
         } catch (Exception e) {
             fail("Should not raise any exception");
         }
     }
+
     @Test
     public void testDecode() throws Exception {
         String value = "hello";
-        assertEquals(Raw.decode(value.getBytes(charset)),value);
+        assertTrue(Arrays.equals(encoder.decode(value), value.getBytes()));
     }
 
     @Test
     public void testDecodeNullString() throws Exception {
-        byte[] value = null;
+        String value = null;
         try {
-            assertNull(Raw.decode(value));
+            assertNull(encoder.decode(value));
         } catch (Exception e) {
             e.printStackTrace();
             fail("Should not raise any exception");

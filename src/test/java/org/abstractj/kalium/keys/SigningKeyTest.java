@@ -16,14 +16,15 @@
 
 package org.abstractj.kalium.keys;
 
-import org.abstractj.kalium.encoders.Hex;
 import org.junit.Test;
 
 import java.util.Arrays;
 
+import static org.abstractj.kalium.encoders.Encoder.HEX;
 import static org.abstractj.kalium.fixture.TestVectors.SIGN_MESSAGE;
 import static org.abstractj.kalium.fixture.TestVectors.SIGN_PRIVATE;
 import static org.abstractj.kalium.fixture.TestVectors.SIGN_SIGNATURE;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -32,18 +33,27 @@ public class SigningKeyTest {
     @Test
     public void testGenerateSigninKey() throws Exception {
         try {
-            SigningKey key = new SigningKey().generate();
-            assertTrue(key instanceof SigningKey);
+            new SigningKey();
         } catch (Exception e) {
             fail("Should return a valid key size");
         }
     }
 
     @Test
-    public void testAcceptsValidKey() throws Exception {
+    public void testAcceptsRawValidKey() throws Exception {
         try {
-            SigningKey key = new SigningKey(SIGN_PRIVATE).generate();
-            assertTrue(key instanceof SigningKey);
+            byte[] rawKey = HEX.decode(SIGN_PRIVATE);
+            new SigningKey(rawKey);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Should return a valid key size");
+        }
+    }
+
+    @Test
+    public void testAcceptsHexValidKey() throws Exception {
+        try {
+            new SigningKey(SIGN_PRIVATE, HEX);
         } catch (Exception e) {
             e.printStackTrace();
             fail("Should return a valid key size");
@@ -53,7 +63,7 @@ public class SigningKeyTest {
     @Test
     public void testCreateHexValidKey() throws Exception {
         try {
-            new SigningKey(SIGN_PRIVATE).generate().toHex();
+            new SigningKey(SIGN_PRIVATE, HEX).toString();
         } catch (Exception e) {
             e.printStackTrace();
             fail("Should return a valid key size");
@@ -63,7 +73,7 @@ public class SigningKeyTest {
     @Test
     public void testCreateByteValidKey() throws Exception {
         try {
-            new SigningKey(SIGN_PRIVATE).generate().getBytes();
+            new SigningKey(SIGN_PRIVATE, HEX).toBytes();
         } catch (Exception e) {
             e.printStackTrace();
             fail("Should return a valid key size");
@@ -72,22 +82,53 @@ public class SigningKeyTest {
 
     @Test(expected = RuntimeException.class)
     public void testRejectNullKey() throws Exception {
-        String key = null;
+        byte[] key = null;
         new SigningKey(key);
         fail("Should reject null keys");
     }
 
     @Test(expected = RuntimeException.class)
     public void testRejectShortKey() throws Exception {
-        String key = "short";
+        byte[] key = "short".getBytes();
         new SigningKey(key);
         fail("Should reject short keys");
     }
 
     @Test
     public void testSignMessageAsBytes() throws Exception {
-        SigningKey key = new SigningKey(SIGN_PRIVATE).generate();
-        byte[] signedMessage = key.sign(Hex.decodeHexString(SIGN_MESSAGE));
-        assertTrue("Message sign has failed", Arrays.equals(Hex.decodeHexString(SIGN_SIGNATURE), signedMessage));
+        byte[] rawKey = HEX.decode(SIGN_PRIVATE);
+        byte[] signatureRaw = HEX.decode(SIGN_SIGNATURE);
+        SigningKey key = new SigningKey(rawKey);
+        byte[] signedMessage = key.sign(HEX.decode(SIGN_MESSAGE));
+        assertTrue("Message sign has failed", Arrays.equals(signatureRaw, signedMessage));
+    }
+
+    @Test
+    public void testSignMessageAsHex() throws Exception {
+        SigningKey key = new SigningKey(SIGN_PRIVATE, HEX);
+        String signature = key.sign(SIGN_MESSAGE, HEX);
+        assertEquals("Message sign has failed", SIGN_SIGNATURE, signature);
+    }
+
+    @Test
+    public void testSerializesToHex() throws Exception {
+        try {
+            SigningKey key = new SigningKey(SIGN_PRIVATE, HEX);
+            assertEquals("Correct sign key expected", SIGN_PRIVATE, key.toString());
+        } catch (Exception e) {
+            fail("Should return a valid key size");
+        }
+    }
+
+    @Test
+    public void testSerializesToBytes() throws Exception {
+        try {
+            byte[] rawKey = HEX.decode(SIGN_PRIVATE);
+            SigningKey key = new SigningKey(SIGN_PRIVATE, HEX);
+            assertTrue("Correct sign key expected", Arrays.equals(rawKey,
+                    key.toBytes()));
+        } catch (Exception e) {
+            fail("Should return a valid key size");
+        }
     }
 }

@@ -17,14 +17,14 @@
 package org.abstractj.kalium;
 
 import jnr.ffi.LibraryLoader;
-
 import jnr.ffi.annotations.In;
 import jnr.ffi.annotations.Out;
 import jnr.ffi.types.u_int64_t;
+
 public class NaCl {
 
     private static final String LIBRARY_NAME = "sodium";
-    public static final Sodium SODIUM_INSTANCE= LibraryLoader.create(Sodium.class)
+    public static final Sodium SODIUM_INSTANCE = LibraryLoader.create(Sodium.class)
             .search("/usr/local/lib")
             .search("/opt/local/lib")
             .load(LIBRARY_NAME);

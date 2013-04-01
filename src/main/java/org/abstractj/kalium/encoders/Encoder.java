@@ -16,14 +16,16 @@
 
 package org.abstractj.kalium.encoders;
 
-public class Raw implements Encoder {
+import java.nio.charset.Charset;
 
-    public byte[] decode(final String data) {
-        return data != null ? data.getBytes(CHARSET) : null;
-    }
+public interface Encoder {
 
-    @Override
-    public String encode(byte[] data) {
-        return data != null ? new String(data, CHARSET) : null;
-    }
+    public static final Charset CHARSET = Charset.forName("US-ASCII");
+
+    public static final Hex HEX = new Hex();
+    public static final Raw RAW = new Raw();
+
+    public byte[] decode(String data);
+
+    public String encode(final byte[] data);
 }

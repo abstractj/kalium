@@ -16,11 +16,11 @@
 
 package org.abstractj.kalium.crypto;
 
-import org.abstractj.kalium.encoders.Hex;
 import org.junit.Test;
 
 import java.util.Arrays;
 
+import static org.abstractj.kalium.encoders.Encoder.HEX;
 import static org.abstractj.kalium.fixture.TestVectors.BOX_CIPHERTEXT;
 import static org.abstractj.kalium.fixture.TestVectors.BOX_MESSAGE;
 import static org.abstractj.kalium.fixture.TestVectors.BOX_NONCE;
@@ -57,9 +57,9 @@ public class SecretBoxTest {
     public void testEncrypt() throws Exception {
         SecretBox box = new SecretBox(SECRET_KEY);
 
-        byte[] nonce = Hex.decodeHexString(BOX_NONCE);
-        byte[] message = Hex.decodeHexString(BOX_MESSAGE);
-        byte[] ciphertext = Hex.decodeHexString(BOX_CIPHERTEXT);
+        byte[] nonce = HEX.decode(BOX_NONCE);
+        byte[] message = HEX.decode(BOX_MESSAGE);
+        byte[] ciphertext = HEX.decode(BOX_CIPHERTEXT);
 
         byte[] result = box.encrypt(nonce, message);
         assertTrue("failed to generate ciphertext", Arrays.equals(result, ciphertext));
@@ -70,8 +70,8 @@ public class SecretBoxTest {
 
         SecretBox box = new SecretBox(SECRET_KEY);
 
-        byte[] nonce = Hex.decodeHexString(BOX_NONCE);
-        byte[] expectedMessage = Hex.decodeHexString(BOX_MESSAGE);
+        byte[] nonce = HEX.decode(BOX_NONCE);
+        byte[] expectedMessage = HEX.decode(BOX_MESSAGE);
         byte[] ciphertext = box.encrypt(nonce, expectedMessage);
 
         byte[] message = box.decrypt(nonce, ciphertext);
@@ -82,8 +82,8 @@ public class SecretBoxTest {
     @Test(expected = RuntimeException.class)
     public void testDecryptCorruptedCipherText() throws Exception {
         SecretBox box = new SecretBox(SECRET_KEY);
-        byte[] nonce = Hex.decodeHexString(BOX_NONCE);
-        byte[] message = Hex.decodeHexString(BOX_MESSAGE);
+        byte[] nonce = HEX.decode(BOX_NONCE);
+        byte[] message = HEX.decode(BOX_MESSAGE);
         byte[] ciphertext = box.encrypt(nonce, message);
         ciphertext[23] = ' ';
 

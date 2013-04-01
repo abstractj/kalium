@@ -19,7 +19,7 @@ package org.abstractj.kalium.keys;
 import org.abstractj.kalium.NaCl.Sodium;
 import org.abstractj.kalium.crypto.Random;
 import org.abstractj.kalium.crypto.Util;
-import org.abstractj.kalium.encoders.Hex;
+import org.abstractj.kalium.encoders.Encoder;
 
 import static org.abstractj.kalium.NaCl.SODIUM_INSTANCE;
 import static org.abstractj.kalium.NaCl.Sodium.PUBLICKEY_BYTES;
@@ -29,6 +29,7 @@ import static org.abstractj.kalium.crypto.Util.checkLength;
 import static org.abstractj.kalium.crypto.Util.isValid;
 import static org.abstractj.kalium.crypto.Util.slice;
 import static org.abstractj.kalium.crypto.Util.zeros;
+import static org.abstractj.kalium.encoders.Encoder.HEX;
 
 public class SigningKey {
 
@@ -38,27 +39,21 @@ public class SigningKey {
     private byte[] secretKey;
     private byte[] publicKey;
 
-    public SigningKey() {
-        this.seed = new Random().randomBytes(SECRETKEY_BYTES);
-        checkLength(this.seed, SECRETKEY_BYTES);
-    }
-
     public SigningKey(byte[] seed) {
+        checkLength(seed, SECRETKEY_BYTES);
         this.seed = seed;
-        checkLength(this.seed, SECRETKEY_BYTES);
-    }
-
-    public SigningKey(String seed) {
-        this.seed = Hex.decodeHexString(seed);
-        checkLength(this.seed, SECRETKEY_BYTES);
-    }
-
-    public SigningKey generate() {
-        publicKey = zeros(PUBLICKEY_BYTES);
-        secretKey = zeros(SECRETKEY_BYTES * 2);
+        this.publicKey = zeros(PUBLICKEY_BYTES);
+        this.secretKey = zeros(SECRETKEY_BYTES * 2);
         isValid(sodium.crypto_sign_ed25519_ref_seed_keypair(publicKey, secretKey, seed),
                 "Failed to generate a key pair");
-        return this;
+    }
+
+    public SigningKey() {
+        this(new Random().randomBytes(SECRETKEY_BYTES));
+    }
+
+    public SigningKey(String seed, Encoder encoder) {
+        this(encoder.decode(seed));
     }
 
     public byte[] sign(byte[] message) {
@@ -69,11 +64,17 @@ public class SigningKey {
         return signature;
     }
 
-    public byte[] getBytes() {
-        return secretKey;
+    public String sign(String message, Encoder encoder) {
+        byte[] signature = sign(encoder.decode(message));
+        return encoder.encode(signature);
     }
 
-    public String toHex() {
-        return Hex.encodeHexString(secretKey);
+    public byte[] toBytes() {
+        return seed;
+    }
+
+    @Override
+    public String toString() {
+        return HEX.encode(seed);
     }
 }

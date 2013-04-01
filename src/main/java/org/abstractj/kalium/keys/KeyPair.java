@@ -17,9 +17,7 @@
 package org.abstractj.kalium.keys;
 
 import org.abstractj.kalium.crypto.Point;
-import org.abstractj.kalium.encoders.Hex;
-
-import java.io.UnsupportedEncodingException;
+import org.abstractj.kalium.encoders.Encoder;
 
 import static org.abstractj.kalium.NaCl.SODIUM_INSTANCE;
 import static org.abstractj.kalium.NaCl.Sodium;
@@ -32,10 +30,13 @@ public class KeyPair {
 
     private static final Sodium sodium = SODIUM_INSTANCE;
 
-    private static byte[] publicKey;
-    private static byte[] secretKey;
+    private byte[] publicKey;
+    private byte[] secretKey;
 
-    private KeyPair() {
+    public KeyPair() {
+        this.secretKey = zeros(SECRETKEY_BYTES);
+        this.publicKey = zeros(PUBLICKEY_BYTES);
+        sodium.crypto_box_curve25519xsalsa20poly1305_ref_keypair(publicKey, secretKey);
     }
 
     public KeyPair(byte[] secretKey) {
@@ -43,29 +44,13 @@ public class KeyPair {
         checkLength(this.secretKey, SECRETKEY_BYTES);
     }
 
-    public KeyPair(String secretKey) {
-        this.secretKey = Hex.decodeHexString(secretKey);
-        checkLength(this.secretKey, SECRETKEY_BYTES);
-    }
-
-    public static KeyPair generate() throws UnsupportedEncodingException {
-        secretKey = zeros(SECRETKEY_BYTES);
-        publicKey = zeros(PUBLICKEY_BYTES);
-        sodium.crypto_box_curve25519xsalsa20poly1305_ref_keypair(publicKey, secretKey);
-        return new KeyPair();
-    }
-
-    public byte[] getBytes() {
-        return secretKey;
-    }
-
-    public String toHex() {
-        return Hex.encodeHexString(secretKey);
+    public KeyPair(String secretKey, Encoder encoder) {
+        this(encoder.decode(secretKey));
     }
 
     public PublicKey getPublicKey() {
         Point point = new Point();
-        byte[] key = publicKey != null ? publicKey : point.mult(Hex.encodeHexString(secretKey)).toBytes();
+        byte[] key = publicKey != null ? publicKey : point.mult(secretKey).toBytes();
         return new PublicKey(key);
     }
 

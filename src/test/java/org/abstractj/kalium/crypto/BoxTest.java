@@ -16,14 +16,13 @@
 
 package org.abstractj.kalium.crypto;
 
-import org.abstractj.kalium.encoders.Hex;
-import org.abstractj.kalium.keys.KeyPair;
 import org.abstractj.kalium.keys.PrivateKey;
 import org.abstractj.kalium.keys.PublicKey;
 import org.junit.Test;
 
 import java.util.Arrays;
 
+import static org.abstractj.kalium.encoders.Encoder.HEX;
 import static org.abstractj.kalium.fixture.TestVectors.ALICE_PRIVATE_KEY;
 import static org.abstractj.kalium.fixture.TestVectors.ALICE_PUBLIC_KEY;
 import static org.abstractj.kalium.fixture.TestVectors.BOB_PRIVATE_KEY;
@@ -40,7 +39,7 @@ public class BoxTest {
     @Test
     public void testAcceptStrings() throws Exception {
         try {
-            new Box(ALICE_PUBLIC_KEY, BOB_PRIVATE_KEY);
+            new Box(ALICE_PUBLIC_KEY, BOB_PRIVATE_KEY, HEX);
         } catch (Exception e) {
             fail("Box should accept strings");
         }
@@ -84,21 +83,21 @@ public class BoxTest {
     }
 
     @Test
-    public void testEncrypt() throws Exception {
+    public void testEncryptRawBytes() throws Exception {
         Box box = new Box(new PublicKey(ALICE_PUBLIC_KEY), new PrivateKey(BOB_PRIVATE_KEY));
-        byte[] nonce = Hex.decodeHexString(BOX_NONCE);
-        byte[] message = Hex.decodeHexString(BOX_MESSAGE);
-        byte[] ciphertext = Hex.decodeHexString(BOX_CIPHERTEXT);
+        byte[] nonce = HEX.decode(BOX_NONCE);
+        byte[] message = HEX.decode(BOX_MESSAGE);
+        byte[] ciphertext = HEX.decode(BOX_CIPHERTEXT);
 
         byte[] result = box.encrypt(nonce, message);
         assertTrue("failed to generate ciphertext", Arrays.equals(result, ciphertext));
     }
 
     @Test
-    public void testDecrypt() throws Exception {
+    public void testDecryptRawBytes() throws Exception {
         Box box = new Box(new PublicKey(ALICE_PUBLIC_KEY), new PrivateKey(BOB_PRIVATE_KEY));
-        byte[] nonce = Hex.decodeHexString(BOX_NONCE);
-        byte[] expectedMessage = Hex.decodeHexString(BOX_MESSAGE);
+        byte[] nonce = HEX.decode(BOX_NONCE);
+        byte[] expectedMessage = HEX.decode(BOX_MESSAGE);
         byte[] ciphertext = box.encrypt(nonce, expectedMessage);
 
         Box pandora = new Box(new PublicKey(BOB_PUBLIC_KEY), new PrivateKey(ALICE_PRIVATE_KEY));
@@ -106,11 +105,31 @@ public class BoxTest {
         assertTrue("failed to decrypt ciphertext", Arrays.equals(message, expectedMessage));
     }
 
+    @Test
+    public void testEncryptHexBytes() throws Exception {
+        Box box = new Box(new PublicKey(ALICE_PUBLIC_KEY), new PrivateKey(BOB_PRIVATE_KEY));
+        byte[] ciphertext = HEX.decode(BOX_CIPHERTEXT);
+
+        byte[] result = box.encrypt(BOX_NONCE, BOX_MESSAGE, HEX);
+        assertTrue("failed to generate ciphertext", Arrays.equals(result, ciphertext));
+    }
+
+    @Test
+    public void testDecryptHexBytes() throws Exception {
+        Box box = new Box(new PublicKey(ALICE_PUBLIC_KEY), new PrivateKey(BOB_PRIVATE_KEY));
+        byte[] expectedMessage = HEX.decode(BOX_MESSAGE);
+        byte[] ciphertext = box.encrypt(BOX_NONCE, BOX_MESSAGE, HEX);
+
+        Box pandora = new Box(new PublicKey(BOB_PUBLIC_KEY), new PrivateKey(ALICE_PRIVATE_KEY));
+        byte[] message = pandora.decrypt(BOX_NONCE, HEX.encode(ciphertext), HEX);
+        assertTrue("failed to decrypt ciphertext", Arrays.equals(message, expectedMessage));
+    }
+
     @Test(expected = RuntimeException.class)
     public void testDecryptCorruptedCipherText() throws Exception {
         Box box = new Box(new PublicKey(ALICE_PUBLIC_KEY), new PrivateKey(BOB_PRIVATE_KEY));
-        byte[] nonce = Hex.decodeHexString(BOX_NONCE);
-        byte[] message = Hex.decodeHexString(BOX_MESSAGE);
+        byte[] nonce = HEX.decode(BOX_NONCE);
+        byte[] message = HEX.decode(BOX_MESSAGE);
         byte[] ciphertext = box.encrypt(nonce, message);
         ciphertext[23] = ' ';
 
