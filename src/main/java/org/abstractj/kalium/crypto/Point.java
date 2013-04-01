@@ -17,10 +17,11 @@
 package org.abstractj.kalium.crypto;
 
 import org.abstractj.kalium.NaCl.Sodium;
-import org.abstractj.kalium.encoders.Hex;
+import org.abstractj.kalium.encoders.Encoder;
 
 import static org.abstractj.kalium.NaCl.SODIUM_INSTANCE;
 import static org.abstractj.kalium.NaCl.Sodium.SCALAR_BYTES;
+import static org.abstractj.kalium.encoders.Encoder.HEX;
 
 public class Point {
 
@@ -31,26 +32,27 @@ public class Point {
     private byte[] result;
 
     public Point() {
-        this.point = Hex.decodeHexString(STANDARD_GROUP_ELEMENT);
+        this.point = HEX.decode(STANDARD_GROUP_ELEMENT);
     }
 
-    public Point(String point) {
-        this.point = Hex.decodeHexString(point);
+    public Point(String point, Encoder encoder) {
+        this.point = encoder.decode(point);
     }
 
-    public Point mult(String n) {
-        byte[] intValue = Hex.decodeHexString(n);
+    public Point(byte[] point) {
+        this.point = point;
+    }
+
+    public Point mult(byte[] n) {
+        byte[] intValue = n;
         result = Util.zeros(SCALAR_BYTES);
         sodium.crypto_scalarmult_curve25519_ref(result, intValue, point);
-        return this;
+        return new Point(result);
     }
 
-    public String value() {
-        return Hex.encodeHexString(result);
-    }
-
-    public String toHex() {
-        return Hex.encodeHexString(point);
+    @Override
+    public String toString() {
+        return HEX.encode(point);
     }
 
     public byte[] toBytes() {

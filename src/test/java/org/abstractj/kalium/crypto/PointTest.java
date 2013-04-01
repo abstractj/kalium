@@ -16,7 +16,7 @@
 
 package org.abstractj.kalium.crypto;
 
-import org.abstractj.kalium.encoders.Hex;
+import static org.abstractj.kalium.encoders.Encoder.HEX;
 import org.junit.Test;
 
 import static org.abstractj.kalium.fixture.TestVectors.ALICE_MULT_BOB;
@@ -27,24 +27,26 @@ import static org.junit.Assert.assertEquals;
 
 public class PointTest {
 
+    public static final byte[] ALICE_PK = HEX.decode(ALICE_PRIVATE_KEY);
+
     @Test
     public void testMultipleIntegersWithBasePoint() throws Exception {
         Point point = new Point();
-        String mult = point.mult(ALICE_PRIVATE_KEY).value();
+        String mult = point.mult(ALICE_PK).value();
         assertEquals("Should return a serialized point", ALICE_PUBLIC_KEY, mult);
     }
 
     @Test
     public void testMultipleIntegersWithArbitraryPoints() throws Exception {
         Point point = new Point(BOB_PUBLIC_KEY);
-        String mult = point.mult(ALICE_PRIVATE_KEY).value();
+        String mult = point.mult(ALICE_PK).value();
         assertEquals("Should return a valid serialized point", ALICE_MULT_BOB, mult);
     }
 
     @Test
     public void testSerializeToBytes() throws Exception {
         Point point = new Point(BOB_PUBLIC_KEY);
-        assertEquals("Should serialize to bytes", BOB_PUBLIC_KEY, Hex.encodeHexString(point.toBytes()));
+        assertEquals("Should serialize to bytes", BOB_PUBLIC_KEY, HEX.encode(point.toBytes()));
     }
 
     @Test
