@@ -18,17 +18,23 @@ package org.abstractj.kalium.keys;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+
+import static org.abstractj.kalium.encoders.Encoder.HEX;
 import static org.abstractj.kalium.fixture.TestVectors.BOB_PRIVATE_KEY;
+import static org.abstractj.kalium.fixture.TestVectors.BOB_PUBLIC_KEY;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 public class KeyPairTest {
 
     @Test
-    public void testGeneratePrivateKey() {
+    public void testGenerateKeyPair() {
         try {
-            KeyPair key = KeyPair.generate();
-            assertTrue(key instanceof KeyPair);
+            KeyPair key = new KeyPair();
+            assertTrue(key.getPrivateKey() instanceof PrivateKey);
+            assertTrue(key.getPublicKey() instanceof PublicKey);
         } catch (Exception e) {
             fail("Should return a valid key size");
         }
@@ -37,16 +43,17 @@ public class KeyPairTest {
     @Test
     public void testAcceptsValidKey() {
         try {
-            new KeyPair(BOB_PRIVATE_KEY);
+            byte[] rawKey = HEX.decode(BOB_PRIVATE_KEY);
+            new KeyPair(rawKey);
         } catch (Exception e) {
             fail("Should not raise any exception");
         }
     }
 
     @Test
-    public void testCreateHexValidKey() {
+    public void testAcceptsHexEncodedKey() {
         try {
-            new KeyPair(BOB_PRIVATE_KEY).getPrivateKey().toHex();
+            new KeyPair(BOB_PRIVATE_KEY, HEX);
         } catch (Exception e) {
             fail("Should not raise any exception");
         }
@@ -54,14 +61,14 @@ public class KeyPairTest {
 
     @Test(expected = RuntimeException.class)
     public void testRejectNullKey() throws Exception {
-        String privateKey = null;
+        byte[] privateKey = null;
         new KeyPair(privateKey);
         fail("Should reject null keys");
     }
 
     @Test(expected = RuntimeException.class)
     public void testRejectShortKey() throws Exception {
-        String privateKey = "short";
+        byte[] privateKey = "short".getBytes();
         new KeyPair(privateKey);
         fail("Should reject null keys");
     }
@@ -69,9 +76,51 @@ public class KeyPairTest {
     @Test
     public void testGeneratePublicKey() throws Exception {
         try {
-            KeyPair key = new KeyPair(BOB_PRIVATE_KEY);
+            byte[] pk = HEX.decode(BOB_PRIVATE_KEY);
+            KeyPair key = new KeyPair(pk);
             assertTrue(key.getPublicKey() instanceof PublicKey);
-            key.getPublicKey().getBytes();
+        } catch (Exception e) {
+            fail("Should return a valid key size");
+        }
+    }
+
+    @Test
+    public void testPrivateKeyToString() throws Exception {
+        try {
+            KeyPair key = new KeyPair(BOB_PRIVATE_KEY, HEX);
+            assertEquals("Correct private key expected", BOB_PRIVATE_KEY, key.getPrivateKey().toString());
+        } catch (Exception e) {
+            fail("Should return a valid key size");
+        }
+    }
+
+    @Test
+    public void testPrivateKeyToBytes() throws Exception {
+        try {
+            KeyPair key = new KeyPair(BOB_PRIVATE_KEY, HEX);
+            assertTrue("Correct private key expected", Arrays.equals(HEX.decode(BOB_PUBLIC_KEY),
+                    key.getPublicKey().toBytes()));
+        } catch (Exception e) {
+            fail("Should return a valid key size");
+        }
+    }
+
+    @Test
+    public void testPublicKeyToString() throws Exception {
+        try {
+            KeyPair key = new KeyPair(BOB_PRIVATE_KEY, HEX);
+            assertEquals("Correct public key expected", BOB_PUBLIC_KEY, key.getPublicKey().toString());
+        } catch (Exception e) {
+            fail("Should return a valid key size");
+        }
+    }
+
+    @Test
+    public void testPublicKeyToBytes() throws Exception {
+        try {
+            KeyPair key = new KeyPair(BOB_PRIVATE_KEY, HEX);
+            assertTrue("Correct public key expected", Arrays.equals(HEX.decode(BOB_PUBLIC_KEY),
+                    key.getPublicKey().toBytes()));
         } catch (Exception e) {
             fail("Should return a valid key size");
         }

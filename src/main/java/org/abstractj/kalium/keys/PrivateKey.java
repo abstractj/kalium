@@ -17,9 +17,9 @@
 package org.abstractj.kalium.keys;
 
 import org.abstractj.kalium.crypto.Util;
-import org.abstractj.kalium.encoders.Hex;
 
 import static org.abstractj.kalium.NaCl.Sodium.SECRETKEY_BYTES;
+import static org.abstractj.kalium.encoders.Encoder.HEX;
 
 public class PrivateKey {
 
@@ -31,14 +31,16 @@ public class PrivateKey {
     }
 
     public PrivateKey(String secretKey) {
-        this.secretKey = Hex.decodeHexString(secretKey);
+        this.secretKey = HEX.decode(secretKey);
+        Util.checkLength(this.secretKey, SECRETKEY_BYTES);
     }
 
-    public byte[] getBytes() {
+    public byte[] toBytes() {
         return secretKey;
     }
 
-    public String toHex(){
-        return Hex.encodeHexString(secretKey);
+    @Override
+    public String toString() {
+        return HEX.encode(secretKey);
     }
 }

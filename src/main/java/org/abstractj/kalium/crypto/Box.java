@@ -17,8 +17,7 @@
 package org.abstractj.kalium.crypto;
 
 import org.abstractj.kalium.NaCl.Sodium;
-import org.abstractj.kalium.encoders.Hex;
-import org.abstractj.kalium.keys.KeyPair;
+import org.abstractj.kalium.encoders.Encoder;
 import org.abstractj.kalium.keys.PrivateKey;
 import org.abstractj.kalium.keys.PublicKey;
 
@@ -43,19 +42,19 @@ public class Box {
     private final byte[] privateKey;
     private final byte[] publicKey;
 
-
-    public Box(PublicKey publicKey, PrivateKey privateKey) {
-        this.publicKey = publicKey.getBytes();
-        this.privateKey = privateKey.getBytes();
-        checkLength(publicKey.getBytes(), PUBLICKEY_BYTES);
-        checkLength(privateKey.getBytes(), SECRETKEY_BYTES);
+    public Box(byte[] publicKey, byte[] privateKey) {
+        this.publicKey = publicKey;
+        this.privateKey = privateKey;
+        checkLength(publicKey, PUBLICKEY_BYTES);
+        checkLength(privateKey, SECRETKEY_BYTES);
     }
 
-    public Box(String publicKey, String privateKey) {
-        this.publicKey = Hex.decodeHexString(publicKey);
-        this.privateKey = Hex.decodeHexString(privateKey);
-        checkLength(this.publicKey, PUBLICKEY_BYTES);
-        checkLength(this.privateKey, SECRETKEY_BYTES);
+    public Box(PublicKey publicKey, PrivateKey privateKey) {
+        this(publicKey.toBytes(), privateKey.toBytes());
+    }
+
+    public Box(String publicKey, String privateKey, Encoder encoder) {
+        this(encoder.decode(publicKey), encoder.decode(privateKey));
     }
 
     public byte[] encrypt(byte[] nonce, byte[] message) {
@@ -67,6 +66,10 @@ public class Box {
         return removeZeros(BOXZERO_BYTES, ct);
     }
 
+    public byte[] encrypt(String nonce, String message, Encoder encoder) {
+        return encrypt(encoder.decode(nonce), encoder.decode(message));
+    }
+
     public byte[] decrypt(byte[] nonce, byte[] ciphertext) {
         checkLength(nonce, NONCE_BYTES);
         byte[] ct = prependZeros(BOXZERO_BYTES, ciphertext);
@@ -74,5 +77,9 @@ public class Box {
         isValid(sodium.crypto_box_curve25519xsalsa20poly1305_ref_open(message, ct,
                 message.length, nonce, publicKey, privateKey), "Decryption failed. Ciphertext failed verification.");
         return removeZeros(ZERO_BYTES, message);
+    }
+
+    public byte[] decrypt(String nonce, String ciphertext, Encoder encoder){
+        return decrypt(encoder.decode(nonce), encoder.decode(ciphertext));
     }
 }

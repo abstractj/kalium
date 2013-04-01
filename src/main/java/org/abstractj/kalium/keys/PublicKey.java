@@ -17,9 +17,9 @@
 package org.abstractj.kalium.keys;
 
 import org.abstractj.kalium.crypto.Util;
-import org.abstractj.kalium.encoders.Hex;
 
 import static org.abstractj.kalium.NaCl.Sodium.PUBLICKEY_BYTES;
+import static org.abstractj.kalium.encoders.Encoder.HEX;
 
 public class PublicKey {
 
@@ -31,10 +31,15 @@ public class PublicKey {
     }
 
     public PublicKey(String publicKey) {
-        this.publicKey = Hex.decodeHexString(publicKey);
+        this.publicKey = HEX.decode(publicKey);
     }
 
-    public byte[] getBytes() {
+    public byte[] toBytes() {
         return publicKey;
+    }
+
+    @Override
+    public String toString() {
+        return HEX.encode(publicKey);
     }
 }

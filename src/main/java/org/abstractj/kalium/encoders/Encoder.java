@@ -26,5 +26,6 @@ public interface Encoder {
     public static final Raw RAW = new Raw();
 
     public byte[] decode(String data);
+
     public String encode(final byte[] data);
 }

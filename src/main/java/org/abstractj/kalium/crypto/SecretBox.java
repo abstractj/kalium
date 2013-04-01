@@ -16,16 +16,15 @@
 
 package org.abstractj.kalium.crypto;
 
+import org.abstractj.kalium.NaCl.Sodium;
+
+import static org.abstractj.kalium.NaCl.SODIUM_INSTANCE;
 import static org.abstractj.kalium.NaCl.Sodium.BOXZERO_BYTES;
 import static org.abstractj.kalium.NaCl.Sodium.NONCE_BYTES;
 import static org.abstractj.kalium.NaCl.Sodium.XSALSA20_POLY1305_SECRETBOX_KEYBYTES;
 import static org.abstractj.kalium.NaCl.Sodium.ZERO_BYTES;
-
-import static org.abstractj.kalium.NaCl.SODIUM_INSTANCE;
 import static org.abstractj.kalium.crypto.Util.isValid;
-
-import org.abstractj.kalium.NaCl.Sodium;
-import org.abstractj.kalium.encoders.Hex;
+import static org.abstractj.kalium.encoders.Encoder.HEX;
 
 public class SecretBox {
 
@@ -38,10 +37,11 @@ public class SecretBox {
         Util.checkLength(key, XSALSA20_POLY1305_SECRETBOX_KEYBYTES);
     }
 
-    public SecretBox(String key){
-        this.key = Hex.decodeHexString(key);
+    public SecretBox(String key) {
+        this.key = HEX.decode(key);
         Util.checkLength(this.key, XSALSA20_POLY1305_SECRETBOX_KEYBYTES);
     }
+
     public byte[] encrypt(byte[] nonce, byte[] message) {
         Util.checkLength(nonce, NONCE_BYTES);
         byte[] msg = Util.prependZeros(ZERO_BYTES, message);

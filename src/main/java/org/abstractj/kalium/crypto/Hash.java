@@ -17,11 +17,11 @@
 package org.abstractj.kalium.crypto;
 
 import org.abstractj.kalium.NaCl.Sodium;
-import org.abstractj.kalium.encoders.Hex;
 
 import static org.abstractj.kalium.NaCl.SODIUM_INSTANCE;
 import static org.abstractj.kalium.NaCl.Sodium.SHA256BYTES;
 import static org.abstractj.kalium.NaCl.Sodium.SHA512BYTES;
+import static org.abstractj.kalium.encoders.Encoder.HEX;
 
 public class Hash {
 
@@ -42,6 +42,6 @@ public class Hash {
     }
 
     public String toHex() {
-        return Hex.encodeHexString(buffer);
+        return HEX.encode(buffer);
     }
 }
