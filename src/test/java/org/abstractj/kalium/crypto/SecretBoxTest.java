@@ -33,7 +33,7 @@ public class SecretBoxTest {
     @Test
     public void testAcceptStrings() throws Exception {
         try {
-            new SecretBox(SECRET_KEY);
+            new SecretBox(SECRET_KEY, HEX);
         } catch (Exception e) {
             fail("SecretBox should accept strings");
         }
@@ -41,7 +41,7 @@ public class SecretBoxTest {
 
     @Test(expected = RuntimeException.class)
     public void testNullKey() throws Exception {
-        String key = null;
+        byte[] key = null;
         new SecretBox(key);
         fail("Should raise an exception");
     }
@@ -49,13 +49,13 @@ public class SecretBoxTest {
     @Test(expected = RuntimeException.class)
     public void testShortKey() throws Exception {
         String key = "hello";
-        new SecretBox(key);
+        new SecretBox(key.getBytes());
         fail("Should raise an exception");
     }
 
     @Test
     public void testEncrypt() throws Exception {
-        SecretBox box = new SecretBox(SECRET_KEY);
+        SecretBox box = new SecretBox(SECRET_KEY, HEX);
 
         byte[] nonce = HEX.decode(BOX_NONCE);
         byte[] message = HEX.decode(BOX_MESSAGE);
@@ -68,7 +68,7 @@ public class SecretBoxTest {
     @Test
     public void testDecrypt() throws Exception {
 
-        SecretBox box = new SecretBox(SECRET_KEY);
+        SecretBox box = new SecretBox(SECRET_KEY, HEX);
 
         byte[] nonce = HEX.decode(BOX_NONCE);
         byte[] expectedMessage = HEX.decode(BOX_MESSAGE);
@@ -81,7 +81,7 @@ public class SecretBoxTest {
 
     @Test(expected = RuntimeException.class)
     public void testDecryptCorruptedCipherText() throws Exception {
-        SecretBox box = new SecretBox(SECRET_KEY);
+        SecretBox box = new SecretBox(SECRET_KEY, HEX);
         byte[] nonce = HEX.decode(BOX_NONCE);
         byte[] message = HEX.decode(BOX_MESSAGE);
         byte[] ciphertext = box.encrypt(nonce, message);
