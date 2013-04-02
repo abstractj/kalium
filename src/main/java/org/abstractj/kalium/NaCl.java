@@ -19,6 +19,7 @@ package org.abstractj.kalium;
 import jnr.ffi.LibraryLoader;
 import jnr.ffi.annotations.In;
 import jnr.ffi.annotations.Out;
+import jnr.ffi.byref.LongLongByReference;
 import jnr.ffi.types.u_int64_t;
 
 public class NaCl {
@@ -76,7 +77,7 @@ public class NaCl {
 
         int crypto_sign_ed25519_ref_seed_keypair(@Out byte[] publicKey, @Out byte[] secretKey, @In byte[] seed);
 
-        int crypto_sign_ed25519_ref(@Out byte[] buffer, @In byte[] bufferLen, @In byte[] message, @In int length, @In byte[] secretKey);
+        int crypto_sign_ed25519_ref(@Out byte[] buffer, @Out LongLongByReference bufferLen, @In byte[] message, @u_int64_t long length, @In byte[] secretKey);
 
     }
 }
