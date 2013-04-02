@@ -16,9 +16,8 @@
 
 package org.abstractj.kalium.keys;
 
-import org.abstractj.kalium.crypto.Util;
-
 import static org.abstractj.kalium.NaCl.Sodium.PUBLICKEY_BYTES;
+import static org.abstractj.kalium.crypto.Util.checkLength;
 import static org.abstractj.kalium.encoders.Encoder.HEX;
 
 public class PublicKey {
@@ -27,7 +26,7 @@ public class PublicKey {
 
     public PublicKey(byte[] publicKey) {
         this.publicKey = publicKey;
-        Util.checkLength(publicKey, PUBLICKEY_BYTES);
+        checkLength(publicKey, PUBLICKEY_BYTES);
     }
 
     public PublicKey(String publicKey) {

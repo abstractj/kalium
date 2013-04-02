@@ -46,6 +46,8 @@ public class SigningKey {
         byte[] publicKey = zeros(PUBLICKEY_BYTES);
         isValid(sodium.crypto_sign_ed25519_ref_seed_keypair(publicKey, secretKey, seed),
                 "Failed to generate a key pair");
+
+        new VerifyKey(publicKey);
     }
 
     public SigningKey() {

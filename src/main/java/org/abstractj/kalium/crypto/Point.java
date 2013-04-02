@@ -21,6 +21,7 @@ import org.abstractj.kalium.encoders.Encoder;
 
 import static org.abstractj.kalium.NaCl.SODIUM_INSTANCE;
 import static org.abstractj.kalium.NaCl.Sodium.SCALAR_BYTES;
+import static org.abstractj.kalium.crypto.Util.zeros;
 import static org.abstractj.kalium.encoders.Encoder.HEX;
 
 public class Point {
@@ -43,7 +44,7 @@ public class Point {
     }
 
     public Point mult(byte[] n) {
-        byte[] result = Util.zeros(SCALAR_BYTES);
+        byte[] result = zeros(SCALAR_BYTES);
         sodium.crypto_scalarmult_curve25519_ref(result, n, point);
         return new Point(result);
     }

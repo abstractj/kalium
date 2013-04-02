@@ -35,7 +35,7 @@ public class Util {
 
     public static void checkLength(byte[] data, int size) {
         if (data == null || data.length != size)
-            throw new RuntimeException("Invalid size");
+            throw new RuntimeException("Invalid size: " + data.length);
     }
 
     public static byte[] zeros(int n) {
@@ -52,4 +52,10 @@ public class Util {
         return Arrays.copyOfRange(buffer, start, end);
     }
 
+    public static byte[] merge(byte[] signature, byte[] message) {
+        byte[] result = new byte[signature.length + message.length];
+        System.arraycopy(signature, 0, result, 0, signature.length);
+        System.arraycopy(message, 0, result, signature.length, message.length);
+        return result;
+    }
 }
