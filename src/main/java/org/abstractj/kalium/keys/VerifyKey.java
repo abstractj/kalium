@@ -16,6 +16,7 @@
 
 package org.abstractj.kalium.keys;
 
+import jnr.ffi.byref.LongLongByReference;
 import org.abstractj.kalium.NaCl.Sodium;
 import org.abstractj.kalium.encoders.Encoder;
 
@@ -47,7 +48,7 @@ public class VerifyKey {
         checkLength(signature, SIGNATURE_BYTES);
         byte[] sigAndMsg = merge(signature, message);
         byte[] buffer = zeros(sigAndMsg.length);
-        byte[] bufferLen = zeros(Long.SIZE);
+        LongLongByReference bufferLen = new LongLongByReference(0);
 
         return isValid(sodium.crypto_sign_ed25519_ref_open(buffer, bufferLen, sigAndMsg, sigAndMsg.length, key), "signature was forged or corrupted");
     }
