@@ -16,6 +16,7 @@
 
 package org.abstractj.kalium.keys;
 
+import jnr.ffi.byref.LongLongByReference;
 import org.abstractj.kalium.NaCl.Sodium;
 import org.abstractj.kalium.crypto.Random;
 import org.abstractj.kalium.crypto.Util;
@@ -57,7 +58,7 @@ public class SigningKey {
 
     public byte[] sign(byte[] message) {
         byte[] signature = Util.prependZeros(SIGNATURE_BYTES, message);
-        byte[] bufferLen = Util.zeros(Long.SIZE);
+        LongLongByReference bufferLen = new LongLongByReference(0);
         sodium.crypto_sign_ed25519_ref(signature, bufferLen, message, message.length, secretKey);
         signature = slice(signature, 0, SIGNATURE_BYTES);
         return signature;
