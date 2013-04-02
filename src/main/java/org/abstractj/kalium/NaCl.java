@@ -67,7 +67,6 @@ public class NaCl {
         public int crypto_scalarmult_curve25519_ref(@Out byte[] result, @In byte[] intValue, @In byte[] point);
 
         public static final int XSALSA20_POLY1305_SECRETBOX_KEYBYTES = 32;
-        public static final int XSALSA20_POLY1305_SECRETBOX_NONCEBYTES = 24;
 
         int crypto_secretbox_xsalsa20poly1305_ref(@Out byte[] ct, @In byte[] msg, @u_int64_t long length, @In byte[] nonce, @In byte[] key);
 

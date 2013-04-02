@@ -47,7 +47,7 @@ public class Hex implements Encoder {
      * @param data An array of characters containing hexadecimal digits
      * @return A byte array containing binary data decoded from the supplied char array.
      */
-    public static byte[] decodeHex(final char[] data) {
+    private static byte[] decodeHex(final char[] data) {
 
         final int len = (data == null) ? 0 : data.length;
 
@@ -84,7 +84,7 @@ public class Hex implements Encoder {
      * @param data a byte[] to convert to Hex characters
      * @return A char[] containing hexadecimal characters
      */
-    public static char[] encodeHex(final byte[] data) {
+    private static char[] encodeHex(final byte[] data) {
         return encodeHex(data, true);
     }
 
@@ -98,7 +98,7 @@ public class Hex implements Encoder {
      * @return A char[] containing hexadecimal characters
      * @since 1.4
      */
-    public static char[] encodeHex(final byte[] data, final boolean toLowerCase) {
+    private static char[] encodeHex(final byte[] data, final boolean toLowerCase) {
         return encodeHex(data, toLowerCase ? DIGITS_LOWER : DIGITS_UPPER);
     }
 
@@ -112,7 +112,7 @@ public class Hex implements Encoder {
      * @return A char[] containing hexadecimal characters
      * @since 1.4
      */
-    protected static char[] encodeHex(final byte[] data, final char[] toDigits) {
+    private static char[] encodeHex(final byte[] data, final char[] toDigits) {
         final int l = data.length;
         final char[] out = new char[l << 1];
         // two characters form the hex value.
@@ -143,7 +143,7 @@ public class Hex implements Encoder {
      * @param index The index of the character in the source
      * @return An integer
      */
-    protected static int toDigit(final char ch, final int index) {
+    private static int toDigit(final char ch, final int index) {
         final int digit = Character.digit(ch, 16);
         if (digit == -1) {
             throw new RuntimeException("Illegal hexadecimal character " + ch + " at index " + index);

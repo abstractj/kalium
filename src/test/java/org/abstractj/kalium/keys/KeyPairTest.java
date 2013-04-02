@@ -33,8 +33,8 @@ public class KeyPairTest {
     public void testGenerateKeyPair() {
         try {
             KeyPair key = new KeyPair();
-            assertTrue(key.getPrivateKey() instanceof PrivateKey);
-            assertTrue(key.getPublicKey() instanceof PublicKey);
+            assertTrue(key.getPrivateKey() != null);
+            assertTrue(key.getPublicKey() != null);
         } catch (Exception e) {
             fail("Should return a valid key size");
         }
@@ -78,7 +78,7 @@ public class KeyPairTest {
         try {
             byte[] pk = HEX.decode(BOB_PRIVATE_KEY);
             KeyPair key = new KeyPair(pk);
-            assertTrue(key.getPublicKey() instanceof PublicKey);
+            assertTrue(key.getPublicKey() != null);
         } catch (Exception e) {
             fail("Should return a valid key size");
         }

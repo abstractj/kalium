@@ -36,14 +36,13 @@ public class SigningKey {
     private static final Sodium sodium = SODIUM_INSTANCE;
 
     private final byte[] seed;
-    private byte[] secretKey;
-    private byte[] publicKey;
+    private final byte[] secretKey;
 
     public SigningKey(byte[] seed) {
         checkLength(seed, SECRETKEY_BYTES);
         this.seed = seed;
-        this.publicKey = zeros(PUBLICKEY_BYTES);
         this.secretKey = zeros(SECRETKEY_BYTES * 2);
+        byte[] publicKey = zeros(PUBLICKEY_BYTES);
         isValid(sodium.crypto_sign_ed25519_ref_seed_keypair(publicKey, secretKey, seed),
                 "Failed to generate a key pair");
     }

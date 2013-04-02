@@ -28,26 +28,28 @@ public class Point {
     private static final Sodium sodium = SODIUM_INSTANCE;
     private static final String STANDARD_GROUP_ELEMENT = "0900000000000000000000000000000000000000000000000000000000000000";
 
-    private byte[] point;
-    private byte[] result;
+    private final byte[] point;
 
     public Point() {
         this.point = HEX.decode(STANDARD_GROUP_ELEMENT);
-    }
-
-    public Point(String point, Encoder encoder) {
-        this.point = encoder.decode(point);
     }
 
     public Point(byte[] point) {
         this.point = point;
     }
 
+    public Point(String point, Encoder encoder) {
+        this(encoder.decode(point));
+    }
+
     public Point mult(byte[] n) {
-        byte[] intValue = n;
-        result = Util.zeros(SCALAR_BYTES);
-        sodium.crypto_scalarmult_curve25519_ref(result, intValue, point);
+        byte[] result = Util.zeros(SCALAR_BYTES);
+        sodium.crypto_scalarmult_curve25519_ref(result, n, point);
         return new Point(result);
+    }
+
+    public Point mult(String n, Encoder encoder) {
+        return mult(encoder.decode(n));
     }
 
     @Override

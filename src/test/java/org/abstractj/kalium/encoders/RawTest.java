@@ -19,7 +19,6 @@ package org.abstractj.kalium.encoders;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.nio.charset.Charset;
 import java.util.Arrays;
 
 import static junit.framework.Assert.assertNull;
@@ -28,8 +27,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 public class RawTest {
-
-    private static final Charset charset = Charset.forName("US-ASCII");
 
     private Encoder encoder;
 

@@ -30,19 +30,17 @@ import static org.junit.Assert.assertTrue;
 
 public class PointTest {
 
-    public static final byte[] ALICE_PK = HEX.decode(ALICE_PRIVATE_KEY);
-
     @Test
     public void testMultipleIntegersWithBasePoint() throws Exception {
         Point point = new Point();
-        String mult = point.mult(ALICE_PK).toString();
+        String mult = point.mult(ALICE_PRIVATE_KEY, HEX).toString();
         assertEquals("Should return a serialized point", ALICE_PUBLIC_KEY, mult);
     }
 
     @Test
     public void testMultipleIntegersWithArbitraryPoints() throws Exception {
         Point point = new Point(BOB_PUBLIC_KEY, HEX);
-        String mult = point.mult(ALICE_PK).toString();
+        String mult = point.mult(ALICE_PRIVATE_KEY, HEX).toString();
         assertEquals("Should return a valid serialized point", ALICE_MULT_BOB, mult);
     }
 

@@ -31,7 +31,7 @@ public class KeyPair {
     private static final Sodium sodium = SODIUM_INSTANCE;
 
     private byte[] publicKey;
-    private byte[] secretKey;
+    private final byte[] secretKey;
 
     public KeyPair() {
         this.secretKey = zeros(SECRETKEY_BYTES);

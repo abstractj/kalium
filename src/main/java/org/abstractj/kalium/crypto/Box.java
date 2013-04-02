@@ -79,7 +79,7 @@ public class Box {
         return removeZeros(ZERO_BYTES, message);
     }
 
-    public byte[] decrypt(String nonce, String ciphertext, Encoder encoder){
+    public byte[] decrypt(String nonce, String ciphertext, Encoder encoder) {
         return decrypt(encoder.decode(nonce), encoder.decode(ciphertext));
     }
 }

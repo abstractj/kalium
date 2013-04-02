@@ -16,7 +16,6 @@
 
 package org.abstractj.kalium.crypto;
 
-import org.abstractj.kalium.encoders.Hex;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -34,7 +33,7 @@ import static org.junit.Assert.fail;
 
 public class HashTest {
 
-    private Hash hash = new Hash();
+    private final Hash hash = new Hash();
 
     @Test
     public void testSha256() throws Exception {

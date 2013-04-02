@@ -20,14 +20,7 @@ import java.util.Arrays;
 
 public class Util {
 
-    public static final int DEFAULT_SIZE = 32;
-
-    public static byte[] merge(byte[] signature, byte[] message) {
-        byte[] result = new byte[signature.length + message.length];
-        System.arraycopy(signature, 0, result, 0, signature.length);
-        System.arraycopy(message, 0, result, signature.length - 1, message.length);
-        return result;
-    }
+    private static final int DEFAULT_SIZE = 32;
 
     public static byte[] prependZeros(int n, byte[] message) {
         byte[] result = new byte[n + message.length];
@@ -37,16 +30,7 @@ public class Util {
     }
 
     public static byte[] removeZeros(int n, byte[] message) {
-        byte[] buffer = Arrays.copyOfRange(message, n, message.length);
-        return buffer;
-    }
-
-    public static byte[] prependZeros(String message) {
-        return prependZeros(DEFAULT_SIZE, message.getBytes());
-    }
-
-    public static byte[] removeZeros(byte[] message) {
-        return removeZeros(DEFAULT_SIZE, message);
+        return Arrays.copyOfRange(message, n, message.length);
     }
 
     public static void checkLength(byte[] data, int size) {
@@ -56,11 +40,6 @@ public class Util {
 
     public static byte[] zeros(int n) {
         return new byte[n];
-    }
-
-    public static void isValid(int status) {
-        if (status != 0)
-            throw new RuntimeException("Invalid key");
     }
 
     public static boolean isValid(int status, String message) {
