@@ -23,8 +23,10 @@ import static org.abstractj.kalium.NaCl.SODIUM_INSTANCE;
 import static org.abstractj.kalium.NaCl.Sodium.PUBLICKEY_BYTES;
 import static org.abstractj.kalium.NaCl.Sodium.SIGNATURE_BYTES;
 import static org.abstractj.kalium.crypto.Util.checkLength;
+import static org.abstractj.kalium.crypto.Util.isValid;
 import static org.abstractj.kalium.crypto.Util.merge;
 import static org.abstractj.kalium.crypto.Util.zeros;
+import static org.abstractj.kalium.encoders.Encoder.HEX;
 
 public class VerifyKey {
 
@@ -47,12 +49,19 @@ public class VerifyKey {
         byte[] buffer = zeros(sigAndMsg.length);
         byte[] bufferLen = zeros(Long.SIZE);
 
-        System.out.println(sigAndMsg.length);
+        return isValid(sodium.crypto_sign_ed25519_ref_open(buffer, bufferLen, sigAndMsg, sigAndMsg.length, key), "signature was forged or corrupted");
+    }
 
-        int meh = sodium.crypto_sign_ed25519_ref_open(buffer, bufferLen, sigAndMsg, sigAndMsg.length, key);
+    public boolean verify(String message, String signature, Encoder encoder) {
+        return verify(encoder.decode(message), encoder.decode(signature));
+    }
 
-        System.out.println(meh);
+    public byte[] toBytes() {
+        return key;
+    }
 
-        return false;
+    @Override
+    public String toString(){
+        return HEX.encode(key);
     }
 }
