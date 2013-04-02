@@ -16,29 +16,18 @@
 
 package org.abstractj.kalium.keys;
 
-import static org.abstractj.kalium.NaCl.Sodium.PUBLICKEY_BYTES;
-import static org.abstractj.kalium.crypto.Util.checkLength;
+import org.junit.Test;
+
 import static org.abstractj.kalium.encoders.Encoder.HEX;
+import static org.abstractj.kalium.fixture.TestVectors.SIGN_MESSAGE;
+import static org.abstractj.kalium.fixture.TestVectors.SIGN_PRIVATE;
 
-public class PublicKey {
+public class VerifyKeyTest {
 
-    private final byte[] publicKey;
-
-    public PublicKey(byte[] publicKey) {
-        this.publicKey = publicKey;
-        checkLength(publicKey, PUBLICKEY_BYTES);
-    }
-
-    public PublicKey(String publicKey) {
-        this.publicKey = HEX.decode(publicKey);
-    }
-
-    public byte[] toBytes() {
-        return publicKey;
-    }
-
-    @Override
-    public String toString() {
-        return HEX.encode(publicKey);
+    @Test
+    public void testVerify() throws Exception {
+        byte[] rawKey = HEX.decode(SIGN_PRIVATE);
+        VerifyKey verifyKey = new VerifyKey(rawKey);
+        verifyKey.verify(HEX.decode(SIGN_MESSAGE), HEX.decode(SIGN_PRIVATE));
     }
 }

@@ -79,5 +79,6 @@ public class NaCl {
 
         int crypto_sign_ed25519_ref(@Out byte[] buffer, @Out LongLongByReference bufferLen, @In byte[] message, @u_int64_t long length, @In byte[] secretKey);
 
+        int crypto_sign_ed25519_ref_open(@Out byte[] buffer, @In byte[] bufferLen, @In byte[] sigAndMsg, @u_int64_t long length, @In byte[] key);
     }
 }
