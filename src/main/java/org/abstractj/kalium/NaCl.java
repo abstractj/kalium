@@ -38,11 +38,11 @@ public class NaCl {
 
         public static final int SHA256BYTES = 32;
 
-        public int crypto_hash_sha256_ref(@Out byte[] buffer, String message, @u_int64_t long sizeof);
+        public int crypto_hash_sha256_ref(@Out byte[] buffer, @In byte[] message, @u_int64_t long sizeof);
 
         public static final int SHA512BYTES = 64;
 
-        public int crypto_hash_sha512_ref(@Out byte[] buffer, String message, @u_int64_t long sizeof);
+        public int crypto_hash_sha512_ref(@Out byte[] buffer, @In byte[] message, @u_int64_t long sizeof);
 
         public static final int PUBLICKEY_BYTES = 32;
         public static final int SECRETKEY_BYTES = 32;

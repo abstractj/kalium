@@ -16,8 +16,13 @@
 
 package org.abstractj.kalium.crypto;
 
+import org.abstractj.kalium.encoders.Hex;
 import org.junit.Test;
 
+import java.util.Arrays;
+
+import static junit.framework.Assert.assertTrue;
+import static org.abstractj.kalium.encoders.Encoder.HEX;
 import static org.abstractj.kalium.fixture.TestVectors.SHA256_DIGEST;
 import static org.abstractj.kalium.fixture.TestVectors.SHA256_DIGEST_EMPTY_STRING;
 import static org.abstractj.kalium.fixture.TestVectors.SHA256_MESSAGE;
@@ -33,20 +38,33 @@ public class HashTest {
 
     @Test
     public void testSha256() throws Exception {
-        String result = hash.sha256(SHA256_MESSAGE).toHex();
-        assertEquals("Hash is invalid", SHA256_DIGEST, result);
+        final byte[] rawMessage = SHA256_MESSAGE.getBytes();
+        String result = HEX.encode(hash.sha256(rawMessage));
+        assertTrue("Hash is invalid", Arrays.equals(SHA256_DIGEST.getBytes(), result.getBytes()));
     }
 
     @Test
     public void testSha256EmptyString() throws Exception {
-        String result = hash.sha256("").toHex();
+        byte[] result = hash.sha256("".getBytes());
+        assertEquals("Hash is invalid", SHA256_DIGEST_EMPTY_STRING, HEX.encode(result));
+    }
+
+    @Test
+    public void testSha256HexString() throws Exception {
+        String result = hash.sha256(SHA256_MESSAGE, HEX);
+        assertEquals("Hash is invalid", SHA256_DIGEST, result);
+    }
+
+    @Test
+    public void testSha256EmptyHexString() throws Exception {
+        String result = hash.sha256("", HEX);
         assertEquals("Hash is invalid", SHA256_DIGEST_EMPTY_STRING, result);
     }
 
     @Test
     public void testSha256NullByte() {
         try {
-            hash.sha256("\0").toHex();
+            hash.sha256("\0".getBytes());
         } catch (Exception e) {
             fail("Should not raise any exception on null byte");
         }
@@ -54,20 +72,33 @@ public class HashTest {
 
     @Test
     public void testSha512() throws Exception {
-        String result = hash.sha512(SHA512_MESSAGE).toHex();
-        assertEquals("Hash value must be the same", SHA512_DIGEST, result);
+        final byte[] rawMessage = SHA512_MESSAGE.getBytes();
+        String result = HEX.encode(hash.sha512(rawMessage));
+        assertTrue("Hash is invalid", Arrays.equals(SHA512_DIGEST.getBytes(), result.getBytes()));
     }
 
     @Test
     public void testSha512EmptyString() throws Exception {
-        String result = hash.sha512("").toHex();
+        byte[] result = hash.sha512("".getBytes());
+        assertEquals("Hash is invalid", SHA512_DIGEST_EMPTY_STRING, HEX.encode(result));
+    }
+
+    @Test
+    public void testSha512HexString() throws Exception {
+        String result = hash.sha512(SHA512_MESSAGE, HEX);
+        assertEquals("Hash is invalid", SHA512_DIGEST, result);
+    }
+
+    @Test
+    public void testSha512EmptyHexString() throws Exception {
+        String result = hash.sha512("", HEX);
         assertEquals("Hash is invalid", SHA512_DIGEST_EMPTY_STRING, result);
     }
 
     @Test
     public void testSha512NullByte() {
         try {
-            hash.sha512("\0").toHex();
+            hash.sha512("\0".getBytes());
         } catch (Exception e) {
             fail("Should not raise any exception on null byte");
         }
