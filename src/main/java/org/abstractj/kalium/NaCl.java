@@ -47,7 +47,7 @@ public class NaCl {
         public static final int PUBLICKEY_BYTES = 32;
         public static final int SECRETKEY_BYTES = 32;
 
-        public int crypto_box_curve25519xsalsa20poly1305_ref_keypair(byte[] publicKey, byte[] secretKey);
+        public int crypto_box_curve25519xsalsa20poly1305_ref_keypair(@Out byte[] publicKey, @Out byte[] secretKey);
 
 
         public static final int NONCE_BYTES = 24;
@@ -56,26 +56,28 @@ public class NaCl {
 
         public void randombytes(@Out byte[] buffer, @u_int64_t long size);
 
-        public int crypto_box_curve25519xsalsa20poly1305_ref(@Out byte[] ct, @In byte[] msg, @u_int64_t long length, @In byte[] nonce, @In byte[] publicKey, @In byte[] privateKey);
+        public int crypto_box_curve25519xsalsa20poly1305_ref(@Out byte[] ct, @In byte[] msg, @u_int64_t long length, @In byte[] nonce,
+                                                             @In byte[] publicKey, @In byte[] privateKey);
 
-        public int crypto_box_curve25519xsalsa20poly1305_ref_open(@Out byte[] message, @In byte[] ct, @u_int64_t long length, @In byte[] nonce, @In byte[] publicKey, @In byte[] privateKey);
+        public int crypto_box_curve25519xsalsa20poly1305_ref_open(@Out byte[] message, @In byte[] ct, @u_int64_t long length,
+                                                                  @In byte[] nonce, @In byte[] publicKey, @In byte[] privateKey);
 
         public static final int SCALAR_BYTES = 32;
 
-        public int crypto_scalarmult_curve25519_ref(@Out byte[] result, @In byte[] intValue, byte[] point);
+        public int crypto_scalarmult_curve25519_ref(@Out byte[] result, @In byte[] intValue, @In byte[] point);
 
         public static final int XSALSA20_POLY1305_SECRETBOX_KEYBYTES = 32;
         public static final int XSALSA20_POLY1305_SECRETBOX_NONCEBYTES = 24;
 
-        int crypto_secretbox_xsalsa20poly1305_ref(byte[] ct, byte[] msg, int length, byte[] nonce, byte[] key);
+        int crypto_secretbox_xsalsa20poly1305_ref(@Out byte[] ct, @In byte[] msg, @u_int64_t long length, @In byte[] nonce, @In byte[] key);
 
-        int crypto_secretbox_xsalsa20poly1305_ref_open(byte[] message, byte[] ct, int length, byte[] nonce, byte[] key);
+        int crypto_secretbox_xsalsa20poly1305_ref_open(@Out byte[] message, @In byte[] ct, @u_int64_t long length, @In byte[] nonce, @In byte[] key);
 
         public static final int SIGNATURE_BYTES = 64;
 
-        int crypto_sign_ed25519_ref_seed_keypair(byte[] publicKey, byte[] secretKey, byte[] seed);
+        int crypto_sign_ed25519_ref_seed_keypair(@Out byte[] publicKey, @Out byte[] secretKey, @In byte[] seed);
 
-        int crypto_sign_ed25519_ref(byte[] buffer, byte[] bufferLen, byte[] message, int length, byte[] secretKey);
+        int crypto_sign_ed25519_ref(@Out byte[] buffer, @In byte[] bufferLen, @In byte[] message, @In int length, @In byte[] secretKey);
 
     }
 }
