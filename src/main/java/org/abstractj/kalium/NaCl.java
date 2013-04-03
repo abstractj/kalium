@@ -26,8 +26,6 @@ public class NaCl {
 
     private static final String LIBRARY_NAME = "sodium";
     public static final Sodium SODIUM_INSTANCE = LibraryLoader.create(Sodium.class)
-            .search("/usr/local/lib")
-            .search("/opt/local/lib")
             .load(LIBRARY_NAME);
 
     private NaCl() {
