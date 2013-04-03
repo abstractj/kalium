@@ -36,6 +36,7 @@ Add as a Maven dependency at your project:
 
 kalium is a work in progress, feedback, bug reports and patches are always welcome.
 
+[![Build Status](https://travis-ci.org/abstractj/kalium.png?branch=master)](https://travis-ci.org/abstractj/kalium)
 
 
  
