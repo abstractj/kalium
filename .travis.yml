@@ -3,8 +3,12 @@ language: java
 before_script:
   - wget -c http://download.dnscrypt.org/libsodium/releases/libsodium-0.3.tar.gz
   - tar xzvf libsodium-0.3.tar.gz
-  - ./configure
+  - cd libsodium-0.3 && mkdir vendor
+  - ./configure --prefix=`pwd`/vendor
   - make && make check && make install
+  - cd ../
+
+env: JAVA_OPTS="-Djava.library.path=/home/travis/build/abstractj/kalium/libsodium-0.3/vendor/lib"
 
 jdk:
   - oraclejdk7
