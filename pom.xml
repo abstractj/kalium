@@ -18,6 +18,13 @@
         <version>7</version>
     </parent>
 
+    <scm>
+        <connection>scm:git:git@github.com:abstractj/kalium.git</connection>
+        <developerConnection>scm:git:git@github.com:abstractj/kalium.git</developerConnection>
+        <url>https://github.com/abstractj/kalium</url>
+        <tag>HEAD</tag>
+    </scm>
+
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
