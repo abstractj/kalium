@@ -5,11 +5,16 @@ before_script:
   - tar xzvf libsodium-0.3.tar.gz
   - cd libsodium-0.3 && mkdir vendor
   - ./configure --prefix=`pwd`/vendor
-  - make && make check && make install
+  - make && make install
   - cd ../
+
+script: "LD_LIBRARY_PATH=/home/travis/build/abstractj/kalium/libsodium-0.3/vendor/lib"
 
 env: JAVA_OPTS="-Djava.library.path=/home/travis/build/abstractj/kalium/libsodium-0.3/vendor/lib"
 
 jdk:
   - oraclejdk7
   - openjdk6
+
+after_success:
+  - rm -rf libsodium-0.3*
