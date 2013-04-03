@@ -1,0 +1,11 @@
+language: java
+
+before_script:
+  - wget -c http://download.dnscrypt.org/libsodium/releases/libsodium-0.3.tar.gz
+  - tar xzvf libsodium-0.3.tar.gz
+  - ./configure
+  - make && make check && make install
+
+jdk:
+  - oraclejdk7
+  - openjdk6
