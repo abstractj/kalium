@@ -16,28 +16,25 @@
 
 package org.abstractj.kalium.crypto;
 
-import org.abstractj.kalium.NaCl.Sodium;
 import org.abstractj.kalium.encoders.Encoder;
 
-import static org.abstractj.kalium.NaCl.SODIUM_INSTANCE;
 import static org.abstractj.kalium.NaCl.Sodium.SHA256BYTES;
 import static org.abstractj.kalium.NaCl.Sodium.SHA512BYTES;
+import static org.abstractj.kalium.NaCl.sodium;
 
 public class Hash {
-
-    private static final Sodium sodium = SODIUM_INSTANCE;
 
     private static byte[] buffer;
 
     public byte[] sha256(byte[] message) {
         buffer = new byte[SHA256BYTES];
-        sodium.crypto_hash_sha256_ref(buffer, message, message.length);
+        sodium().crypto_hash_sha256_ref(buffer, message, message.length);
         return buffer;
     }
 
     public byte[] sha512(byte[] message) {
         buffer = new byte[SHA512BYTES];
-        sodium.crypto_hash_sha512_ref(buffer, message, message.length);
+        sodium().crypto_hash_sha512_ref(buffer, message, message.length);
         return buffer;
     }
 

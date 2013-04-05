@@ -19,16 +19,13 @@ package org.abstractj.kalium.keys;
 import org.abstractj.kalium.crypto.Point;
 import org.abstractj.kalium.encoders.Encoder;
 
-import static org.abstractj.kalium.NaCl.SODIUM_INSTANCE;
-import static org.abstractj.kalium.NaCl.Sodium;
 import static org.abstractj.kalium.NaCl.Sodium.PUBLICKEY_BYTES;
 import static org.abstractj.kalium.NaCl.Sodium.SECRETKEY_BYTES;
+import static org.abstractj.kalium.NaCl.sodium;
 import static org.abstractj.kalium.crypto.Util.checkLength;
 import static org.abstractj.kalium.crypto.Util.zeros;
 
 public class KeyPair {
-
-    private static final Sodium sodium = SODIUM_INSTANCE;
 
     private byte[] publicKey;
     private final byte[] secretKey;
@@ -36,7 +33,7 @@ public class KeyPair {
     public KeyPair() {
         this.secretKey = zeros(SECRETKEY_BYTES);
         this.publicKey = zeros(PUBLICKEY_BYTES);
-        sodium.crypto_box_curve25519xsalsa20poly1305_ref_keypair(publicKey, secretKey);
+        sodium().crypto_box_curve25519xsalsa20poly1305_ref_keypair(publicKey, secretKey);
     }
 
     public KeyPair(byte[] secretKey) {

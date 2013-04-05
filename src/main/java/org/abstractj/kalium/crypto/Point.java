@@ -16,17 +16,15 @@
 
 package org.abstractj.kalium.crypto;
 
-import org.abstractj.kalium.NaCl.Sodium;
 import org.abstractj.kalium.encoders.Encoder;
 
-import static org.abstractj.kalium.NaCl.SODIUM_INSTANCE;
 import static org.abstractj.kalium.NaCl.Sodium.SCALAR_BYTES;
+import static org.abstractj.kalium.NaCl.sodium;
 import static org.abstractj.kalium.crypto.Util.zeros;
 import static org.abstractj.kalium.encoders.Encoder.HEX;
 
 public class Point {
 
-    private static final Sodium sodium = SODIUM_INSTANCE;
     private static final String STANDARD_GROUP_ELEMENT = "0900000000000000000000000000000000000000000000000000000000000000";
 
     private final byte[] point;
@@ -45,7 +43,7 @@ public class Point {
 
     public Point mult(byte[] n) {
         byte[] result = zeros(SCALAR_BYTES);
-        sodium.crypto_scalarmult_curve25519_ref(result, n, point);
+        sodium().crypto_scalarmult_curve25519_ref(result, n, point);
         return new Point(result);
     }
 
