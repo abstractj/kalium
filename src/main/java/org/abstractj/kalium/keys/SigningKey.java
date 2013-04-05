@@ -17,15 +17,14 @@
 package org.abstractj.kalium.keys;
 
 import jnr.ffi.byref.LongLongByReference;
-import org.abstractj.kalium.NaCl.Sodium;
 import org.abstractj.kalium.crypto.Random;
 import org.abstractj.kalium.crypto.Util;
 import org.abstractj.kalium.encoders.Encoder;
 
-import static org.abstractj.kalium.NaCl.SODIUM_INSTANCE;
 import static org.abstractj.kalium.NaCl.Sodium.PUBLICKEY_BYTES;
 import static org.abstractj.kalium.NaCl.Sodium.SECRETKEY_BYTES;
 import static org.abstractj.kalium.NaCl.Sodium.SIGNATURE_BYTES;
+import static org.abstractj.kalium.NaCl.sodium;
 import static org.abstractj.kalium.crypto.Util.checkLength;
 import static org.abstractj.kalium.crypto.Util.isValid;
 import static org.abstractj.kalium.crypto.Util.slice;
@@ -33,8 +32,6 @@ import static org.abstractj.kalium.crypto.Util.zeros;
 import static org.abstractj.kalium.encoders.Encoder.HEX;
 
 public class SigningKey {
-
-    private static final Sodium sodium = SODIUM_INSTANCE;
 
     private final byte[] seed;
     private final byte[] secretKey;
@@ -44,7 +41,7 @@ public class SigningKey {
         this.seed = seed;
         this.secretKey = zeros(SECRETKEY_BYTES * 2);
         byte[] publicKey = zeros(PUBLICKEY_BYTES);
-        isValid(sodium.crypto_sign_ed25519_ref_seed_keypair(publicKey, secretKey, seed),
+        isValid(sodium().crypto_sign_ed25519_ref_seed_keypair(publicKey, secretKey, seed),
                 "Failed to generate a key pair");
 
         new VerifyKey(publicKey);
@@ -61,7 +58,7 @@ public class SigningKey {
     public byte[] sign(byte[] message) {
         byte[] signature = Util.prependZeros(SIGNATURE_BYTES, message);
         LongLongByReference bufferLen = new LongLongByReference(0);
-        sodium.crypto_sign_ed25519_ref(signature, bufferLen, message, message.length, secretKey);
+        sodium().crypto_sign_ed25519_ref(signature, bufferLen, message, message.length, secretKey);
         signature = slice(signature, 0, SIGNATURE_BYTES);
         return signature;
     }
