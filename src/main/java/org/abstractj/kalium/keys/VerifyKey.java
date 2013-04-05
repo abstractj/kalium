@@ -17,12 +17,11 @@
 package org.abstractj.kalium.keys;
 
 import jnr.ffi.byref.LongLongByReference;
-import org.abstractj.kalium.NaCl.Sodium;
 import org.abstractj.kalium.encoders.Encoder;
 
-import static org.abstractj.kalium.NaCl.SODIUM_INSTANCE;
 import static org.abstractj.kalium.NaCl.Sodium.PUBLICKEY_BYTES;
 import static org.abstractj.kalium.NaCl.Sodium.SIGNATURE_BYTES;
+import static org.abstractj.kalium.NaCl.sodium;
 import static org.abstractj.kalium.crypto.Util.checkLength;
 import static org.abstractj.kalium.crypto.Util.isValid;
 import static org.abstractj.kalium.crypto.Util.merge;
@@ -32,8 +31,6 @@ import static org.abstractj.kalium.encoders.Encoder.HEX;
 public class VerifyKey {
 
     private byte[] key;
-
-    private static final Sodium sodium = SODIUM_INSTANCE;
 
     public VerifyKey(byte[] key) {
         checkLength(key, PUBLICKEY_BYTES);
@@ -50,7 +47,7 @@ public class VerifyKey {
         byte[] buffer = zeros(sigAndMsg.length);
         LongLongByReference bufferLen = new LongLongByReference(0);
 
-        return isValid(sodium.crypto_sign_ed25519_ref_open(buffer, bufferLen, sigAndMsg, sigAndMsg.length, key), "signature was forged or corrupted");
+        return isValid(sodium().crypto_sign_ed25519_ref_open(buffer, bufferLen, sigAndMsg, sigAndMsg.length, key), "signature was forged or corrupted");
     }
 
     public boolean verify(String message, String signature, Encoder encoder) {

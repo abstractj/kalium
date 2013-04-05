@@ -24,12 +24,19 @@ import jnr.ffi.types.u_int64_t;
 
 public class NaCl {
 
+    public static Sodium sodium() {
+        return SingletonHolder.SODIUM_INSTANCE;
+    }
+    
     private static final String LIBRARY_NAME = "sodium";
-    public static final Sodium SODIUM_INSTANCE = LibraryLoader.create(Sodium.class)
-            .search("/usr/local/lib")
-            .search("/opt/local/lib")
-            .load(LIBRARY_NAME);
-
+    
+    private static final class SingletonHolder {
+        public static final Sodium SODIUM_INSTANCE = LibraryLoader.create(Sodium.class)
+                .search("/usr/local/lib")
+                .search("/opt/local/lib")
+                .load(LIBRARY_NAME);
+    }
+    
     private NaCl() {
     }
 
