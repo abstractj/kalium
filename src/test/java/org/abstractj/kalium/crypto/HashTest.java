@@ -28,6 +28,9 @@ import static org.abstractj.kalium.fixture.TestVectors.SHA256_MESSAGE;
 import static org.abstractj.kalium.fixture.TestVectors.SHA512_DIGEST;
 import static org.abstractj.kalium.fixture.TestVectors.SHA512_DIGEST_EMPTY_STRING;
 import static org.abstractj.kalium.fixture.TestVectors.SHA512_MESSAGE;
+import static org.abstractj.kalium.fixture.TestVectors.Blake2_DIGEST;
+import static org.abstractj.kalium.fixture.TestVectors.Blake2_DIGEST_EMPTY_STRING;
+import static org.abstractj.kalium.fixture.TestVectors.Blake2_MESSAGE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -98,6 +101,40 @@ public class HashTest {
     public void testSha512NullByte() {
         try {
             hash.sha512("\0".getBytes());
+        } catch (Exception e) {
+            fail("Should not raise any exception on null byte");
+        }
+    }
+
+    @Test
+    public void testBlake2() throws Exception {
+        final byte[] rawMessage = Blake2_MESSAGE.getBytes();
+        String result = HEX.encode(hash.blake2(rawMessage));
+        assertTrue("Hash is invalid", Arrays.equals(Blake2_DIGEST.getBytes(), result.getBytes()));
+    }
+
+    @Test
+    public void testBlake2EmptyString() throws Exception {
+        byte[] result = hash.blake2("".getBytes());
+        assertEquals("Hash is invalid", Blake2_DIGEST_EMPTY_STRING, HEX.encode(result));
+    }
+
+    @Test
+    public void testBlake2HexString() throws Exception {
+        String result = hash.blake2(Blake2_MESSAGE, HEX);
+        assertEquals("Hash is invalid", Blake2_DIGEST, result);
+    }
+
+    @Test
+    public void testBlake2EmptyHexString() throws Exception {
+        String result = hash.blake2("", HEX);
+        assertEquals("Hash is invalid", Blake2_DIGEST_EMPTY_STRING, result);
+    }
+
+    @Test
+    public void testBlake2NullByte() {
+        try {
+            hash.blake2("\0".getBytes());
         } catch (Exception e) {
             fail("Should not raise any exception on null byte");
         }

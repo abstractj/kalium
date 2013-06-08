@@ -17,7 +17,9 @@
 package org.abstractj.kalium.crypto;
 
 import org.abstractj.kalium.encoders.Encoder;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import static org.abstractj.kalium.NaCl.Sodium.BLAKE2B_OUTBYTES;
 import static org.abstractj.kalium.NaCl.Sodium.SHA256BYTES;
 import static org.abstractj.kalium.NaCl.Sodium.SHA512BYTES;
 import static org.abstractj.kalium.NaCl.sodium;
@@ -47,4 +49,24 @@ public class Hash {
         byte[] hash = sha512(messsage.getBytes());
         return encoder.encode(hash);
     }
+
+
+    public byte[] blake2(byte[] message) throws NotImplementedException {
+        if (!blakeSupportedVersion()) throw new NotImplementedException();
+
+        buffer = new byte[BLAKE2B_OUTBYTES];
+        sodium().crypto_generichash_blake2b(buffer, BLAKE2B_OUTBYTES, message, message.length, null, 0);
+        return buffer;
+    }
+
+    public String blake2(String message, Encoder encoder) throws NotImplementedException {
+        if (!blakeSupportedVersion()) throw new NotImplementedException();
+        byte[] hash = blake2(message.getBytes());
+        return encoder.encode(hash);
+    }
+
+    private boolean blakeSupportedVersion(){
+        return sodium().sodium_version_string().compareTo("0.4.0") >= 0 ;
+    }
+
 }
