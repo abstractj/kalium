@@ -36,6 +36,16 @@ public class TestVectors {
             "d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e";
 
 
+
+    /**
+     * Blake2 test vectors
+     */
+    public static final String Blake2_MESSAGE = "The quick brown fox jumps over the lazy dog";
+    public static final String Blake2_DIGEST = "a8add4bdddfd93e4877d2746e62817b116364a1fa7bc148d95090bc7333b3673f82401" +
+            "cf7aa2e4cb1ecd90296e3f14cb5413f8ed77be73045b13914cdcd6a918";
+    public static final String Blake2_DIGEST_EMPTY_STRING = "786a02f742015903c6c6fd852552d272912f4740e15847618a86e217f" +
+            "71f5419d25e1031afee585313896444934eb04b903a685b1448b755d56f701afe9be2ce";
+
     /**
      * Curve25519 test vectors
      */

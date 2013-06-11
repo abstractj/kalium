@@ -18,6 +18,7 @@ package org.abstractj.kalium.crypto;
 
 import org.abstractj.kalium.encoders.Encoder;
 
+import static org.abstractj.kalium.NaCl.Sodium.BLAKE2B_OUTBYTES;
 import static org.abstractj.kalium.NaCl.Sodium.SHA256BYTES;
 import static org.abstractj.kalium.NaCl.Sodium.SHA512BYTES;
 import static org.abstractj.kalium.NaCl.sodium;
@@ -38,13 +39,33 @@ public class Hash {
         return buffer;
     }
 
-    public String sha256(String messsage, Encoder encoder) {
-        byte[] hash = sha256(messsage.getBytes());
+    public String sha256(String message, Encoder encoder) {
+        byte[] hash = sha256(message.getBytes());
         return encoder.encode(hash);
     }
 
-    public String sha512(String messsage, Encoder encoder) {
-        byte[] hash = sha512(messsage.getBytes());
+    public String sha512(String message, Encoder encoder) {
+        byte[] hash = sha512(message.getBytes());
         return encoder.encode(hash);
     }
+
+
+    public byte[] blake2(byte[] message) throws UnsupportedOperationException {
+        if (!blakeSupportedVersion()) throw new UnsupportedOperationException();
+
+        buffer = new byte[BLAKE2B_OUTBYTES];
+        sodium().crypto_generichash_blake2b(buffer, BLAKE2B_OUTBYTES, message, message.length, null, 0);
+        return buffer;
+    }
+
+    public String blake2(String message, Encoder encoder) throws UnsupportedOperationException {
+        if (!blakeSupportedVersion()) throw new UnsupportedOperationException();
+        byte[] hash = blake2(message.getBytes());
+        return encoder.encode(hash);
+    }
+
+    private boolean blakeSupportedVersion(){
+        return sodium().sodium_version_string().compareTo("0.4.0") >= 0 ;
+    }
+
 }
