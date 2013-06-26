@@ -1,7 +1,7 @@
 language: java
 
 before_script:
-  - wget -c http://download.dnscrypt.org/libsodium/releases/libsodium-0.4.1.tar.gz
+  - wget -c http://download.libsodium.org/libsodium/releases/libsodium-0.4.1.tar.gz
   - tar xzvf libsodium-0.4.1.tar.gz
   - cd libsodium-0.4.1 && mkdir vendor
   - ./configure --prefix=`pwd`/vendor
