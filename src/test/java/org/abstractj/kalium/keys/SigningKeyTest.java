@@ -21,9 +21,7 @@ import org.junit.Test;
 import java.util.Arrays;
 
 import static org.abstractj.kalium.encoders.Encoder.HEX;
-import static org.abstractj.kalium.fixture.TestVectors.SIGN_MESSAGE;
-import static org.abstractj.kalium.fixture.TestVectors.SIGN_PRIVATE;
-import static org.abstractj.kalium.fixture.TestVectors.SIGN_SIGNATURE;
+import static org.abstractj.kalium.fixture.TestVectors.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -130,5 +128,19 @@ public class SigningKeyTest {
         } catch (Exception e) {
             fail("Should return a valid key size");
         }
+    }
+
+    @Test
+    public void testAccessVerifyKey() {
+        SigningKey key = new SigningKey(SIGN_PRIVATE, HEX);
+        VerifyKey v = key.getVerifyKey();
+        assertEquals(v.toString(), SIGN_PUBLIC);
+    }
+
+    @Test
+    public void testRoundTrip() {
+        SigningKey key = new SigningKey(SIGN_PRIVATE, HEX);
+        String signature = key.sign(SIGN_MESSAGE, HEX);
+        key.getVerifyKey().verify(SIGN_MESSAGE, signature, HEX);
     }
 }

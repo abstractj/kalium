@@ -35,6 +35,7 @@ public class SigningKey {
 
     private final byte[] seed;
     private final byte[] secretKey;
+    private final VerifyKey verifyKey;
 
     public SigningKey(byte[] seed) {
         checkLength(seed, SECRETKEY_BYTES);
@@ -44,7 +45,7 @@ public class SigningKey {
         isValid(sodium().crypto_sign_ed25519_ref_seed_keypair(publicKey, secretKey, seed),
                 "Failed to generate a key pair");
 
-        new VerifyKey(publicKey);
+        this.verifyKey = new VerifyKey(publicKey);
     }
 
     public SigningKey() {
@@ -53,6 +54,10 @@ public class SigningKey {
 
     public SigningKey(String seed, Encoder encoder) {
         this(encoder.decode(seed));
+    }
+
+    public VerifyKey getVerifyKey() {
+        return this.verifyKey;
     }
 
     public byte[] sign(byte[] message) {
