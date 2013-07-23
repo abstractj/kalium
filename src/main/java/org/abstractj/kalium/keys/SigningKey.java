@@ -32,23 +32,11 @@ import static org.abstractj.kalium.crypto.Util.zeros;
 import static org.abstractj.kalium.encoders.Encoder.HEX;
 
 public class SigningKey {
-
-    private final byte[] seed;
     private final byte[] secretKey;
 
-    public SigningKey(byte[] seed) {
-        checkLength(seed, SECRETKEY_BYTES);
-        this.seed = seed;
-        this.secretKey = zeros(SECRETKEY_BYTES * 2);
-        byte[] publicKey = zeros(PUBLICKEY_BYTES);
-        isValid(sodium().crypto_sign_ed25519_ref_seed_keypair(publicKey, secretKey, seed),
-                "Failed to generate a key pair");
-
-        new VerifyKey(publicKey);
-    }
-
-    public SigningKey() {
-        this(new Random().randomBytes(SECRETKEY_BYTES));
+    public SigningKey(byte[] secretKey) {
+        checkLength(secretKey, SECRETKEY_BYTES * 2);
+        this.secretKey = secretKey;
     }
 
     public SigningKey(String seed, Encoder encoder) {
@@ -69,11 +57,13 @@ public class SigningKey {
     }
 
     public byte[] toBytes() {
-        return seed;
+        /* We happen to know that in the Ed25519 scheme that the keypair-generating seed
+        is the first SECRETKEY_BYTES of the secretKey. This is kind of gross. */
+        return Util.slice(secretKey, 0, SECRETKEY_BYTES);
     }
 
     @Override
     public String toString() {
-        return HEX.encode(seed);
+        return HEX.encode(toBytes());
     }
 }

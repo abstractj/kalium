@@ -70,7 +70,7 @@ public class VerifyKeyTest {
 
     @Test
     public void testSerializeToString() throws Exception {
-        SigningKey key = new SigningKey(SIGN_PRIVATE, HEX);
+        SigningKey key = new SigningKeyPair(SIGN_PRIVATE, HEX).getSigningKey();
         VerifyKey verifyKey = new VerifyKey(SIGN_PUBLIC, HEX);
         verifyKey.verify(SIGN_MESSAGE, SIGN_SIGNATURE, HEX);
         assertEquals(verifyKey.toString(), SIGN_PUBLIC);
