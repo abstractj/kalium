@@ -19,8 +19,8 @@ package org.abstractj.kalium.keys;
 import jnr.ffi.byref.LongLongByReference;
 import org.abstractj.kalium.encoders.Encoder;
 
-import static org.abstractj.kalium.NaCl.Sodium.PUBLICKEY_BYTES;
 import static org.abstractj.kalium.NaCl.Sodium.SIGNATURE_BYTES;
+import static org.abstractj.kalium.NaCl.Sodium.SIGNATURE_PUBLICKEY_BYTES;
 import static org.abstractj.kalium.NaCl.sodium;
 import static org.abstractj.kalium.crypto.Util.checkLength;
 import static org.abstractj.kalium.crypto.Util.isValid;
@@ -33,7 +33,7 @@ public class VerifyKey {
     private byte[] key;
 
     public VerifyKey(byte[] key) {
-        checkLength(key, PUBLICKEY_BYTES);
+        checkLength(key, SIGNATURE_PUBLICKEY_BYTES);
         this.key = key;
     }
 
