@@ -19,8 +19,9 @@ package org.abstractj.kalium.keys;
 import org.abstractj.kalium.crypto.Random;
 import org.abstractj.kalium.encoders.Encoder;
 
-import static org.abstractj.kalium.NaCl.Sodium.PUBLICKEY_BYTES;
-import static org.abstractj.kalium.NaCl.Sodium.SECRETKEY_BYTES;
+import static org.abstractj.kalium.NaCl.Sodium.SIGNATURE_PUBLICKEY_BYTES;
+import static org.abstractj.kalium.NaCl.Sodium.SIGNATURE_SECRETKEY_BYTES;
+import static org.abstractj.kalium.NaCl.Sodium.SIGNATURE_SEED_BYTES;
 import static org.abstractj.kalium.NaCl.sodium;
 import static org.abstractj.kalium.crypto.Util.checkLength;
 import static org.abstractj.kalium.crypto.Util.isValid;
@@ -31,15 +32,15 @@ public class SigningKeyPair {
     private final byte[] verifyKey;
 
     public SigningKeyPair(byte[] seed) {
-        checkLength(seed, SECRETKEY_BYTES);
-        this.signingKey = zeros(SECRETKEY_BYTES * 2);
-        this.verifyKey = zeros(PUBLICKEY_BYTES);
+        checkLength(seed, SIGNATURE_SEED_BYTES);
+        this.signingKey = zeros(SIGNATURE_SECRETKEY_BYTES);
+        this.verifyKey = zeros(SIGNATURE_PUBLICKEY_BYTES);
         isValid(sodium().crypto_sign_ed25519_ref_seed_keypair(verifyKey, signingKey, seed),
                 "Failed to generate a key pair");
     }
 
     public SigningKeyPair() {
-        this(new Random().randomBytes(SECRETKEY_BYTES));
+        this(new Random().randomBytes(SIGNATURE_SEED_BYTES));
     }
 
     public SigningKeyPair(String seed, Encoder encoder) {

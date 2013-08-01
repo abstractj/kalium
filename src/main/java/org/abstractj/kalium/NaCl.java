@@ -87,6 +87,9 @@ public class NaCl {
         int crypto_secretbox_xsalsa20poly1305_ref_open(@Out byte[] message, @In byte[] ct, @u_int64_t long length, @In byte[] nonce, @In byte[] key);
 
         public static final int SIGNATURE_BYTES = 64;
+        public static final int SIGNATURE_SEED_BYTES = 32;
+        public static final int SIGNATURE_SECRETKEY_BYTES = 64;
+        public static final int SIGNATURE_PUBLICKEY_BYTES = 32;
 
         int crypto_sign_ed25519_ref_seed_keypair(@Out byte[] publicKey, @Out byte[] secretKey, @In byte[] seed);
 

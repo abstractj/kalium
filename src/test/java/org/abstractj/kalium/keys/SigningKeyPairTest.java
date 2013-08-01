@@ -40,7 +40,7 @@ public class SigningKeyPairTest {
     @Test
     public void testAcceptsRawValidKey() throws Exception {
         try {
-            byte[] rawKey = HEX.decode(SIGN_PRIVATE);
+            byte[] rawKey = HEX.decode(SIGN_KEY_SEED);
             new SigningKeyPair(rawKey);
         } catch (Exception e) {
             e.printStackTrace();
@@ -51,7 +51,7 @@ public class SigningKeyPairTest {
     @Test
     public void testAcceptsHexValidKey() throws Exception {
         try {
-            new SigningKeyPair(SIGN_PRIVATE, HEX);
+            new SigningKeyPair(SIGN_KEY_SEED, HEX);
         } catch (Exception e) {
             e.printStackTrace();
             fail("Should return a valid key size");
@@ -61,7 +61,7 @@ public class SigningKeyPairTest {
     @Test
     public void testCreateHexValidKey() throws Exception {
         try {
-            new SigningKeyPair(SIGN_PRIVATE, HEX).getSigningKey().toString();
+            new SigningKeyPair(SIGN_KEY_SEED, HEX).getSigningKey().toString();
         } catch (Exception e) {
             e.printStackTrace();
             fail("Should return a valid key size");
@@ -71,7 +71,7 @@ public class SigningKeyPairTest {
     @Test
     public void testCreateByteValidKey() throws Exception {
         try {
-            new SigningKeyPair(SIGN_PRIVATE, HEX).getSigningKey().toBytes();
+            new SigningKeyPair(SIGN_KEY_SEED, HEX).getSigningKey().toBytes();
         } catch (Exception e) {
             e.printStackTrace();
             fail("Should return a valid key size");
@@ -94,7 +94,7 @@ public class SigningKeyPairTest {
 
     @Test
     public void testSignMessageAsBytes() throws Exception {
-        byte[] rawKey = HEX.decode(SIGN_PRIVATE);
+        byte[] rawKey = HEX.decode(SIGN_KEY_SEED);
         byte[] signatureRaw = HEX.decode(SIGN_SIGNATURE);
         SigningKey key = new SigningKeyPair(rawKey).getSigningKey();
         byte[] signedMessage = key.sign(HEX.decode(SIGN_MESSAGE));
@@ -103,7 +103,7 @@ public class SigningKeyPairTest {
 
     @Test
     public void testSignMessageAsHex() throws Exception {
-        SigningKey key = new SigningKeyPair(SIGN_PRIVATE, HEX).getSigningKey();
+        SigningKey key = new SigningKeyPair(SIGN_KEY_SEED, HEX).getSigningKey();
         String signature = key.sign(SIGN_MESSAGE, HEX);
         assertEquals("Message sign has failed", SIGN_SIGNATURE, signature);
     }
@@ -111,8 +111,8 @@ public class SigningKeyPairTest {
     @Test
     public void testSerializesToHex() throws Exception {
         try {
-            SigningKey key = new SigningKeyPair(SIGN_PRIVATE, HEX).getSigningKey();
-            assertEquals("Correct sign key expected", SIGN_PRIVATE, key.toString());
+            SigningKey key = new SigningKeyPair(SIGN_KEY_SEED, HEX).getSigningKey();
+            assertEquals("Correct sign key expected", SIGN_KEY_SEED, key.toString());
         } catch (Exception e) {
             fail("Should return a valid key size");
         }
@@ -121,10 +121,10 @@ public class SigningKeyPairTest {
     @Test
     public void testSerializesToBytes() throws Exception {
         try {
-            byte[] rawKey = HEX.decode(SIGN_PRIVATE);
-            SigningKey key = new SigningKeyPair(SIGN_PRIVATE, HEX).getSigningKey();
+            byte[] rawKey = HEX.decode(SIGN_KEY_SEED);
+            SigningKey key = new SigningKeyPair(SIGN_KEY_SEED, HEX).getSigningKey();
             assertTrue("Correct sign key expected", Arrays.equals(rawKey,
-                    key.toBytes()));
+                    key.toSeed()));
         } catch (Exception e) {
             fail("Should return a valid key size");
         }
@@ -132,13 +132,13 @@ public class SigningKeyPairTest {
 
     @Test
     public void testAccessVerifyKey() {
-        VerifyKey key = new SigningKeyPair(SIGN_PRIVATE, HEX).getVerifyKey();
+        VerifyKey key = new SigningKeyPair(SIGN_KEY_SEED, HEX).getVerifyKey();
         assertEquals(key.toString(), SIGN_PUBLIC);
     }
 
     @Test
     public void testRoundTrip() {
-        SigningKeyPair kp = new SigningKeyPair(SIGN_PRIVATE, HEX);
+        SigningKeyPair kp = new SigningKeyPair(SIGN_KEY_SEED, HEX);
         String signature = kp.getSigningKey().sign(SIGN_MESSAGE, HEX);
         assertTrue(kp.getVerifyKey().verify(SIGN_MESSAGE, signature, HEX));
     }

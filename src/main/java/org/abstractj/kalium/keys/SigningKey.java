@@ -17,30 +17,27 @@
 package org.abstractj.kalium.keys;
 
 import jnr.ffi.byref.LongLongByReference;
-import org.abstractj.kalium.crypto.Random;
 import org.abstractj.kalium.crypto.Util;
 import org.abstractj.kalium.encoders.Encoder;
 
-import static org.abstractj.kalium.NaCl.Sodium.PUBLICKEY_BYTES;
-import static org.abstractj.kalium.NaCl.Sodium.SECRETKEY_BYTES;
+import static org.abstractj.kalium.NaCl.Sodium.SIGNATURE_SECRETKEY_BYTES;
+import static org.abstractj.kalium.NaCl.Sodium.SIGNATURE_SEED_BYTES;
 import static org.abstractj.kalium.NaCl.Sodium.SIGNATURE_BYTES;
 import static org.abstractj.kalium.NaCl.sodium;
 import static org.abstractj.kalium.crypto.Util.checkLength;
-import static org.abstractj.kalium.crypto.Util.isValid;
 import static org.abstractj.kalium.crypto.Util.slice;
-import static org.abstractj.kalium.crypto.Util.zeros;
 import static org.abstractj.kalium.encoders.Encoder.HEX;
 
 public class SigningKey {
     private final byte[] secretKey;
 
     public SigningKey(byte[] secretKey) {
-        checkLength(secretKey, SECRETKEY_BYTES * 2);
+        checkLength(secretKey, SIGNATURE_SECRETKEY_BYTES);
         this.secretKey = secretKey;
     }
 
-    public SigningKey(String seed, Encoder encoder) {
-        this(encoder.decode(seed));
+    public SigningKey(String secretKey, Encoder encoder) {
+        this(encoder.decode(secretKey));
     }
 
     public byte[] sign(byte[] message) {
@@ -56,14 +53,18 @@ public class SigningKey {
         return encoder.encode(signature);
     }
 
-    public byte[] toBytes() {
+    public byte[] toSeed() {
         /* We happen to know that in the Ed25519 scheme that the keypair-generating seed
-        is the first SECRETKEY_BYTES of the secretKey. This is kind of gross. */
-        return Util.slice(secretKey, 0, SECRETKEY_BYTES);
+        is the first SIGNATURE_SEED_BYTES of the secretKey. */
+        return Util.slice(secretKey, 0, SIGNATURE_SEED_BYTES);
+    }
+
+    public byte[] toBytes() {
+        return secretKey;
     }
 
     @Override
     public String toString() {
-        return HEX.encode(toBytes());
+        return HEX.encode(toSeed());
     }
 }
