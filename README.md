@@ -19,15 +19,12 @@ OS X users can get libsodium via [homebrew](http://mxcl.github.com/homebrew/) wi
 
 ### kalium installation
 
-    git clone https://github.com/abstractj/kalium && cd kalium
-    mvn clean install
-    
 Add as a Maven dependency at your project:
 
     <dependency>
         <groupId>org.abstractj.kalium</groupId>
         <artifactId>kalium</artifactId>
-        <version>0.1.5-SNAPSHOT</version>
+        <version>0.2.0</version>
         <scope>compile</scope>
     </dependency>
         
