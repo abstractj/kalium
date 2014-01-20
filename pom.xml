@@ -60,7 +60,7 @@
         <dependency>
             <groupId>com.github.jnr</groupId>
             <artifactId>jnr-ffi</artifactId>
-            <version>1.0.4</version>
+            <version>1.0.10</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
