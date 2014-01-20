@@ -1,20 +1,20 @@
 language: java
 
 before_script:
-  - wget -c http://download.libsodium.org/libsodium/releases/libsodium-0.4.2.tar.gz
-  - tar xzvf libsodium-0.4.2.tar.gz
-  - cd libsodium-0.4.2 && mkdir vendor
+  - wget -c http://download.libsodium.org/libsodium/releases/libsodium-0.4.5.tar.gz
+  - tar xzvf libsodium-0.4.5.tar.gz
+  - cd libsodium-0.4.5 && mkdir vendor
   - ./configure --prefix=`pwd`/vendor
   - make && make install
   - cd ../
 
-script: "LD_LIBRARY_PATH=/home/travis/build/abstractj/kalium/libsodium-0.4.2/vendor/lib"
+script: "LD_LIBRARY_PATH=/home/travis/build/abstractj/kalium/libsodium-0.4.5/vendor/lib"
 
-env: JAVA_OPTS="-Djava.library.path=/home/travis/build/abstractj/kalium/libsodium-0.4.2/vendor/lib"
+env: JAVA_OPTS="-Djava.library.path=/home/travis/build/abstractj/kalium/libsodium-0.4.5/vendor/lib"
 
 jdk:
   - oraclejdk7
   - openjdk6
 
 after_success:
-  - rm -rf libsodium-0.4.2*
+  - rm -rf libsodium-0.4.5*
