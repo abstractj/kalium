@@ -134,19 +134,19 @@ public class Signature {
         return hsum;
     }
 
-    static byte[] signature(byte[] m, byte[] sk, byte[] pk) {
+    static byte[] sign(byte[] m, byte[] sk, byte[] pk) {
         byte[] h = hash.sha512(sk);
-        //System.out.println("signature open with m="+test.getHex(m)+" h="+test.getHex(h)+" pk="+test.getHex(pk));
+        //System.out.println("sign open with m="+test.getHex(m)+" h="+test.getHex(h)+" pk="+test.getHex(pk));
         BigInteger a = BigInteger.valueOf(2).pow(b-2);
         for (int i=3;i<(b-2);i++) {
             a = a.add(BigInteger.valueOf(2).pow(i).multiply(BigInteger.valueOf(bit(h,i))));
         }
-        //System.out.println("signature a="+a);
+        //System.out.println("sign a="+a);
         ByteBuffer rsub = ByteBuffer.allocate((b/8)+m.length);
         rsub.put(h, b/8, b/4-b/8).put(m);
-        //System.out.println("signature rsub="+test.getHex(rsub.array()));
+        //System.out.println("sign rsub="+test.getHex(rsub.array()));
         BigInteger r = Hint(rsub.array());
-        //System.out.println("signature r="+r);
+        //System.out.println("sign r="+r);
         BigInteger[] R = scalarmult(B,r);
         ByteBuffer Stemp = ByteBuffer.allocate(32+pk.length+m.length);
         Stemp.put(encodepoint(R)).put(pk).put(m);
@@ -193,25 +193,25 @@ public class Signature {
         return P;
     }
 
-    static boolean checkvalid(byte[] s, byte[] m, byte[] pk) throws Exception {
-        if (s.length != b/4) throw new Exception("signature length is wrong");
+    static boolean verify(byte[] s, byte[] m, byte[] pk) throws Exception {
+        if (s.length != b/4) throw new Exception("sign length is wrong");
         if (pk.length != b/8) throw new Exception("public-key length is wrong");
-        //System.out.println("checkvalid open with s="+test.getHex(s)+" m="+test.getHex(m)+" pk="+test.getHex(pk));
+        //System.out.println("verify open with s="+test.getHex(s)+" m="+test.getHex(m)+" pk="+test.getHex(pk));
         byte[] Rbyte = Arrays.copyOfRange(s, 0, b/8);
-        //System.out.println("checkvalid Rbyte="+test.getHex(Rbyte));
+        //System.out.println("verify Rbyte="+test.getHex(Rbyte));
         BigInteger[] R = decodepoint(Rbyte);
         BigInteger[] A = decodepoint(pk);
-        //System.out.println("checkvalid R="+R[0]+","+R[1]+" A="+A[0]+","+A[1]);
+        //System.out.println("verify R="+R[0]+","+R[1]+" A="+A[0]+","+A[1]);
         byte[] Sbyte = Arrays.copyOfRange(s, b/8, b/4);
-        //System.out.println("checkvalid Sbyte="+test.getHex(Sbyte));
+        //System.out.println("verify Sbyte="+test.getHex(Sbyte));
         BigInteger S = decodeint(Sbyte);
-        //System.out.println("checkvalid S="+S);
+        //System.out.println("verify S="+S);
         ByteBuffer Stemp = ByteBuffer.allocate(32+pk.length+m.length);
         Stemp.put(encodepoint(R)).put(pk).put(m);
         BigInteger h = Hint(Stemp.array());
         BigInteger[] ra = scalarmult(B,S);
         BigInteger[] rb = edwards(R,scalarmult(A,h));
-        //System.out.println("checkvalid ra="+ra[0]+","+ra[1]+" rb="+rb[0]+","+rb[1]);
+        //System.out.println("verify ra="+ra[0]+","+ra[1]+" rb="+rb[0]+","+rb[1]);
         if (!ra[0].equals(rb[0]) || !ra[1].equals(rb[1])) // Constant time comparison
             return false;
         return true;

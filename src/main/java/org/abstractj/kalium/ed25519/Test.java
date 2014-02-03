@@ -27,9 +27,9 @@ public class Test {
         byte[] privateKey = HEX.decode(SIGN_PRIVATE);
         byte[] publicKey = Signature.publickey(privateKey);
         byte[] message = HEX.decode(SIGN_MESSAGE);
-        byte[] signature = Signature.signature(message, privateKey, publicKey);
+        byte[] signature = Signature.sign(message, privateKey, publicKey);
         try {
-            System.out.println("check signature result:\n" + Signature.checkvalid(signature, message, publicKey));
+            System.out.println("check sign result:\n" + Signature.verify(signature, message, publicKey));
         } catch (Exception e) {
             e.printStackTrace();
         }
