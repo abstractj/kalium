@@ -16,6 +16,8 @@
 
 package org.abstractj.kalium.crypto;
 
+import org.jboss.aerogear.AeroGearCrypto;
+import org.jboss.aerogear.crypto.password.Pbkdf2;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -68,7 +70,9 @@ public class SecretBoxTest {
     @Test
     public void testDecrypt() throws Exception {
 
-        SecretBox box = new SecretBox(SECRET_KEY, HEX);
+        Pbkdf2 pbkdf2 = AeroGearCrypto.pbkdf2();
+        byte[] key = pbkdf2.encrypt("123", new Random().randomBytes());
+        SecretBox box = new SecretBox(key);
 
         byte[] nonce = HEX.decode(BOX_NONCE);
         byte[] expectedMessage = HEX.decode(BOX_MESSAGE);
