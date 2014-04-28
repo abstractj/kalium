@@ -39,6 +39,8 @@ public class KeyPair {
     public KeyPair(byte[] secretKey) {
         this.secretKey = secretKey;
         checkLength(this.secretKey, SECRETKEY_BYTES);
+        Point point = new Point();
+        this.publicKey = point.mult(secretKey).toBytes();
     }
 
     public KeyPair(String secretKey, Encoder encoder) {
@@ -46,9 +48,7 @@ public class KeyPair {
     }
 
     public PublicKey getPublicKey() {
-        Point point = new Point();
-        byte[] key = publicKey != null ? publicKey : point.mult(secretKey).toBytes();
-        return new PublicKey(key);
+        return new PublicKey(publicKey);
     }
 
     public PrivateKey getPrivateKey() {
