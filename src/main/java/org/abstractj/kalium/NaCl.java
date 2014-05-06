@@ -34,6 +34,7 @@ public class NaCl {
         public static final Sodium SODIUM_INSTANCE = LibraryLoader.create(Sodium.class)
                 .search("/usr/local/lib")
                 .search("/opt/local/lib")
+                .search("lib")
                 .load(LIBRARY_NAME);
     }
     
