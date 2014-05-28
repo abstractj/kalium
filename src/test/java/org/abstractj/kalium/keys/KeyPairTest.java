@@ -116,6 +116,13 @@ public class KeyPairTest {
     }
 
     @Test
+    public void testKeyPairs(){
+        KeyPair kp = new KeyPair();
+        KeyPair kp2 = new KeyPair(kp.getPrivateKey().toBytes());
+        assertEquals(kp, kp2);
+    }
+
+    @Test
     public void testPublicKeyToBytes() throws Exception {
         try {
             KeyPair key = new KeyPair(BOB_PRIVATE_KEY, HEX);
