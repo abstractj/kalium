@@ -47,7 +47,7 @@ public class VerifyKey {
         byte[] buffer = zeros(sigAndMsg.length);
         LongLongByReference bufferLen = new LongLongByReference(0);
 
-        return isValid(sodium().crypto_sign_ed25519_ref_open(buffer, bufferLen, sigAndMsg, sigAndMsg.length, key), "signature was forged or corrupted");
+        return isValid(sodium().crypto_sign_ed25519_open(buffer, bufferLen, sigAndMsg, sigAndMsg.length, key), "signature was forged or corrupted");
     }
 
     public boolean verify(String message, String signature, Encoder encoder) {

@@ -58,7 +58,7 @@ public class Box {
         checkLength(nonce, NONCE_BYTES);
         byte[] msg = prependZeros(ZERO_BYTES, message);
         byte[] ct = new byte[msg.length];
-        isValid(sodium().crypto_box_curve25519xsalsa20poly1305_ref(ct, msg,
+        isValid(sodium().crypto_box_curve25519xsalsa20poly1305(ct, msg,
                 msg.length, nonce, publicKey, privateKey), "Encryption failed");
         return removeZeros(BOXZERO_BYTES, ct);
     }
@@ -71,7 +71,7 @@ public class Box {
         checkLength(nonce, NONCE_BYTES);
         byte[] ct = prependZeros(BOXZERO_BYTES, ciphertext);
         byte[] message = new byte[ct.length];
-        isValid(sodium().crypto_box_curve25519xsalsa20poly1305_ref_open(message, ct,
+        isValid(sodium().crypto_box_curve25519xsalsa20poly1305_open(message, ct,
                 message.length, nonce, publicKey, privateKey), "Decryption failed. Ciphertext failed verification.");
         return removeZeros(ZERO_BYTES, message);
     }

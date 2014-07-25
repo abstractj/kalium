@@ -33,7 +33,7 @@ public class KeyPair {
     public KeyPair() {
         this.secretKey = zeros(SECRETKEY_BYTES);
         this.publicKey = zeros(PUBLICKEY_BYTES);
-        sodium().crypto_box_curve25519xsalsa20poly1305_ref_keypair(publicKey, secretKey);
+        sodium().crypto_box_curve25519xsalsa20poly1305_keypair(publicKey, secretKey);
     }
 
     public KeyPair(byte[] secretKey) {

@@ -29,13 +29,13 @@ public class Hash {
 
     public byte[] sha256(byte[] message) {
         buffer = new byte[SHA256BYTES];
-        sodium().crypto_hash_sha256_ref(buffer, message, message.length);
+        sodium().crypto_hash_sha256(buffer, message, message.length);
         return buffer;
     }
 
     public byte[] sha512(byte[] message) {
         buffer = new byte[SHA512BYTES];
-        sodium().crypto_hash_sha512_ref(buffer, message, message.length);
+        sodium().crypto_hash_sha512(buffer, message, message.length);
         return buffer;
     }
 

@@ -42,7 +42,7 @@ public class SigningKey {
         this.seed = seed;
         this.secretKey = zeros(SECRETKEY_BYTES * 2);
         byte[] publicKey = zeros(PUBLICKEY_BYTES);
-        isValid(sodium().crypto_sign_ed25519_ref_seed_keypair(publicKey, secretKey, seed),
+        isValid(sodium().crypto_sign_ed25519_seed_keypair(publicKey, secretKey, seed),
                 "Failed to generate a key pair");
 
         this.verifyKey = new VerifyKey(publicKey);
@@ -63,7 +63,7 @@ public class SigningKey {
     public byte[] sign(byte[] message) {
         byte[] signature = Util.prependZeros(SIGNATURE_BYTES, message);
         LongLongByReference bufferLen = new LongLongByReference(0);
-        sodium().crypto_sign_ed25519_ref(signature, bufferLen, message, message.length, secretKey);
+        sodium().crypto_sign_ed25519(signature, bufferLen, message, message.length, secretKey);
         signature = slice(signature, 0, SIGNATURE_BYTES);
         return signature;
     }

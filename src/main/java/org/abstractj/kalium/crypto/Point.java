@@ -43,7 +43,7 @@ public class Point {
 
     public Point mult(byte[] n) {
         byte[] result = zeros(SCALAR_BYTES);
-        sodium().crypto_scalarmult_curve25519_ref(result, n, point);
+        sodium().crypto_scalarmult_curve25519(result, n, point);
         return new Point(result);
     }
 

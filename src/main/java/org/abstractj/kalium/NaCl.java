@@ -47,11 +47,11 @@ public class NaCl {
 
         public static final int SHA256BYTES = 32;
 
-        public int crypto_hash_sha256_ref(@Out byte[] buffer, @In byte[] message, @u_int64_t long sizeof);
+        public int crypto_hash_sha256(@Out byte[] buffer, @In byte[] message, @u_int64_t long sizeof);
 
         public static final int SHA512BYTES = 64;
 
-        public int crypto_hash_sha512_ref(@Out byte[] buffer, @In byte[] message, @u_int64_t long sizeof);
+        public int crypto_hash_sha512(@Out byte[] buffer, @In byte[] message, @u_int64_t long sizeof);
 
 
         public static final int BLAKE2B_OUTBYTES = 64;
@@ -61,7 +61,7 @@ public class NaCl {
         public static final int PUBLICKEY_BYTES = 32;
         public static final int SECRETKEY_BYTES = 32;
 
-        public int crypto_box_curve25519xsalsa20poly1305_ref_keypair(@Out byte[] publicKey, @Out byte[] secretKey);
+        public int crypto_box_curve25519xsalsa20poly1305_keypair(@Out byte[] publicKey, @Out byte[] secretKey);
 
 
         public static final int NONCE_BYTES = 24;
@@ -70,29 +70,29 @@ public class NaCl {
 
         public void randombytes(@Out byte[] buffer, @u_int64_t long size);
 
-        public int crypto_box_curve25519xsalsa20poly1305_ref(@Out byte[] ct, @In byte[] msg, @u_int64_t long length, @In byte[] nonce,
-                                                             @In byte[] publicKey, @In byte[] privateKey);
+        public int crypto_box_curve25519xsalsa20poly1305(@Out byte[] ct, @In byte[] msg, @u_int64_t long length, @In byte[] nonce,
+                                                         @In byte[] publicKey, @In byte[] privateKey);
 
-        public int crypto_box_curve25519xsalsa20poly1305_ref_open(@Out byte[] message, @In byte[] ct, @u_int64_t long length,
-                                                                  @In byte[] nonce, @In byte[] publicKey, @In byte[] privateKey);
+        public int crypto_box_curve25519xsalsa20poly1305_open(@Out byte[] message, @In byte[] ct, @u_int64_t long length,
+                                                              @In byte[] nonce, @In byte[] publicKey, @In byte[] privateKey);
 
         public static final int SCALAR_BYTES = 32;
 
-        public int crypto_scalarmult_curve25519_ref(@Out byte[] result, @In byte[] intValue, @In byte[] point);
+        public int crypto_scalarmult_curve25519(@Out byte[] result, @In byte[] intValue, @In byte[] point);
 
         public static final int XSALSA20_POLY1305_SECRETBOX_KEYBYTES = 32;
         public static final int XSALSA20_POLY1305_SECRETBOX_NONCEBYTES = 24;
 
-        int crypto_secretbox_xsalsa20poly1305_ref(@Out byte[] ct, @In byte[] msg, @u_int64_t long length, @In byte[] nonce, @In byte[] key);
+        int crypto_secretbox_xsalsa20poly1305(@Out byte[] ct, @In byte[] msg, @u_int64_t long length, @In byte[] nonce, @In byte[] key);
 
-        int crypto_secretbox_xsalsa20poly1305_ref_open(@Out byte[] message, @In byte[] ct, @u_int64_t long length, @In byte[] nonce, @In byte[] key);
+        int crypto_secretbox_xsalsa20poly1305_open(@Out byte[] message, @In byte[] ct, @u_int64_t long length, @In byte[] nonce, @In byte[] key);
 
         public static final int SIGNATURE_BYTES = 64;
 
-        int crypto_sign_ed25519_ref_seed_keypair(@Out byte[] publicKey, @Out byte[] secretKey, @In byte[] seed);
+        int crypto_sign_ed25519_seed_keypair(@Out byte[] publicKey, @Out byte[] secretKey, @In byte[] seed);
 
-        int crypto_sign_ed25519_ref(@Out byte[] buffer, @Out LongLongByReference bufferLen, @In byte[] message, @u_int64_t long length, @In byte[] secretKey);
+        int crypto_sign_ed25519(@Out byte[] buffer, @Out LongLongByReference bufferLen, @In byte[] message, @u_int64_t long length, @In byte[] secretKey);
 
-        int crypto_sign_ed25519_ref_open(@Out byte[] buffer, @Out LongLongByReference bufferLen, @In byte[] sigAndMsg, @u_int64_t long length, @In byte[] key);
+        int crypto_sign_ed25519_open(@Out byte[] buffer, @Out LongLongByReference bufferLen, @In byte[] sigAndMsg, @u_int64_t long length, @In byte[] key);
     }
 }
