@@ -40,12 +40,12 @@ public class Hash {
     }
 
     public String sha256(String message, Encoder encoder) {
-        byte[] hash = sha256(message.getBytes());
+        byte[] hash = sha256(encoder.decode(message));
         return encoder.encode(hash);
     }
 
     public String sha512(String message, Encoder encoder) {
-        byte[] hash = sha512(message.getBytes());
+        byte[] hash = sha512(encoder.decode(message));
         return encoder.encode(hash);
     }
 
@@ -60,7 +60,7 @@ public class Hash {
 
     public String blake2(String message, Encoder encoder) throws UnsupportedOperationException {
         if (!blakeSupportedVersion()) throw new UnsupportedOperationException();
-        byte[] hash = blake2(message.getBytes());
+        byte[] hash = blake2(encoder.decode(message));
         return encoder.encode(hash);
     }
 
