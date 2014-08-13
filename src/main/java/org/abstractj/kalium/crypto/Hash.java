@@ -24,17 +24,14 @@ import static org.abstractj.kalium.NaCl.Sodium.SHA512BYTES;
 import static org.abstractj.kalium.NaCl.sodium;
 
 public class Hash {
-
-    private static byte[] buffer;
-
     public byte[] sha256(byte[] message) {
-        buffer = new byte[SHA256BYTES];
+        byte[] buffer = new byte[SHA256BYTES];
         sodium().crypto_hash_sha256(buffer, message, message.length);
         return buffer;
     }
 
     public byte[] sha512(byte[] message) {
-        buffer = new byte[SHA512BYTES];
+        byte[] buffer = new byte[SHA512BYTES];
         sodium().crypto_hash_sha512(buffer, message, message.length);
         return buffer;
     }
@@ -53,7 +50,7 @@ public class Hash {
     public byte[] blake2(byte[] message) throws UnsupportedOperationException {
         if (!blakeSupportedVersion()) throw new UnsupportedOperationException();
 
-        buffer = new byte[BLAKE2B_OUTBYTES];
+        byte[] buffer = new byte[BLAKE2B_OUTBYTES];
         sodium().crypto_generichash_blake2b(buffer, BLAKE2B_OUTBYTES, message, message.length, null, 0);
         return buffer;
     }
