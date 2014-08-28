@@ -42,6 +42,12 @@ public class NaCl {
     }
 
     public interface Sodium {
+
+        /**
+         * This function isn't thread safe. Be sure to call it once, and before performing other operations.
+         *
+         * Check libsodium's documentation for more info.
+         */
         public int sodium_init();
 
         public String sodium_version_string();
@@ -97,6 +103,11 @@ public class NaCl {
         int crypto_sign_ed25519_open(@Out byte[] buffer, @Out LongLongByReference bufferLen, @In byte[] sigAndMsg, @u_int64_t long length, @In byte[] key);
     }
 
+    /**
+     * This function isn't thread safe. Be sure to call it once, and before performing other operations.
+     *
+     * Check libsodium's <i>sodium_init()</i> documentation for more info.
+     */
     public static int init() {
         return sodium().sodium_init();
     }
