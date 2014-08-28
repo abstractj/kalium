@@ -27,9 +27,9 @@ public class NaCl {
     public static Sodium sodium() {
         return SingletonHolder.SODIUM_INSTANCE;
     }
-    
+
     private static final String LIBRARY_NAME = "sodium";
-    
+
     private static final class SingletonHolder {
         public static final Sodium SODIUM_INSTANCE = LibraryLoader.create(Sodium.class)
                 .search("/usr/local/lib")
@@ -37,7 +37,7 @@ public class NaCl {
                 .search("lib")
                 .load(LIBRARY_NAME);
     }
-    
+
     private NaCl() {
     }
 
