@@ -45,9 +45,9 @@ public class TestVectors {
             "cf7aa2e4cb1ecd90296e3f14cb5413f8ed77be73045b13914cdcd6a918";
     public static final String Blake2_DIGEST_EMPTY_STRING = "786a02f742015903c6c6fd852552d272912f4740e15847618a86e217f" +
             "71f5419d25e1031afee585313896444934eb04b903a685b1448b755d56f701afe9be2ce";
-    public static final bytes[] Blake2_KEY = "This is a super secret key. Ssshh!".getBytes();
-    public static final bytes[] Blake2_SALT = "0123456789abcdef".getBytes();
-    public static final bytes[] Blake2_PERSONAL = "fedcba9876543210".getBytes();
+    public static final byte[] Blake2_KEY = "This is a super secret key. Ssshh!".getBytes();
+    public static final byte[] Blake2_SALT = "0123456789abcdef".getBytes();
+    public static final byte[] Blake2_PERSONAL = "fedcba9876543210".getBytes();
     public static final String Blake2_DIGEST_WITH_SALT_PERSONAL = "9479874d504f0447d43d72a969c989c34032172276ac50077e0027277c3c8d867bee9ee314c8506e4e4a9b3030b989d3eb7b4c1826c8e0d56e6aa71b1d4cf388";
 
     /**
