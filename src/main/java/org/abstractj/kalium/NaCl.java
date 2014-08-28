@@ -42,6 +42,7 @@ public class NaCl {
     }
 
     public interface Sodium {
+        public int sodium_init();
 
         public String sodium_version_string();
 
@@ -94,5 +95,9 @@ public class NaCl {
         int crypto_sign_ed25519(@Out byte[] buffer, @Out LongLongByReference bufferLen, @In byte[] message, @u_int64_t long length, @In byte[] secretKey);
 
         int crypto_sign_ed25519_open(@Out byte[] buffer, @Out LongLongByReference bufferLen, @In byte[] sigAndMsg, @u_int64_t long length, @In byte[] key);
+    }
+
+    public static int init() {
+        return sodium().sodium_init();
     }
 }
