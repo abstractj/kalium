@@ -139,4 +139,10 @@ public class HashTest {
             fail("Should not raise any exception on null byte");
         }
     }
+
+    @Test
+    public void testBlake2WithSaltAndPersonal() {
+        byte[] result = hash.blake2(Blake2_MESSAGE.getBytes(), Blake2_KEY, Blake2_SALT, Blake2_PERSONAL);
+        assertEquals("Hash is invalid", Blake2_DIGEST_WITH_SALT_PERSONAL, HEX.encode(result));
+    }
 }
