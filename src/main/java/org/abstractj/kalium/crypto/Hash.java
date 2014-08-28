@@ -65,10 +65,10 @@ public class Hash {
         if (!blakeSupportedVersion()) throw new UnsupportedOperationException();
 
         byte[] buffer = new byte[BLAKE2B_OUTBYTES];
-        sodium().crypto_generichash_blake2b(buffer, BLAKE2B_OUTBYTES,
-                                            message, message.length,
-                                            key, key.length,
-                                            salt, personal);
+        sodium().crypto_generichash_blake2b_salt_personal(buffer, BLAKE2B_OUTBYTES,
+                                                          message, message.length,
+                                                          key, key.length,
+                                                          salt, personal);
         return buffer;
     }
 
