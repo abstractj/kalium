@@ -28,9 +28,14 @@ import static org.abstractj.kalium.fixture.TestVectors.SHA256_MESSAGE;
 import static org.abstractj.kalium.fixture.TestVectors.SHA512_DIGEST;
 import static org.abstractj.kalium.fixture.TestVectors.SHA512_DIGEST_EMPTY_STRING;
 import static org.abstractj.kalium.fixture.TestVectors.SHA512_MESSAGE;
+import static org.abstractj.kalium.fixture.TestVectors.Blake2_MESSAGE;
 import static org.abstractj.kalium.fixture.TestVectors.Blake2_DIGEST;
 import static org.abstractj.kalium.fixture.TestVectors.Blake2_DIGEST_EMPTY_STRING;
-import static org.abstractj.kalium.fixture.TestVectors.Blake2_MESSAGE;
+import static org.abstractj.kalium.fixture.TestVectors.Blake2_DIGEST_WITH_SALT_PERSONAL;
+import static org.abstractj.kalium.fixture.TestVectors.Blake2_KEY;
+import static org.abstractj.kalium.fixture.TestVectors.Blake2_SALT;
+import static org.abstractj.kalium.fixture.TestVectors.Blake2_PERSONAL;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
