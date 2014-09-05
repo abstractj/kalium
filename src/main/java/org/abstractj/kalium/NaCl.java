@@ -25,7 +25,14 @@ import jnr.ffi.types.u_int64_t;
 public class NaCl {
 
     public static Sodium sodium() {
-        return SingletonHolder.SODIUM_INSTANCE;
+        Sodium sodium = SingletonHolder.SODIUM_INSTANCE;
+
+        if(!(sodium.sodium_version_string().compareTo("0.4.0") >= 0)){
+            String message = String.format("Unsupported libsodium version: %s. Please update",
+                    sodium.sodium_version_string());
+            throw new UnsupportedOperationException(message);
+        }
+        return sodium;
     }
 
     private static final String LIBRARY_NAME = "sodium";
@@ -36,6 +43,7 @@ public class NaCl {
                 .search("/opt/local/lib")
                 .search("lib")
                 .load(LIBRARY_NAME);
+
     }
 
     private NaCl() {

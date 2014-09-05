@@ -48,22 +48,17 @@ public class Hash {
 
 
     public byte[] blake2(byte[] message) throws UnsupportedOperationException {
-        if (!blakeSupportedVersion()) throw new UnsupportedOperationException();
-
         byte[] buffer = new byte[BLAKE2B_OUTBYTES];
         sodium().crypto_generichash_blake2b(buffer, BLAKE2B_OUTBYTES, message, message.length, null, 0);
         return buffer;
     }
 
     public String blake2(String message, Encoder encoder) throws UnsupportedOperationException {
-        if (!blakeSupportedVersion()) throw new UnsupportedOperationException();
         byte[] hash = blake2(message.getBytes());
         return encoder.encode(hash);
     }
 
     public byte[] blake2(byte[] message, byte[] key, byte[] salt, byte[] personal) throws UnsupportedOperationException {
-        if (!blakeSupportedVersion()) throw new UnsupportedOperationException();
-
         byte[] buffer = new byte[BLAKE2B_OUTBYTES];
         sodium().crypto_generichash_blake2b_salt_personal(buffer, BLAKE2B_OUTBYTES,
                                                           message, message.length,
@@ -71,9 +66,4 @@ public class Hash {
                                                           salt, personal);
         return buffer;
     }
-
-    private boolean blakeSupportedVersion(){
-        return sodium().sodium_version_string().compareTo("0.4.0") >= 0 ;
-    }
-
 }
