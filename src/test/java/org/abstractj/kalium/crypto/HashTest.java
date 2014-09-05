@@ -147,7 +147,9 @@ public class HashTest {
 
     @Test
     public void testBlake2WithSaltAndPersonal() {
-        byte[] result = hash.blake2(Blake2_MESSAGE.getBytes(), Blake2_KEY, Blake2_SALT, Blake2_PERSONAL);
+        byte[] result = hash.blake2(Blake2_MESSAGE.getBytes(), Blake2_KEY.getBytes(),
+                Blake2_SALT.getBytes(),
+                Blake2_PERSONAL.getBytes());
         assertEquals("Hash is invalid", Blake2_DIGEST_WITH_SALT_PERSONAL, HEX.encode(result));
     }
 }
