@@ -24,7 +24,6 @@ public class Util {
 
     public static byte[] prependZeros(int n, byte[] message) {
         byte[] result = new byte[n + message.length];
-        Arrays.fill(result, (byte) 0);
         System.arraycopy(message, 0, result, n, message.length);
         return result;
     }
