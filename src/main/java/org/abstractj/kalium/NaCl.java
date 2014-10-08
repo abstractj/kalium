@@ -68,7 +68,7 @@ public class NaCl {
 
         public static final int SHA512BYTES = 64;
 
-        public int crypto_hash_sha512(@Out byte[] buffer, @In byte[] message, @u_int64_t long sizeof);
+        public int crypto_hash_sha512(@Out ByteBuffer buffer, @In ByteBuffer message, @u_int64_t long sizeof);
 
 
         public static final int BLAKE2B_OUTBYTES = 64;

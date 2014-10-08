@@ -66,12 +66,46 @@ public class Hash {
         // REVIEW: This is unsafe because of byte[]!
         return copyBufferToArray(sha256(ByteBuffer.wrap(message)));
     }
+
+    /**
+     * Like the regular sha512 with the same signature,
+     * except without safety checks.
+     *
+     * @param message The message for which to compute the checksum.
+     * @param out The buffer that will have the checksum. Must be a directly
+     *            allocated, and of the appropriate capacity.
+     */
+    private void sha512Unsafe(ByteBuffer message, ByteBuffer out){
+        sodium().crypto_hash_sha512(out, message, message.capacity());
+    }
+
+    /**
+     * Computes a SHA-512 checksum.
+     *
+     * @param message The message for which to compute the checksum.
+     * @param out The buffer that will have the checksum.
+     */
+    public void sha512(ByteBuffer message, ByteBuffer out) {
+        assert out.isDirect();
+        assert out.capacity() == SHA512BYTES;
+        sha512Unsafe(message, out);
+    }
+
+    /**
+     * Computes a SHA-512 checksum.
+     *
+     * @param message The message for which to compute the checksum.
+     * @return A new, directly allocated byte buffer with the checksum.
+     */
+    public ByteBuffer sha512(ByteBuffer message) {
+        ByteBuffer out = ByteBuffer.allocateDirect(SHA512BYTES);
+        sha512Unsafe(message, out);
+        return out;
     }
 
     public byte[] sha512(byte[] message) {
-        byte[] buffer = new byte[SHA512BYTES];
-        sodium().crypto_hash_sha512(buffer, message, message.length);
-        return buffer;
+        // REVIEW: This is unsafe because of byte[]!
+        return copyBufferToArray(sha512(ByteBuffer.wrap(message)));
     }
 
     public String sha256(String message, Encoder encoder) {
