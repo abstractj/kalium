@@ -124,25 +124,74 @@ public class Hash {
     // UnsupportedOperationException, but  it appears they can no longer
     // actually raise that exception. Should I remove them?
 
-
-    public byte[] blake2(byte[] message) throws UnsupportedOperationException {
-        byte[] buffer = new byte[BLAKE2B_OUTBYTES];
-        sodium().crypto_generichash_blake2b(buffer, BLAKE2B_OUTBYTES, message, message.length, null, 0);
-        return buffer;
+    /**
+     * Computes a BLAKE2b checksum, without safety checks.
+     *
+     * For parameters, consult blake2.
+     */
+    private static void blake2Unsafe(ByteBuffer out, ByteBuffer message,
+                                     ByteBuffer key, ByteBuffer salt,
+                                     ByteBuffer personal) {
+        int keyLength = key == null ? 0 : key.capacity();
+        sodium().crypto_generichash_blake2b_salt_personal(
+                out, BLAKE2B_OUTBYTES,
+                message, message.capacity(),
+                key, keyLength,
+                salt, personal);
     }
 
-    public String blake2(String message, Encoder encoder) throws UnsupportedOperationException {
+    /**
+     * Computes a BLAKE2b checksum.
+     *
+     * @param out The buffer that will have the checksum. Must be a directly
+     *            allocated, and of the appropriate capacity.
+     * @param message The The message for which to compute the checksum.
+     * @param key The key, or null if undesired.
+     * @param salt The salt, or null if undesired.
+     * @param personal The personalization parameter, null if undesired.
+     */
+    public static void blake2(ByteBuffer out, ByteBuffer message,
+                              ByteBuffer key, ByteBuffer salt,
+                              ByteBuffer personal) {
+        assert out.isDirect();
+        assert out.capacity() == BLAKE2B_OUTBYTES;
+        blake2Unsafe(out, message, key, salt, personal);
+    }
+
+    /**
+     * Computes a BLAKE2b checksum.
+     *
+     * Exactly like the other blake2 method, except it creates the output
+     * buffer for you.
+     */
+    public static ByteBuffer blake2(ByteBuffer message, ByteBuffer key,
+                                    ByteBuffer salt, ByteBuffer personal) {
+        ByteBuffer out = ByteBuffer.allocateDirect(BLAKE2B_OUTBYTES);
+        blake2Unsafe(out, message, key, salt, personal);
+        return out;
+    }
+
+    public byte[] blake2(byte[] message) throws UnsupportedOperationException {
+        // REVIEW: This is unsafe because of byte[]!
+        ByteBuffer buf = blake2(ByteBuffer.wrap(message), null, null, null);
+        return copyBufferToArray(buf);
+    }
+
+    public String blake2(String message, Encoder encoder) throws
+            UnsupportedOperationException {
+        // REVIEW: This is unsafe because of String!
         byte[] hash = blake2(message.getBytes());
         return encoder.encode(hash);
     }
 
-    public byte[] blake2(byte[] message, byte[] key, byte[] salt, byte[] personal) throws UnsupportedOperationException {
-        byte[] buffer = new byte[BLAKE2B_OUTBYTES];
-        sodium().crypto_generichash_blake2b_salt_personal(buffer, BLAKE2B_OUTBYTES,
-                                                          message, message.length,
-                                                          key, key.length,
-                                                          salt, personal);
-        return buffer;
+    public byte[] blake2(byte[] message, byte[] key, byte[] salt,
+                         byte[] personal) throws UnsupportedOperationException {
+        // REVIEW: This is unsafe because of byte[]!
+        ByteBuffer buf = blake2(ByteBuffer.wrap(message), ByteBuffer.wrap(key),
+                ByteBuffer.wrap(salt), ByteBuffer.wrap(personal));
+        return copyBufferToArray(buf);
+    }
+
     /**
      * Copies a ByteBuffer's contents into an array.
      *
