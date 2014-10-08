@@ -120,6 +120,10 @@ public class Hash {
         return encoder.encode(hash);
     }
 
+    // REVIEW: All of the blake2 things still have throws
+    // UnsupportedOperationException, but  it appears they can no longer
+    // actually raise that exception. Should I remove them?
+
 
     public byte[] blake2(byte[] message) throws UnsupportedOperationException {
         byte[] buffer = new byte[BLAKE2B_OUTBYTES];
