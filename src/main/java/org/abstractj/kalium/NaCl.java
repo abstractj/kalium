@@ -22,6 +22,8 @@ import jnr.ffi.annotations.Out;
 import jnr.ffi.byref.LongLongByReference;
 import jnr.ffi.types.u_int64_t;
 
+import java.nio.ByteBuffer;
+
 public class NaCl {
 
     public static Sodium sodium() {
@@ -62,7 +64,7 @@ public class NaCl {
 
         public static final int SHA256BYTES = 32;
 
-        public int crypto_hash_sha256(@Out byte[] buffer, @In byte[] message, @u_int64_t long sizeof);
+        public int crypto_hash_sha256(@Out ByteBuffer buffer, @In ByteBuffer message, @u_int64_t long sizeof);
 
         public static final int SHA512BYTES = 64;
 

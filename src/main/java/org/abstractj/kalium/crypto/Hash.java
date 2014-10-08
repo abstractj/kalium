@@ -18,16 +18,54 @@ package org.abstractj.kalium.crypto;
 
 import org.abstractj.kalium.encoders.Encoder;
 
+import java.nio.ByteBuffer;
+
 import static org.abstractj.kalium.NaCl.Sodium.BLAKE2B_OUTBYTES;
 import static org.abstractj.kalium.NaCl.Sodium.SHA256BYTES;
 import static org.abstractj.kalium.NaCl.Sodium.SHA512BYTES;
 import static org.abstractj.kalium.NaCl.sodium;
 
 public class Hash {
+    /**
+     * Like the regular sha256 with the same signature,
+     * except without safety checks.
+     *
+     * @param message The message for which to compute the checksum.
+     * @param out The buffer that will have the checksum. Must be a directly
+     *            allocated, and of the appropriate capacity.
+     */
+    private void sha256Unsafe(ByteBuffer message, ByteBuffer out){
+        sodium().crypto_hash_sha256(out, message, message.capacity());
+    }
+
+    /**
+     * Computes a SHA-256 checksum.
+     *
+     * @param message The message for which to compute the checksum.
+     * @param out The buffer that will have the checksum.
+     */
+	public void sha256(ByteBuffer message, ByteBuffer out) {
+        assert out.isDirect();
+        assert out.capacity() == SHA256BYTES;
+        sha256Unsafe(message, out);
+	}
+
+    /**
+     * Computes a SHA-256 checksum.
+     *
+     * @param message The message for which to compute the checksum.
+     * @return A new, directly allocated byte buffer with the checksum.
+     */
+	public ByteBuffer sha256(ByteBuffer message) {
+        ByteBuffer out = ByteBuffer.allocateDirect(SHA256BYTES);
+        sha256Unsafe(message, out);
+        return out;
+	}
+
     public byte[] sha256(byte[] message) {
-        byte[] buffer = new byte[SHA256BYTES];
-        sodium().crypto_hash_sha256(buffer, message, message.length);
-        return buffer;
+        // REVIEW: This is unsafe because of byte[]!
+        return copyBufferToArray(sha256(ByteBuffer.wrap(message)));
+    }
     }
 
     public byte[] sha512(byte[] message) {
@@ -65,5 +103,17 @@ public class Hash {
                                                           key, key.length,
                                                           salt, personal);
         return buffer;
+    /**
+     * Copies a ByteBuffer's contents into an array.
+     *
+     * Since this makes a copy, this is insecure to use with secret data.
+     *
+     * @param buffer The buffer to make a copy of.
+     * @return An independent byte array with the same contents as the buffer.
+     */
+    private static byte[] copyBufferToArray(ByteBuffer buffer) {
+        byte[] result = new byte[buffer.capacity()];
+        buffer.get(result, 0, buffer.capacity());
+        return result;
     }
 }
