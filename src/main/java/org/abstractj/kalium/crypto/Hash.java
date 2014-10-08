@@ -109,11 +109,13 @@ public class Hash {
     }
 
     public String sha256(String message, Encoder encoder) {
+        // REVIEW: This is unsafe because of String!
         byte[] hash = sha256(message.getBytes());
         return encoder.encode(hash);
     }
 
     public String sha512(String message, Encoder encoder) {
+        // REVIEW: This is unsafe because of String!
         byte[] hash = sha512(message.getBytes());
         return encoder.encode(hash);
     }
