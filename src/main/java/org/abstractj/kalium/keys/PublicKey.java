@@ -20,7 +20,7 @@ import static org.abstractj.kalium.NaCl.Sodium.PUBLICKEY_BYTES;
 import static org.abstractj.kalium.crypto.Util.checkLength;
 import static org.abstractj.kalium.encoders.Encoder.HEX;
 
-public class PublicKey {
+public class PublicKey implements Key {
 
     private final byte[] publicKey;
 
