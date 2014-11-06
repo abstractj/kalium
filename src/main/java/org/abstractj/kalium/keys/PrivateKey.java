@@ -20,7 +20,7 @@ import static org.abstractj.kalium.NaCl.Sodium.SECRETKEY_BYTES;
 import static org.abstractj.kalium.crypto.Util.checkLength;
 import static org.abstractj.kalium.encoders.Encoder.HEX;
 
-public class PrivateKey {
+public class PrivateKey implements Key {
 
     private final byte[] secretKey;
 
@@ -34,6 +34,7 @@ public class PrivateKey {
         checkLength(this.secretKey, SECRETKEY_BYTES);
     }
 
+    @Override
     public byte[] toBytes() {
         return secretKey;
     }
