@@ -18,52 +18,191 @@ package org.abstractj.kalium.crypto;
 
 import org.abstractj.kalium.encoders.Encoder;
 
+import java.nio.ByteBuffer;
+
 import static org.abstractj.kalium.NaCl.Sodium.BLAKE2B_OUTBYTES;
 import static org.abstractj.kalium.NaCl.Sodium.SHA256BYTES;
 import static org.abstractj.kalium.NaCl.Sodium.SHA512BYTES;
 import static org.abstractj.kalium.NaCl.sodium;
 
 public class Hash {
+    /**
+     * Like the regular sha256 with the same signature,
+     * except without safety checks.
+     *
+     * @param message The message for which to compute the checksum.
+     * @param out The buffer that will have the checksum. Must be a directly
+     *            allocated, and of the appropriate capacity.
+     */
+    private void sha256Unsafe(ByteBuffer message, ByteBuffer out){
+        sodium().crypto_hash_sha256(out, message, message.capacity());
+    }
+
+    /**
+     * Computes a SHA-256 checksum.
+     *
+     * @param message The message for which to compute the checksum.
+     * @param out The buffer that will have the checksum.
+     */
+	public void sha256(ByteBuffer message, ByteBuffer out) {
+        assert out.isDirect();
+        assert out.capacity() == SHA256BYTES;
+        sha256Unsafe(message, out);
+	}
+
+    /**
+     * Computes a SHA-256 checksum.
+     *
+     * @param message The message for which to compute the checksum.
+     * @return A new, directly allocated byte buffer with the checksum.
+     */
+	public ByteBuffer sha256(ByteBuffer message) {
+        ByteBuffer out = ByteBuffer.allocateDirect(SHA256BYTES);
+        sha256Unsafe(message, out);
+        return out;
+	}
+
     public byte[] sha256(byte[] message) {
-        byte[] buffer = new byte[SHA256BYTES];
-        sodium().crypto_hash_sha256(buffer, message, message.length);
-        return buffer;
+        // REVIEW: This is unsafe because of byte[]!
+        return copyBufferToArray(sha256(ByteBuffer.wrap(message)));
+    }
+
+    /**
+     * Like the regular sha512 with the same signature,
+     * except without safety checks.
+     *
+     * @param message The message for which to compute the checksum.
+     * @param out The buffer that will have the checksum. Must be a directly
+     *            allocated, and of the appropriate capacity.
+     */
+    private void sha512Unsafe(ByteBuffer message, ByteBuffer out){
+        sodium().crypto_hash_sha512(out, message, message.capacity());
+    }
+
+    /**
+     * Computes a SHA-512 checksum.
+     *
+     * @param message The message for which to compute the checksum.
+     * @param out The buffer that will have the checksum.
+     */
+    public void sha512(ByteBuffer message, ByteBuffer out) {
+        assert out.isDirect();
+        assert out.capacity() == SHA512BYTES;
+        sha512Unsafe(message, out);
+    }
+
+    /**
+     * Computes a SHA-512 checksum.
+     *
+     * @param message The message for which to compute the checksum.
+     * @return A new, directly allocated byte buffer with the checksum.
+     */
+    public ByteBuffer sha512(ByteBuffer message) {
+        ByteBuffer out = ByteBuffer.allocateDirect(SHA512BYTES);
+        sha512Unsafe(message, out);
+        return out;
     }
 
     public byte[] sha512(byte[] message) {
-        byte[] buffer = new byte[SHA512BYTES];
-        sodium().crypto_hash_sha512(buffer, message, message.length);
-        return buffer;
+        // REVIEW: This is unsafe because of byte[]!
+        return copyBufferToArray(sha512(ByteBuffer.wrap(message)));
     }
 
     public String sha256(String message, Encoder encoder) {
+        // REVIEW: This is unsafe because of String!
         byte[] hash = sha256(message.getBytes());
         return encoder.encode(hash);
     }
 
     public String sha512(String message, Encoder encoder) {
+        // REVIEW: This is unsafe because of String!
         byte[] hash = sha512(message.getBytes());
         return encoder.encode(hash);
     }
 
+    // REVIEW: All of the blake2 things still have throws
+    // UnsupportedOperationException, but  it appears they can no longer
+    // actually raise that exception. Should I remove them?
 
-    public byte[] blake2(byte[] message) throws UnsupportedOperationException {
-        byte[] buffer = new byte[BLAKE2B_OUTBYTES];
-        sodium().crypto_generichash_blake2b(buffer, BLAKE2B_OUTBYTES, message, message.length, null, 0);
-        return buffer;
+    /**
+     * Computes a BLAKE2b checksum, without safety checks.
+     *
+     * For parameters, consult blake2.
+     */
+    private static void blake2Unsafe(ByteBuffer out, ByteBuffer message,
+                                     ByteBuffer key, ByteBuffer salt,
+                                     ByteBuffer personal) {
+        int keyLength = key == null ? 0 : key.capacity();
+        sodium().crypto_generichash_blake2b_salt_personal(
+                out, BLAKE2B_OUTBYTES,
+                message, message.capacity(),
+                key, keyLength,
+                salt, personal);
     }
 
-    public String blake2(String message, Encoder encoder) throws UnsupportedOperationException {
+    /**
+     * Computes a BLAKE2b checksum.
+     *
+     * @param out The buffer that will have the checksum. Must be a directly
+     *            allocated, and of the appropriate capacity.
+     * @param message The The message for which to compute the checksum.
+     * @param key The key, or null if undesired.
+     * @param salt The salt, or null if undesired.
+     * @param personal The personalization parameter, null if undesired.
+     */
+    public static void blake2(ByteBuffer out, ByteBuffer message,
+                              ByteBuffer key, ByteBuffer salt,
+                              ByteBuffer personal) {
+        assert out.isDirect();
+        assert out.capacity() == BLAKE2B_OUTBYTES;
+        blake2Unsafe(out, message, key, salt, personal);
+    }
+
+    /**
+     * Computes a BLAKE2b checksum.
+     *
+     * Exactly like the other blake2 method, except it creates the output
+     * buffer for you.
+     */
+    public static ByteBuffer blake2(ByteBuffer message, ByteBuffer key,
+                                    ByteBuffer salt, ByteBuffer personal) {
+        ByteBuffer out = ByteBuffer.allocateDirect(BLAKE2B_OUTBYTES);
+        blake2Unsafe(out, message, key, salt, personal);
+        return out;
+    }
+
+    public byte[] blake2(byte[] message) throws UnsupportedOperationException {
+        // REVIEW: This is unsafe because of byte[]!
+        ByteBuffer buf = blake2(ByteBuffer.wrap(message), null, null, null);
+        return copyBufferToArray(buf);
+    }
+
+    public String blake2(String message, Encoder encoder) throws
+            UnsupportedOperationException {
+        // REVIEW: This is unsafe because of String!
         byte[] hash = blake2(message.getBytes());
         return encoder.encode(hash);
     }
 
-    public byte[] blake2(byte[] message, byte[] key, byte[] salt, byte[] personal) throws UnsupportedOperationException {
-        byte[] buffer = new byte[BLAKE2B_OUTBYTES];
-        sodium().crypto_generichash_blake2b_salt_personal(buffer, BLAKE2B_OUTBYTES,
-                                                          message, message.length,
-                                                          key, key.length,
-                                                          salt, personal);
-        return buffer;
+    public byte[] blake2(byte[] message, byte[] key, byte[] salt,
+                         byte[] personal) throws UnsupportedOperationException {
+        // REVIEW: This is unsafe because of byte[]!
+        ByteBuffer buf = blake2(ByteBuffer.wrap(message), ByteBuffer.wrap(key),
+                ByteBuffer.wrap(salt), ByteBuffer.wrap(personal));
+        return copyBufferToArray(buf);
+    }
+
+    /**
+     * Copies a ByteBuffer's contents into an array.
+     *
+     * Since this makes a copy, this is insecure to use with secret data.
+     *
+     * @param buffer The buffer to make a copy of.
+     * @return An independent byte array with the same contents as the buffer.
+     */
+    private static byte[] copyBufferToArray(ByteBuffer buffer) {
+        byte[] result = new byte[buffer.capacity()];
+        buffer.get(result, 0, buffer.capacity());
+        return result;
     }
 }

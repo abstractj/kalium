@@ -22,6 +22,8 @@ import jnr.ffi.annotations.Out;
 import jnr.ffi.byref.LongLongByReference;
 import jnr.ffi.types.u_int64_t;
 
+import java.nio.ByteBuffer;
+
 public class NaCl {
 
     public static Sodium sodium() {
@@ -62,22 +64,22 @@ public class NaCl {
 
         public static final int SHA256BYTES = 32;
 
-        public int crypto_hash_sha256(@Out byte[] buffer, @In byte[] message, @u_int64_t long sizeof);
+        public int crypto_hash_sha256(@Out ByteBuffer buffer, @In ByteBuffer message, @u_int64_t long sizeof);
 
         public static final int SHA512BYTES = 64;
 
-        public int crypto_hash_sha512(@Out byte[] buffer, @In byte[] message, @u_int64_t long sizeof);
+        public int crypto_hash_sha512(@Out ByteBuffer buffer, @In ByteBuffer message, @u_int64_t long sizeof);
 
 
         public static final int BLAKE2B_OUTBYTES = 64;
-        public int crypto_generichash_blake2b(@Out byte[] buffer, @u_int64_t long outLen,
-                                              @In byte[] message, @u_int64_t long messageLen,
-                                              @In byte[] key, @u_int64_t long keyLen);
-        public int crypto_generichash_blake2b_salt_personal(@Out byte[] buffer, @u_int64_t long outLen,
-                                                            @In byte[] message, @u_int64_t long messageLen,
-                                                            @In byte[] key,  @u_int64_t long keyLen,
-                                                            @In byte[] salt,
-                                                            @In byte[] personal);
+        public int crypto_generichash_blake2b(@Out ByteBuffer buffer, @u_int64_t long outLen,
+                                              @In ByteBuffer message, @u_int64_t long messageLen,
+                                              @In ByteBuffer key, @u_int64_t long keyLen);
+        public int crypto_generichash_blake2b_salt_personal(@Out ByteBuffer buffer, @u_int64_t long outLen,
+                                                            @In ByteBuffer message, @u_int64_t long messageLen,
+                                                            @In ByteBuffer key,  @u_int64_t long keyLen,
+                                                            @In ByteBuffer salt,
+                                                            @In ByteBuffer personal);
 
         public static final int PUBLICKEY_BYTES = 32;
         public static final int SECRETKEY_BYTES = 32;
