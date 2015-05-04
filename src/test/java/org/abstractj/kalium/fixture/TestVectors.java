@@ -1,12 +1,12 @@
 /**
  * Copyright 2013 Bruno Oliveira, and individual contributors
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -65,14 +65,14 @@ public class TestVectors {
 
     /**
      * pwhash test vectors
-     * */
-    
+     */
+
     public static final String PWHASH_MESSAGE = "Correct Horse Battery Staple";
     public static final String PWHASH_SALT = "[<~A 32-bytes salt for scrypt~>]";
     public static final String PWHASH_DIGEST = "a2ec8a8ee744e0ff2c26d4fc198ddf7c0cd1460b5b6729e0d8518b6577c69acd412491f0913737e64c5c9136c04731545e756e0a9be35f55337e446c6bbc3a3f";
     public static final String PWHASH_DIGEST_EMPTY_STRING = "f8b1543b940c7898ce90261d07f5193cb0570081e47b01610c043b8091666e12585ab9844edb189624c2ba662ca7478cfbed9f38fe1066b7ce583a3321470424";
-    
-    
+
+
     /**
      * Curve25519 test vectors
      */
@@ -107,4 +107,10 @@ public class TestVectors {
     public static final String SIGN_SIGNATURE = "6bd710a368c1249923fc7a1610747403040f0cc30815a00f9ff548a896bbda0b" +
             "4eb2ca19ebcf917f0f34200a9edbad3901b64ab09cc5ef7b9bcc3c40c0ff7509";
     public static final String SIGN_PUBLIC = "77f48b59caeda77751ed138b0ec667ff50f8768c25d48309a8f386a2bad187fb";
+
+    /**
+     * AES 128 test vectors
+     */
+    public static final String AES128_MESSAGE = "Hello World!";
+    public static final String AES128_KEY = "26eee63e1216b927e49871e52f7129a8";
 }

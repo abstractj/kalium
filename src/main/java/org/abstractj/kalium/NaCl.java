@@ -1,12 +1,12 @@
 /**
  * Copyright 2013 Bruno Oliveira, and individual contributors
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,7 +27,7 @@ public class NaCl {
     public static Sodium sodium() {
         Sodium sodium = SingletonHolder.SODIUM_INSTANCE;
 
-        if(!(sodium.sodium_version_string().compareTo("0.4.0") >= 0)){
+        if (!(sodium.sodium_version_string().compareTo("0.4.0") >= 0)) {
             String message = String.format("Unsupported libsodium version: %s. Please update",
                     sodium.sodium_version_string());
             throw new UnsupportedOperationException(message);
@@ -76,14 +76,15 @@ public class NaCl {
 
         public int crypto_hash_sha512(@Out byte[] buffer, @In byte[] message, @u_int64_t long sizeof);
 
-
         public static final int BLAKE2B_OUTBYTES = 64;
+
         public int crypto_generichash_blake2b(@Out byte[] buffer, @u_int64_t long outLen,
                                               @In byte[] message, @u_int64_t long messageLen,
                                               @In byte[] key, @u_int64_t long keyLen);
+
         public int crypto_generichash_blake2b_salt_personal(@Out byte[] buffer, @u_int64_t long outLen,
                                                             @In byte[] message, @u_int64_t long messageLen,
-                                                            @In byte[] key,  @u_int64_t long keyLen,
+                                                            @In byte[] key, @u_int64_t long keyLen,
                                                             @In byte[] salt,
                                                             @In byte[] personal);
 
@@ -109,12 +110,12 @@ public class NaCl {
         public int crypto_pwhash_scryptsalsa208sha256_str_verify(@In byte[] buffer,
                                                                  @In byte[] passwd,
                                                                  @u_int64_t long passwdlen);
-        
+
         public static final int PUBLICKEY_BYTES = 32;
         public static final int SECRETKEY_BYTES = 32;
 
-        public int crypto_box_curve25519xsalsa20poly1305_keypair(@Out byte[] publicKey, @Out byte[] secretKey);
-
+        public int crypto_box_curve25519xsalsa20poly1305_keypair(
+                @Out byte[] publicKey, @Out byte[] secretKey);
 
         public static final int NONCE_BYTES = 24;
         public static final int ZERO_BYTES = 32;
@@ -133,7 +134,7 @@ public class NaCl {
         public int crypto_scalarmult_curve25519(@Out byte[] result, @In byte[] intValue, @In byte[] point);
 
         public static final int XSALSA20_POLY1305_SECRETBOX_KEYBYTES = 32;
-        public static final int XSALSA20_POLY1305_SECRETBOX_NONCEBYTES = 24;
+        public static final int XSALSA20_POLY1305_SECRETBOX_NONCEBYTES = 24;    
 
         int crypto_secretbox_xsalsa20poly1305(@Out byte[] ct, @In byte[] msg, @u_int64_t long length, @In byte[] nonce, @In byte[] key);
 
@@ -146,6 +147,13 @@ public class NaCl {
         int crypto_sign_ed25519(@Out byte[] buffer, @Out LongLongByReference bufferLen, @In byte[] message, @u_int64_t long length, @In byte[] secretKey);
 
         int crypto_sign_ed25519_open(@Out byte[] buffer, @Out LongLongByReference bufferLen, @In byte[] sigAndMsg, @u_int64_t long length, @In byte[] key);
+
+        public static final int AES_128_CTR_KEYBYTES = 16;
+        public static final int CRYPTO_STREAM_AES_128_CTR_NONCEBYTES = 16;
+
+        int crypto_stream_aes128ctr(@Out byte[] result, @In byte[] msg, @u_int64_t long length, @In byte[] nonce, @In byte[] key);
+
+        int crypto_stream_aes128ctr_xor(@Out byte[] result, @In byte[] msg, @u_int64_t long length, @In byte[] nonce, @In byte[] key);
     }
 
     /**
