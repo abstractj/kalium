@@ -60,6 +60,14 @@ public class NaCl {
 
         public String sodium_version_string();
 
+        public static final int HMACSHA512256_BYTES = 32;
+
+        public static final int HMACSHA512256_KEYBYTES = 32;
+
+        public int crypto_auth_hmacsha512256(@Out byte[] mac, @In byte[] message, @u_int64_t long sizeof, @In byte[] key);
+
+        public int crypto_auth_hmacsha512256_verify(@In byte[] mac, @In byte[] message, @u_int64_t long sizeof, @In byte[] key);
+
         public static final int SHA256BYTES = 32;
 
         public int crypto_hash_sha256(@Out byte[] buffer, @In byte[] message, @u_int64_t long sizeof);

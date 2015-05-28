@@ -19,6 +19,18 @@ package org.abstractj.kalium.fixture;
 public class TestVectors {
 
     /**
+     * HMAC SHA512256 test vectors
+     */
+
+    public static final String AUTH_KEY = "eea6a7251c1e72916d11c2cb214d3c252539121d8e234e652d651fa4c8cff880";
+    public static final String AUTH_MESSAGE = "8e993b9f48681273c29650ba32fc76ce48332ea7164d96a4476fb8c531a1186a" +
+            "c0dfc17c98dce87b4da7f011ec48c97271d2c20f9b928fe2270d6fb863d51738" +
+            "b48eeee314a7cc8ab932164548e526ae90224368517acfeabd6bb3732bc0e9da" +
+            "99832b61ca01b6de56244a9e88d5f9b37973f622a43d14a6599b1f654cb45a74" +
+            "e355a5";
+    public static final String AUTH_HMAC_SHA512256 = "b2a31b8d4e01afcab2ee545b5caf4e3d212a99d7b3a116a97cec8e83c32e107d";
+
+    /**
      * SHA256 test vectors
      */
 
