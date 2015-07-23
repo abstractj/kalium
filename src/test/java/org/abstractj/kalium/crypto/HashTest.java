@@ -17,14 +17,12 @@
 package org.abstractj.kalium.crypto;
 
 import org.abstractj.kalium.NaCl;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
 
 import static junit.framework.Assert.assertTrue;
 import static org.abstractj.kalium.encoders.Encoder.HEX;
-import static org.abstractj.kalium.encoders.Encoder.RAW;
 import static org.abstractj.kalium.fixture.TestVectors.SHA256_DIGEST;
 import static org.abstractj.kalium.fixture.TestVectors.SHA256_DIGEST_EMPTY_STRING;
 import static org.abstractj.kalium.fixture.TestVectors.SHA256_MESSAGE;
@@ -41,7 +39,6 @@ import static org.abstractj.kalium.fixture.TestVectors.Blake2_PERSONAL;
 import static org.abstractj.kalium.fixture.TestVectors.PWHASH_MESSAGE;
 import static org.abstractj.kalium.fixture.TestVectors.PWHASH_SALT;
 import static org.abstractj.kalium.fixture.TestVectors.PWHASH_DIGEST;
-import static org.abstractj.kalium.fixture.TestVectors.PWHASH_DIGEST_STR;
 import static org.abstractj.kalium.fixture.TestVectors.PWHASH_DIGEST_EMPTY_STRING;
 
 import static org.junit.Assert.assertEquals;
