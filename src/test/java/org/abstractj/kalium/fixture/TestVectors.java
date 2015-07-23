@@ -62,6 +62,18 @@ public class TestVectors {
     public static final String Blake2_PERSONAL = "fedcba9876543210";
     public static final String Blake2_DIGEST_WITH_SALT_PERSONAL = "9479874d504f0447d43d72a969c989c34032172276ac50077e0027277c3c8d867bee9ee314c8506e4e4a9b3030b989d3eb7b4c1826c8e0d56e6aa71b1d4cf388";
 
+
+    /**
+     * pwhash test vectors
+     * */
+    
+    public static final String PWHASH_MESSAGE = "foopasswd";
+    public static final String PWHASH_SALT = "secretPwHashSaltsecretPwHashSalt"; // Must be 32 characters
+    public static final String PWHASH_DIGEST = "f8557d31b27fb63f90f1d8588f1f22cfa4d5b06c73137e9cbe3dd0b9cef2127b0ca9b7450124b339ea71ef66e944f7460aecae7959a6a7d07c9ea9be915ec1e6";
+    public static final String PWHASH_DIGEST_STR = "24372443362e2e2e2e2f2e2e2e2e333259354c62656242697165375831657465324e4968467861313656495a617a4a713236536f3741727632247a38456f4c4f424c714a3633424d4e675636745965486b50493558536f53716c776e62393976525048563100";
+    public static final String PWHASH_DIGEST_EMPTY_STRING = "bf283c063aaa3ddf8b061dfa6ada5ee77870e9694517bf08d8ba752221117506426c990052d6f74e812ee93470ccae89526cf2e4971459083716a870c95fa073";
+    
+    
     /**
      * Curve25519 test vectors
      */
