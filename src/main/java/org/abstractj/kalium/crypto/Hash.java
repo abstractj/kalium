@@ -18,7 +18,11 @@ package org.abstractj.kalium.crypto;
 
 import org.abstractj.kalium.encoders.Encoder;
 
-import static org.abstractj.kalium.NaCl.Sodium.*;
+import static org.abstractj.kalium.NaCl.Sodium.BLAKE2B_OUTBYTES;
+import static org.abstractj.kalium.NaCl.Sodium.SHA256BYTES;
+import static org.abstractj.kalium.NaCl.Sodium.SHA512BYTES;
+import static org.abstractj.kalium.NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_OUTBYTES;
+import static org.abstractj.kalium.NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_STRBYTES;
 import static org.abstractj.kalium.NaCl.sodium;
 
 public class Hash {
