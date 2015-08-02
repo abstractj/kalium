@@ -160,7 +160,7 @@ public class HashTest {
     
     @Test 
     public void testPWHash(){
-        String result = hash.pwhash_scryptsalsa208sha256(PWHASH_MESSAGE.getBytes(),
+        String result = hash.pwhash(PWHASH_MESSAGE.getBytes(),
                 HEX, 
                 PWHASH_SALT.getBytes(), 
                 NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE, 
@@ -170,7 +170,7 @@ public class HashTest {
     
     @Test
     public void testPWHashEmptyString(){
-        String result = hash.pwhash_scryptsalsa208sha256("".getBytes(),
+        String result = hash.pwhash("".getBytes(),
                 HEX,
                 PWHASH_SALT.getBytes(),
                 NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE,
@@ -181,7 +181,7 @@ public class HashTest {
     @Test
     public void testPWHashNullByte() {
         try {
-            hash.pwhash_scryptsalsa208sha256("\0".getBytes(),
+            hash.pwhash("\0".getBytes(),
                     HEX,
                     PWHASH_SALT.getBytes(),
                     NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE,
@@ -193,18 +193,18 @@ public class HashTest {
     
     @Test
     public void testPWHashStorage(){
-        String result = hash.pwhash_scryptsalsa208sha256_str(PWHASH_MESSAGE.getBytes(),
+        String result = hash.pwhash_str(PWHASH_MESSAGE.getBytes(),
                 HEX,
                 NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE,
                 NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE);
         byte[] hashed = HEX.decode(result);
         
         // Must return true
-        boolean verified1 = hash.pwhash_scryptsalsa208sha256_str_verify(hashed, PWHASH_MESSAGE.getBytes());
+        boolean verified1 = hash.pwhash_str_verify(hashed, PWHASH_MESSAGE.getBytes());
         assertTrue("Invalid password", verified1);
         
         // Must return false since it's an invalid
-        boolean verified2 = hash.pwhash_scryptsalsa208sha256_str_verify(hashed, ("i" + PWHASH_MESSAGE).getBytes());
+        boolean verified2 = hash.pwhash_str_verify(hashed, ("i" + PWHASH_MESSAGE).getBytes());
         assertTrue("Valid password", !verified2);
     }
 }

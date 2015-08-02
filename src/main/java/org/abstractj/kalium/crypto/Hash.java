@@ -69,19 +69,19 @@ public class Hash {
         return buffer;
     }
 
-    public String pwhash_scryptsalsa208sha256(byte[] passwd, Encoder encoder, byte[] salt, int opslimit, long memlimit) {
+    public String pwhash(byte[] passwd, Encoder encoder, byte[] salt, int opslimit, long memlimit) {
         byte[] buffer = new byte[PWHASH_SCRYPTSALSA208SHA256_OUTBYTES];
         sodium().crypto_pwhash_scryptsalsa208sha256(buffer, buffer.length, passwd, passwd.length, salt, opslimit, memlimit);
         return encoder.encode(buffer);
     }
 
-    public String pwhash_scryptsalsa208sha256_str(byte[] passwd, Encoder encoder, int opslimit, long memlimit) {
+    public String pwhash_str(byte[] passwd, Encoder encoder, int opslimit, long memlimit) {
         byte[] buffer = new byte[PWHASH_SCRYPTSALSA208SHA256_STRBYTES];
         sodium().crypto_pwhash_scryptsalsa208sha256_str(buffer, passwd, passwd.length, opslimit, memlimit);
         return encoder.encode(buffer);
     }
 
-    public boolean pwhash_scryptsalsa208sha256_str_verify(byte[] hashed_passwd, byte[] passwd) {
+    public boolean pwhash_str_verify(byte[] hashed_passwd, byte[] passwd) {
         int result = sodium().crypto_pwhash_scryptsalsa208sha256_str_verify(hashed_passwd, passwd, passwd.length);
         return result == 0;
     }
