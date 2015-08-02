@@ -67,10 +67,10 @@ public class TestVectors {
      * pwhash test vectors
      * */
     
-    public static final String PWHASH_MESSAGE = "foopasswd";
-    public static final String PWHASH_SALT = "secretPwHashSaltsecretPwHashSalt"; // Must be 32 characters
-    public static final String PWHASH_DIGEST = "f8557d31b27fb63f90f1d8588f1f22cfa4d5b06c73137e9cbe3dd0b9cef2127b0ca9b7450124b339ea71ef66e944f7460aecae7959a6a7d07c9ea9be915ec1e6";
-    public static final String PWHASH_DIGEST_EMPTY_STRING = "bf283c063aaa3ddf8b061dfa6ada5ee77870e9694517bf08d8ba752221117506426c990052d6f74e812ee93470ccae89526cf2e4971459083716a870c95fa073";
+    public static final String PWHASH_MESSAGE = "Correct Horse Battery Staple";
+    public static final String PWHASH_SALT = "[<~A 32-bytes salt for scrypt~>]";
+    public static final String PWHASH_DIGEST = "a2ec8a8ee744e0ff2c26d4fc198ddf7c0cd1460b5b6729e0d8518b6577c69acd412491f0913737e64c5c9136c04731545e756e0a9be35f55337e446c6bbc3a3f";
+    public static final String PWHASH_DIGEST_EMPTY_STRING = "f8b1543b940c7898ce90261d07f5193cb0570081e47b01610c043b8091666e12585ab9844edb189624c2ba662ca7478cfbed9f38fe1066b7ce583a3321470424";
     
     
     /**
