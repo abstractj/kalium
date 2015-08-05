@@ -87,6 +87,29 @@ public class NaCl {
                                                             @In byte[] salt,
                                                             @In byte[] personal);
 
+        public static final int PWHASH_SCRYPTSALSA208SHA256_STRBYTES = 102;
+        public static final int PWHASH_SCRYPTSALSA208SHA256_OUTBYTES = 64;
+        public static final int PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE = 524288;
+        public static final int PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE = 16777216;
+
+        public int crypto_pwhash_scryptsalsa208sha256(@Out byte[] buffer,
+                                                      @u_int64_t long outlen,
+                                                      @In byte[] passwd,
+                                                      @u_int64_t long passwdlen,
+                                                      @In byte[] salt,
+                                                      @u_int64_t long opslimit,
+                                                      @u_int64_t long memlimit);
+
+        public int crypto_pwhash_scryptsalsa208sha256_str(@Out byte[] buffer,
+                                                          @In byte[] passwd,
+                                                          @u_int64_t long passwdlen,
+                                                          @u_int64_t long opslimit,
+                                                          @u_int64_t long memlimit);
+
+        public int crypto_pwhash_scryptsalsa208sha256_str_verify(@In byte[] buffer,
+                                                                 @In byte[] passwd,
+                                                                 @u_int64_t long passwdlen);
+        
         public static final int PUBLICKEY_BYTES = 32;
         public static final int SECRETKEY_BYTES = 32;
 

@@ -24,6 +24,7 @@ import static org.abstractj.kalium.NaCl.Sodium.SHA512BYTES;
 import static org.abstractj.kalium.NaCl.sodium;
 
 public class Hash {
+
     public byte[] sha256(byte[] message) {
         byte[] buffer = new byte[SHA256BYTES];
         sodium().crypto_hash_sha256(buffer, message, message.length);

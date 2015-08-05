@@ -62,6 +62,17 @@ public class TestVectors {
     public static final String Blake2_PERSONAL = "fedcba9876543210";
     public static final String Blake2_DIGEST_WITH_SALT_PERSONAL = "9479874d504f0447d43d72a969c989c34032172276ac50077e0027277c3c8d867bee9ee314c8506e4e4a9b3030b989d3eb7b4c1826c8e0d56e6aa71b1d4cf388";
 
+
+    /**
+     * pwhash test vectors
+     * */
+    
+    public static final String PWHASH_MESSAGE = "Correct Horse Battery Staple";
+    public static final String PWHASH_SALT = "[<~A 32-bytes salt for scrypt~>]";
+    public static final String PWHASH_DIGEST = "a2ec8a8ee744e0ff2c26d4fc198ddf7c0cd1460b5b6729e0d8518b6577c69acd412491f0913737e64c5c9136c04731545e756e0a9be35f55337e446c6bbc3a3f";
+    public static final String PWHASH_DIGEST_EMPTY_STRING = "f8b1543b940c7898ce90261d07f5193cb0570081e47b01610c043b8091666e12585ab9844edb189624c2ba662ca7478cfbed9f38fe1066b7ce583a3321470424";
+    
+    
     /**
      * Curve25519 test vectors
      */
