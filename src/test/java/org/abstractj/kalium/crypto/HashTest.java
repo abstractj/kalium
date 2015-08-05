@@ -16,6 +16,7 @@
 
 package org.abstractj.kalium.crypto;
 
+import org.abstractj.kalium.NaCl;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -35,6 +36,10 @@ import static org.abstractj.kalium.fixture.TestVectors.Blake2_DIGEST_WITH_SALT_P
 import static org.abstractj.kalium.fixture.TestVectors.Blake2_KEY;
 import static org.abstractj.kalium.fixture.TestVectors.Blake2_SALT;
 import static org.abstractj.kalium.fixture.TestVectors.Blake2_PERSONAL;
+import static org.abstractj.kalium.fixture.TestVectors.PWHASH_MESSAGE;
+import static org.abstractj.kalium.fixture.TestVectors.PWHASH_SALT;
+import static org.abstractj.kalium.fixture.TestVectors.PWHASH_DIGEST;
+import static org.abstractj.kalium.fixture.TestVectors.PWHASH_DIGEST_EMPTY_STRING;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -151,5 +156,55 @@ public class HashTest {
                 Blake2_SALT.getBytes(),
                 Blake2_PERSONAL.getBytes());
         assertEquals("Hash is invalid", Blake2_DIGEST_WITH_SALT_PERSONAL, HEX.encode(result));
+    }
+    
+    @Test 
+    public void testPWHash(){
+        String result = hash.pwhash(PWHASH_MESSAGE.getBytes(),
+                HEX, 
+                PWHASH_SALT.getBytes(), 
+                NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE, 
+                NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE);
+        assertEquals("Hash is invalid", PWHASH_DIGEST, result);
+    }
+    
+    @Test
+    public void testPWHashEmptyString(){
+        String result = hash.pwhash("".getBytes(),
+                HEX,
+                PWHASH_SALT.getBytes(),
+                NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE,
+                NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE);
+        assertEquals("Hash is invalid", PWHASH_DIGEST_EMPTY_STRING, result);
+    }
+
+    @Test
+    public void testPWHashNullByte() {
+        try {
+            hash.pwhash("\0".getBytes(),
+                    HEX,
+                    PWHASH_SALT.getBytes(),
+                    NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE,
+                    NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE);
+        } catch (Exception e) {
+            fail("Should not raise any exception on null byte");
+        }
+    }
+    
+    @Test
+    public void testPWHashStorage(){
+        String result = hash.pwhash_str(PWHASH_MESSAGE.getBytes(),
+                HEX,
+                NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE,
+                NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE);
+        byte[] hashed = HEX.decode(result);
+        
+        // Must return true
+        boolean verified1 = hash.pwhash_str_verify(hashed, PWHASH_MESSAGE.getBytes());
+        assertTrue("Invalid password", verified1);
+        
+        // Must return false since it's an invalid
+        boolean verified2 = hash.pwhash_str_verify(hashed, ("i" + PWHASH_MESSAGE).getBytes());
+        assertTrue("Valid password", !verified2);
     }
 }
