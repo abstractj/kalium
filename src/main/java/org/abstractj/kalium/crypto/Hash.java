@@ -21,11 +21,10 @@ import org.abstractj.kalium.encoders.Encoder;
 import static org.abstractj.kalium.NaCl.Sodium.BLAKE2B_OUTBYTES;
 import static org.abstractj.kalium.NaCl.Sodium.SHA256BYTES;
 import static org.abstractj.kalium.NaCl.Sodium.SHA512BYTES;
-import static org.abstractj.kalium.NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_OUTBYTES;
-import static org.abstractj.kalium.NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_STRBYTES;
 import static org.abstractj.kalium.NaCl.sodium;
 
 public class Hash {
+
     public byte[] sha256(byte[] message) {
         byte[] buffer = new byte[SHA256BYTES];
         sodium().crypto_hash_sha256(buffer, message, message.length);
@@ -67,22 +66,5 @@ public class Hash {
                                                           key, key.length,
                                                           salt, personal);
         return buffer;
-    }
-
-    public String pwhash(byte[] passwd, Encoder encoder, byte[] salt, int opslimit, long memlimit) {
-        byte[] buffer = new byte[PWHASH_SCRYPTSALSA208SHA256_OUTBYTES];
-        sodium().crypto_pwhash_scryptsalsa208sha256(buffer, buffer.length, passwd, passwd.length, salt, opslimit, memlimit);
-        return encoder.encode(buffer);
-    }
-
-    public String pwhash_str(byte[] passwd, Encoder encoder, int opslimit, long memlimit) {
-        byte[] buffer = new byte[PWHASH_SCRYPTSALSA208SHA256_STRBYTES];
-        sodium().crypto_pwhash_scryptsalsa208sha256_str(buffer, passwd, passwd.length, opslimit, memlimit);
-        return encoder.encode(buffer);
-    }
-
-    public boolean pwhash_str_verify(byte[] hashed_passwd, byte[] passwd) {
-        int result = sodium().crypto_pwhash_scryptsalsa208sha256_str_verify(hashed_passwd, passwd, passwd.length);
-        return result == 0;
     }
 }
