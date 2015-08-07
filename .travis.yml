@@ -17,6 +17,7 @@ env: JAVA_OPTS="-Djava.library.path=/home/travis/build/abstractj/kalium/libsodiu
 jdk:
   - oraclejdk7
   - openjdk6
+  - oraclejdk8
 
 after_success:
   - rm -rf libsodium-1.0.3*
