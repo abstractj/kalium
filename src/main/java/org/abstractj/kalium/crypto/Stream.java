@@ -1,6 +1,8 @@
 package org.abstractj.kalium.crypto;
 
 import static org.abstractj.kalium.NaCl.sodium;
+import static org.abstractj.kalium.NaCl.Sodium.BOXZERO_BYTES;
+import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_STREAM_AES_128_CTR_NONCEBYTES;
 import static org.abstractj.kalium.crypto.Util.checkLength;
 import static org.abstractj.kalium.crypto.Util.isValid;
 import static org.abstractj.kalium.crypto.Util.prependZeros;
@@ -18,19 +20,19 @@ public class Stream {
 	}
 
 	public byte[] encrypt(byte[] nonce, byte[] message) {
-		checkLength(nonce, NaCl.Sodium.CRYPTO_STREAM_AES_128_CTR_NONCEBYTES);
+		checkLength(nonce, CRYPTO_STREAM_AES_128_CTR_NONCEBYTES);
 		byte[] msg = prependZeros(NaCl.Sodium.ZERO_BYTES, message);
 		byte[] ct = new byte[msg.length];
 
 		isValid(sodium().crypto_stream_aes128ctr_xor(ct, msg, msg.length,
 				nonce, key), "Encryption failed");
 
-		return removeZeros(NaCl.Sodium.BOXZERO_BYTES, ct);
+		return removeZeros(BOXZERO_BYTES, ct);
 	}
 
 	public byte[] decrypt(byte[] nonce, byte[] ciphertext) {
-		checkLength(nonce, NaCl.Sodium.CRYPTO_STREAM_AES_128_CTR_NONCEBYTES);
-		byte[] ct = prependZeros(NaCl.Sodium.BOXZERO_BYTES, ciphertext);
+		checkLength(nonce, CRYPTO_STREAM_AES_128_CTR_NONCEBYTES);
+		byte[] ct = prependZeros(BOXZERO_BYTES, ciphertext);
 		byte[] message = new byte[ct.length];
 
 		isValid(sodium().crypto_stream_aes128ctr_xor(message, ct,
