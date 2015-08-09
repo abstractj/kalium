@@ -117,11 +117,11 @@ public class NaCl {
         int crypto_sign_ed25519_open(@Out byte[] buffer, @Out LongLongByReference bufferLen, @In byte[] sigAndMsg, @u_int64_t long length, @In byte[] key);
         
         public static final int AES_128_CTR_KEYBYTES = 16;
-	public static final int CRYPTO_STREAM_AES_128_CTR_NONCEBYTES = 16;
+        public static final int CRYPTO_STREAM_AES_128_CTR_NONCEBYTES = 16;
 
-	int crypto_stream_aes128ctr(@Out byte[] result, @In byte[] msg,	@u_int64_t long length, @In byte[] nonce, @In byte[] key);
+        int crypto_stream_aes128ctr(@Out byte[] result, @In byte[] msg,	@u_int64_t long length, @In byte[] nonce, @In byte[] key);
 
-	int crypto_stream_aes128ctr_xor(@Out byte[] result, @In byte[] msg,	@u_int64_t long length, @In byte[] nonce, @In byte[] key);
+        int crypto_stream_aes128ctr_xor(@Out byte[] result, @In byte[] msg,	@u_int64_t long length, @In byte[] nonce, @In byte[] key);
     }
 
     /**
