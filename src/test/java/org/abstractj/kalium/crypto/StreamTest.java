@@ -1,7 +1,7 @@
 package org.abstractj.kalium.crypto;
 
 import static org.abstractj.kalium.encoders.Encoder.HEX;
-import static org.abstractj.kalium.fixture.TestVectors.AES128_KEY;
+import static org.abstractj.kalium.fixture.TestVectors.AES128_PRIVATE_KEY;
 import static org.abstractj.kalium.fixture.TestVectors.AES128_MESSAGE;
 import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_STREAM_AES_128_CTR_NONCEBYTES;
 
@@ -18,7 +18,7 @@ public class StreamTest {
 	@BeforeClass
 	public static void init() {
 		Random random = new Random();
-		stream = new Stream(HEX.decode(AES128_KEY));
+		stream = new Stream(HEX.decode(AES128_PRIVATE_KEY));
 
 		nonce = random
 				.randomBytes(CRYPTO_STREAM_AES_128_CTR_NONCEBYTES);

@@ -111,6 +111,8 @@ public class TestVectors {
     /**
      * AES 128 test vectors
      */
-    public static final String AES128_MESSAGE = "Hello World!";
-    public static final String AES128_KEY = "26eee63e1216b927e49871e52f7129a8";
+    public static final String AES128_PRIVATE_KEY = "2b7e151628aed2a6abf7158809cf4f3c";
+    public static final String AES128_MESSAGE = "6bc1bee22e409f96e93d7e117393172a";
+    public static final String AES128_CIPHERTEXT = "874d6191b620e3261bef6864990db6ce";
+
 }
