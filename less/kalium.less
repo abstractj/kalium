@@ -36,13 +36,18 @@ h1{
   font-size: @font-size-h1*2;
 }
 
-.col-sm-6{
+.content{
   background: #fff;
-  margin-top: 220px;
   padding-bottom: 40px;
+  /* Medium devices (desktops, 992px and up) */
+  @media (min-width: @screen-sm-min) { 
+    margin-top: 220px;
+  }
 }
 
-.brand{
+body:before{
+  content: ".";
+  text-indent: -9999;
   position: fixed;
   z-index: -1;
   left: 0;
@@ -50,15 +55,23 @@ h1{
   background: @brand-primary;
   height: 440px;
 }
-  .logo{
-    background: #fff;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: -64px;
-    line-height: 64px;
-    width: 64px;
-    text-align: center;
+
+.logo{
+  background: #fff;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  line-height: 64px;
+  height: 64px;
+  width: 64px;
+  text-align: center;
+
+  /* Medium devices (desktops, 992px and up) */
+  @media (min-width: @screen-md-min) { 
+    box-shadow: 0 0px 5px rgba(0,0,0,.2);
+    right: -84px;
+  }
   }
 
 .download{

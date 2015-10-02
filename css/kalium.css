@@ -6775,12 +6775,19 @@ h1 {
   font-weight: 700;
   font-size: 72px;
 }
-.col-sm-6 {
+.content {
   background: #fff;
-  margin-top: 220px;
   padding-bottom: 40px;
+  /* Medium devices (desktops, 992px and up) */
 }
-.brand {
+@media (min-width: 768px) {
+  .content {
+    margin-top: 220px;
+  }
+}
+body:before {
+  content: ".";
+  text-indent: -9999;
   position: fixed;
   z-index: -1;
   left: 0;
@@ -6793,10 +6800,18 @@ h1 {
   position: absolute;
   top: 0;
   bottom: 0;
-  right: -64px;
+  right: 0;
   line-height: 64px;
+  height: 64px;
   width: 64px;
   text-align: center;
+  /* Medium devices (desktops, 992px and up) */
+}
+@media (min-width: 992px) {
+  .logo {
+    box-shadow: 0 0px 5px rgba(0, 0, 0, 0.2);
+    right: -84px;
+  }
 }
 .download {
   background: rgba(255, 255, 255, 0.8);
