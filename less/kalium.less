@@ -11,7 +11,16 @@
 @border-radius-large:       2px;
 @border-radius-small:       2px;
 
-@brand-primary: #000;
+@brand-primary: #FF4600;
+
+
+@gray-base:              #000;
+@gray-darker:            lighten(@gray-base, 13.5%); // #222
+@gray-dark:              rgba(0,0,0,84);
+@gray:                   lighten(@gray-base, 33.5%); // #555
+@gray-light:             lighten(@gray-base, 46.7%); // #777
+@gray-lighter:           lighten(@gray-base, 93.5%); // #eee
+
 
 
 pre{
@@ -38,23 +47,24 @@ h1{
   z-index: -1;
   left: 0;
   right: 0;  
-  background: #000;
+  background: @brand-primary;
   height: 440px;
-  .logo{
-//    background: blue;
-    width: 50%;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    text-align: center;
-//    color: #fff;
-  }
 }
+  .logo{
+    background: #fff;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -64px;
+    line-height: 64px;
+    width: 64px;
+    text-align: center;
+  }
 
 .download{
   background: rgba(255,255,255,.8);
   position: -webkit-sticky; 
+  position: sticky; 
   top: 0px;
   margin: 0 -(@grid-gutter-width/2);
   padding: (@grid-gutter-width/2);
