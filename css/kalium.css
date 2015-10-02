@@ -1522,7 +1522,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: 'Roboto Mono', Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 code {
   padding: 2px 4px;
@@ -6765,9 +6765,6 @@ button.close {
     display: none !important;
   }
 }
-pre {
-  font-family: 'Roboto Mono', monospace;
-}
 body {
   font-weight: 400;
 }
@@ -6785,15 +6782,21 @@ h1 {
     margin-top: 220px;
   }
 }
-body:before {
-  content: ".";
-  text-indent: -9999;
-  position: fixed;
-  z-index: -1;
-  left: 0;
-  right: 0;
-  background: #FF4600;
-  height: 440px;
+@media (min-width: 768px) {
+  body:before {
+    content: ".";
+    text-indent: -9999;
+    position: fixed;
+    z-index: -1;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background: #FF4600;
+    background-image: url(../img/photo-1440688807730-73e4e2169fb8.jpg);
+    background-image: url(../img/bg.jpg);
+    background-size: cover;
+  }
 }
 .logo {
   background: #fff;
