@@ -1,0 +1,188 @@
+@import "../node_modules/bootstrap/less/bootstrap.less";
+
+@import url(https://fonts.googleapis.com/css?family=Roboto+Slab:100,400,700|Roboto+Mono);
+
+@font-family-sans-serif: 'Roboto Slab', "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+
+@headings-font-weight:  100;
+@headings-line-height: @line-height-base;
+@border-radius-base:        2px;
+@border-radius-large:       2px;
+@border-radius-small:       2px;
+
+@brand-primary: #000;
+
+
+pre{
+  font-family: 'Roboto Mono', monospace; 
+}
+
+body{
+  font-weight: 400;
+}
+
+h1{
+  font-weight: 700;
+  font-size: @font-size-h1*2;
+}
+
+.col-sm-6{
+  background: #fff;
+  margin-top: 220px;
+  padding-bottom: 40px;
+}
+
+.brand{
+  position: fixed;
+  z-index: -1;
+  left: 0;
+  right: 0;  
+  background: #000;
+  height: 440px;
+  .logo{
+//    background: blue;
+    width: 50%;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    text-align: center;
+//    color: #fff;
+  }
+}
+
+.download{
+  background: rgba(255,255,255,.8);
+  position: -webkit-sticky; 
+  top: 0px;
+  margin: 0 -(@grid-gutter-width/2);
+  padding: (@grid-gutter-width/2);
+  box-shadow: 0 0px 5px rgba(0,0,0,.2);
+}
+
+h3{
+  border-top:1px solid rgba(0,0,0,.12);
+  padding-top: 20px;
+  margin-top: 30px;
+}
+
+h4{
+  font-weight: 400;
+}
+
+code{
+  padding: 0;
+  margin: 0;
+}
+pre{
+  padding: 0;
+}
+
+
+// Solirize dark
+/*
+ * Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmail.com>
+ */
+
+pre {
+  @sol_0: #002b36;
+  @sol_1: #839496;
+  @sol_2: #586e75;
+  @sol_3: #859900;
+  @sol_4: #2aa198;
+  @sol_5: #268bd2;
+  @sol_6: #b58900;
+  @sol_7: #cb4b16;
+  @sol_8: #dc322f;
+  @sol_9: #073642;
+
+  code {
+    display: block; padding: 0.5em;
+    background: @sol_0;
+    color: @sol_1;
+  }
+
+  .clojure .title {
+    color: @sol_1;
+  }
+
+  .comment,
+  .template_comment,
+  .diff .header,
+  .doctype,
+  .pi,
+  .lisp .string,
+  .javadoc {
+    color: @sol_2;
+    font-style: italic;
+  }
+
+  .keyword,
+  .clojure .attribute,
+  .winutils,
+  .method,
+  .addition,
+  .css .tag,
+  .request,
+  .status,
+  .nginx .title {
+    color: @sol_3;
+  }
+
+  .number,
+  .command,
+  .string,
+  .tag .value,
+  .phpdoc,
+  .tex .formula,
+  .regexp,
+  .hexcolor {
+    color: @sol_4;
+  }
+
+  .title,
+  .localvars,
+  .chunk,
+  .decorator,
+  .built_in,
+  .identifier,
+  .literal,
+  .id {
+    color: @sol_5;
+  }
+
+  .attribute,
+  .variable,
+  .lisp .body,
+  .smalltalk .number,
+  .constant,
+  .class .title,
+  .parent,
+  .haskell .type {
+    color: @sol_6;
+  }
+
+  .preprocessor,
+  .preprocessor .keyword,
+  .shebang,
+  .symbol,
+  .symbol .string,
+  .diff .change,
+  .special,
+  .attr_selector,
+  .important,
+  .subst,
+  .cdata {
+    color: @sol_7;
+  }
+
+  .collection,
+  .deletion {
+    color: @sol_8;
+  }
+
+  .tex .formula {
+    background: @sol_9;
+  }
+}
