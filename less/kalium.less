@@ -23,39 +23,45 @@
 
 body{
   font-weight: 400;
-}
+  background: @brand-primary;
+  // I'll play with backgrounds later :)
+  // background: 
+  //   linear-gradient(-45deg, (saturate(@brand-primary,40%)) 10%,  transparent),
+  //   radial-gradient(circle at top center, @brand-primary, (darken(@brand-primary,70%)));
+  //   background-attachment: fixed, fixed;
+  }
 
 h1{
   font-weight: 700;
   font-size: @font-size-h1*2;
-}
+  }
+
+h3{
+  border-top:1px solid rgba(0,0,0,.12);
+  padding-top: 20px;
+  margin-top: 30px;
+  }
+
+h4{ font-weight: 400;}
+
+code{
+  padding: 0;
+  margin: 0;
+  }
+
+pre{
+  padding: 0;
+  }
 
 .content{
   background: #fff;
   padding-bottom: 40px;
+  margin: 10px;
+  
   /* Medium devices (desktops, 992px and up) */
   @media (min-width: @screen-sm-min) { 
-    margin-top: 220px;
+    margin: 166px 0 0 0;
   }
-}
-
-body:before{
-    @media (min-width: @screen-sm-min) { 
-
-  content: ".";
-  text-indent: -9999;
-  position: fixed;
-  z-index: -1;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  background: @brand-primary;
-  background-image: url(../img/photo-1440688807730-73e4e2169fb8.jpg);
-  background-image:  url(../img/bg.jpg);
-    background-size: cover;
-//  height: 440px;
-}
 }
 
 .logo{
@@ -68,12 +74,18 @@ body:before{
   height: 64px;
   width: 64px;
   text-align: center;
-
+  img{ height: 40px; }
   /* Medium devices (desktops, 992px and up) */
   @media (min-width: @screen-md-min) { 
     box-shadow: 0 0px 5px rgba(0,0,0,.2);
-    right: -84px;
-  }
+    right: -123px;
+    line-height: 103px;
+    height: 103px;
+    width: 103px;
+    img{
+        height: 64px;
+      }
+    }
   }
 
 .download{
@@ -84,24 +96,6 @@ body:before{
   margin: 0 -(@grid-gutter-width/2);
   padding: (@grid-gutter-width/2);
   box-shadow: 0 0px 5px rgba(0,0,0,.2);
-}
-
-h3{
-  border-top:1px solid rgba(0,0,0,.12);
-  padding-top: 20px;
-  margin-top: 30px;
-}
-
-h4{
-  font-weight: 400;
-}
-
-code{
-  padding: 0;
-  margin: 0;
-}
-pre{
-  padding: 0;
 }
 
 

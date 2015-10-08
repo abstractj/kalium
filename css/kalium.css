@@ -6767,6 +6767,7 @@ button.close {
 }
 body {
   font-weight: 400;
+  background: #FF4600;
 }
 h1 {
   font-weight: 700;
@@ -6775,27 +6776,12 @@ h1 {
 .content {
   background: #fff;
   padding-bottom: 40px;
+  margin: 10px;
   /* Medium devices (desktops, 992px and up) */
 }
 @media (min-width: 768px) {
   .content {
-    margin-top: 220px;
-  }
-}
-@media (min-width: 768px) {
-  body:before {
-    content: ".";
-    text-indent: -9999;
-    position: fixed;
-    z-index: -1;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    background: #FF4600;
-    background-image: url(../img/photo-1440688807730-73e4e2169fb8.jpg);
-    background-image: url(../img/bg.jpg);
-    background-size: cover;
+    margin: 166px 0 0 0;
   }
 }
 .logo {
@@ -6810,10 +6796,19 @@ h1 {
   text-align: center;
   /* Medium devices (desktops, 992px and up) */
 }
+.logo img {
+  height: 40px;
+}
 @media (min-width: 992px) {
   .logo {
     box-shadow: 0 0px 5px rgba(0, 0, 0, 0.2);
-    right: -84px;
+    right: -123px;
+    line-height: 103px;
+    height: 103px;
+    width: 103px;
+  }
+  .logo img {
+    height: 64px;
   }
 }
 .download {
