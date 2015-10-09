@@ -1,0 +1,319 @@
+@import "../node_modules/bootstrap/less/bootstrap.less";
+
+@import url(https://fonts.googleapis.com/css?family=Roboto+Slab:100,400,700|Roboto+Mono);
+
+@font-family-sans-serif: 'Roboto Slab', "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-monospace:   'Roboto Mono', Menlo, Monaco, Consolas, "Courier New", monospace;
+
+@headings-font-weight:  100;
+@headings-line-height: @line-height-base;
+@border-radius-base:        2px;
+@border-radius-large:       2px;
+@border-radius-small:       2px;
+
+@brand-primary: #FF4600;
+
+@gray-base:              #000;
+@gray-darker:            lighten(@gray-base, 13.5%); // #222
+@gray-dark:              rgba(0,0,0,84);
+@gray:                   lighten(@gray-base, 33.5%); // #555
+@gray-light:             lighten(@gray-base, 46.7%); // #777
+@gray-lighter:           lighten(@gray-base, 93.5%); // #eee
+
+
+body{
+  font-weight: 400;
+  background: @brand-primary;
+  // I'll play with backgrounds later :)
+  // background: 
+  //   linear-gradient(-45deg, (saturate(@brand-primary,40%)) 10%,  transparent),
+  //   radial-gradient(circle at top center, @brand-primary, (darken(@brand-primary,70%)));
+  //   background-attachment: fixed, fixed;
+  }
+
+h1{
+  font-weight: 700;
+  font-size: @font-size-h1*2;
+  }
+
+h3{
+  border-top:1px solid rgba(0,0,0,.12);
+  padding-top: 20px;
+  margin-top: 30px;
+  }
+
+h4{ font-weight: 400;}
+
+code{
+  padding: 0;
+  margin: 0;
+  }
+
+pre{
+  padding: 0;
+  }
+
+.content{
+  background: #fff;
+  padding-bottom: 40px;
+  margin: 10px;
+  
+  /* Medium devices (desktops, 992px and up) */
+  @media (min-width: @screen-sm-min) { 
+    margin: 166px 0 0 0;
+  }
+}
+
+.logo{
+  background: #fff;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  line-height: 64px;
+  height: 64px;
+  width: 64px;
+  text-align: center;
+  img{ height: 40px; }
+  /* Medium devices (desktops, 992px and up) */
+  @media (min-width: @screen-md-min) { 
+    box-shadow: 0 0px 5px rgba(0,0,0,.2);
+    right: -123px;
+    line-height: 103px;
+    height: 103px;
+    width: 103px;
+    img{
+        height: 64px;
+      }
+    }
+  }
+
+.download{
+  background: rgba(255,255,255,.8);
+  position: -webkit-sticky; 
+  position: sticky; 
+  top: 0px;
+  margin: 0 -(@grid-gutter-width/2);
+  padding: (@grid-gutter-width/2);
+  box-shadow: 0 0px 5px rgba(0,0,0,.2);
+}
+
+
+// Solirize dark
+/*
+ * Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmail.com>
+ */
+
+pre {
+  @sol_0: #002b36;
+  @sol_1: #839496;
+  @sol_2: #586e75;
+  @sol_3: #859900;
+  @sol_4: #2aa198;
+  @sol_5: #268bd2;
+  @sol_6: #b58900;
+  @sol_7: #cb4b16;
+  @sol_8: #dc322f;
+  @sol_9: #073642;
+
+  code {
+    display: block; padding: 0.5em;
+    background: @sol_0;
+    color: @sol_1;
+  }
+
+  .clojure .title {
+    color: @sol_1;
+  }
+
+  .comment,
+  .template_comment,
+  .diff .header,
+  .doctype,
+  .pi,
+  .lisp .string,
+  .javadoc {
+    color: @sol_2;
+    font-style: italic;
+  }
+
+  .keyword,
+  .clojure .attribute,
+  .winutils,
+  .method,
+  .addition,
+  .css .tag,
+  .request,
+  .status,
+  .nginx .title {
+    color: @sol_3;
+  }
+
+  .number,
+  .command,
+  .string,
+  .tag .value,
+  .phpdoc,
+  .tex .formula,
+  .regexp,
+  .hexcolor {
+    color: @sol_4;
+  }
+
+  .title,
+  .localvars,
+  .chunk,
+  .decorator,
+  .built_in,
+  .identifier,
+  .literal,
+  .id {
+    color: @sol_5;
+  }
+
+  .attribute,
+  .variable,
+  .lisp .body,
+  .smalltalk .number,
+  .constant,
+  .class .title,
+  .parent,
+  .haskell .type {
+    color: @sol_6;
+  }
+
+  .preprocessor,
+  .preprocessor .keyword,
+  .shebang,
+  .symbol,
+  .symbol .string,
+  .diff .change,
+  .special,
+  .attr_selector,
+  .important,
+  .subst,
+  .cdata {
+    color: @sol_7;
+  }
+
+  .collection,
+  .deletion {
+    color: @sol_8;
+  }
+
+  .tex .formula {
+    background: @sol_9;
+  }
+}
+
+
+
+
+/* Animations */
+
+@-webkit-keyframes fadeInUpWebkit {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+@-moz-keyframes fadeInUpMoz {
+  from {
+    opacity: 0;
+    -moz-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    -moz-transform: none;
+    transform: none;
+  }
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in-up {
+  opacity: 0;
+  -webkit-animation: fadeInUpWebkit ease 1;
+  -moz-animation: fadeInUpMoz ease-in 1;
+  animation: fadeInUp ease-in 1;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-duration: 1s;
+  -moz-animation-duration: 1s;
+  animation-duration: 1s;
+
+  &.one {
+    -webkit-animation-delay: 0.6s;
+    -moz-animation-delay: 0.6s;
+    animation-delay: 0.6s;
+  }
+}
+
+.fade-in {
+  opacity: 0;
+  /* make things invisible upon start */
+  -webkit-animation: fadeIn ease 1;
+  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+  -moz-animation: fadeIn ease-in 1;
+  animation: fadeIn ease-in 1;
+  -webkit-animation-fill-mode: forwards;
+  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-duration: 1s;
+  -moz-animation-duration: 1s;
+  animation-duration: 1s;
+  
+  &.two {
+    -webkit-animation-delay: 1.4s;
+    -moz-animation-delay: 1.4s;
+    animation-delay: 1.4s;  
+  }
+  
+  &.three {
+    -webkit-animation-delay: 2s;
+    -moz-animation-delay: 2s;
+    animation-delay: 2s;  
+  }
+}

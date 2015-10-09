@@ -4,63 +4,77 @@
     <meta charset="UTF-8">
     <title>Kalium</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="css/kalium.css" media="screen">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/default.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/solarized_dark.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
   </head>
   <body>
-    <section class="page-header">
-      <h1 class="project-name">Kalium</h1>
-      <h2 class="project-tagline">Java binding to the Networking and Cryptography (NaCl) library with the awesomeness of libsodium</h2>
-      <a href="https://github.com/abstractj/kalium" class="btn">View on GitHub</a>
-      <a href="https://github.com/abstractj/kalium/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/abstractj/kalium/tarball/master" class="btn">Download .tar.gz</a>
-    </section>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6 col-sm-8 content">
+          <section class="download">
+            <div class="logo one fade-in-up">
+              <img type="image/svg+xml" src="img/kalium.svg" alt="PatternFly Enterprise Application" width="auto"  />
+            </div>
+            <a href="https://github.com/abstractj/kalium" class="btn btn-primary"><span class="hidden-xs">View on </span>GitHub</a>
+            <a href="https://github.com/abstractj/kalium/zipball/master" class="btn btn-default"><span class="hidden-xs">Download </span>.zip</a>
+            <a href="https://github.com/abstractj/kalium/tarball/master" class="btn btn-default"><span class="hidden-xs">Download </span>.tar.gz</a>
+          </section>    
+    
+          <section class="page-header">
+            <h1 class="project-name">Kalium</h1>
+            <h2 class="project-tagline">Java binding to the Networking and Cryptography (NaCl) library with the awesomeness of libsodium</h2>
+          </section>
 
-    <section class="main-content">
-    <p>Kalium is a Java binding to <a href="http://nacl.cr.yp.to/">Networking and Cryptography</a> library by <a href="http://cr.yp.to/djb.html">Daniel J. Bernstein</a>. All the hard work of making a portable NaCl API version was done by <a href="https://github.com/jedisct1">Frank Denis</a> on <a href="https://github.com/jedisct1/libsodium">libsodium</a> and kalium was totally inspired by <a href="https://github.com/tarcieri">Tony Arcieri's</a> work with <a href="https://github.com/cryptosphere/rbnacl">RbNaCl</a>.</p>
+          <section class="main-content">
+            <p>Kalium is a Java binding to <a href="http://nacl.cr.yp.to/">Networking and Cryptography</a> library by <a href="http://cr.yp.to/djb.html">Daniel J. Bernstein</a>. All the hard work of making a portable NaCl API version was done by <a href="https://github.com/jedisct1">Frank Denis</a> on <a href="https://github.com/jedisct1/libsodium">libsodium</a> and kalium was totally inspired by <a href="https://github.com/tarcieri">Tony Arcieri's</a> work with <a href="https://github.com/cryptosphere/rbnacl">RbNaCl</a>.</p>
 
-<h3>Requirements</h3>
+            <h3>Requirements</h3>
 
-<ul>
-<li>JDK 6 or <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">higher</a>
-</li>
-<li><a href="http://maven.apache.org/guides/getting-started/">Apache Maven</a></li>
-</ul>
+            <ul>
+              <li>JDK 6 or <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">higher</a></li>
+              <li><a href="http://maven.apache.org/guides/getting-started/">Apache Maven</a></li>
+            </ul>
 
-<h3>Installation</h3>
-
-<h4>libsodium</h4>
-
-<p>Kalium is implemented using <a href="https://github.com/jnr/jnr-ffi">jnr-ffi</a> to bind the shared libraries from <a href="https://github.com/jedisct1/libsodium">libsodium</a>. For a more detailed explanation, please refer to <a href="https://github.com/cryptosphere/rbnacl/blob/master/README.md">RbNaCl's documentation</a>.</p>
-
-<p>OS X users can get libsodium via <a href="http://mxcl.github.com/homebrew/">homebrew</a> with: </p>
-
-<pre><code>brew install libsodium
-</code></pre>
-
-<h4>Kalium installation</h4>
-
-<pre><code>git clone https://github.com/abstractj/kalium &amp;&amp; cd kalium
+            <h3>Installation</h3>
+            
+            <h4>libsodium</h4>
+            
+            <p>Kalium is implemented using <a href="https://github.com/jnr/jnr-ffi">jnr-ffi</a> to bind the shared libraries from <a href="https://github.com/jedisct1/libsodium">libsodium</a>. For a more detailed explanation, please refer to <a href="https://github.com/cryptosphere/rbnacl/blob/master/README.md">RbNaCl's documentation</a>.</p>
+            
+            <p>OS X users can get libsodium via <a href="http://mxcl.github.com/homebrew/">homebrew</a> with: </p>
+            
+            <pre><code class="bash">
+brew install libsodium
+            </code></pre>
+            
+            <h4>Kalium installation</h4>
+            
+            <pre><code class="bash">
+git clone https://github.com/abstractj/kalium &amp;&amp; cd kalium
 mvn clean install
-</code></pre>
-
-<p>Add as a Maven dependency at your project:</p>
-
-<pre><code>&lt;dependency&gt;
-    &lt;groupId&gt;org.abstractj.kalium&lt;/groupId&gt;
-    &lt;artifactId&gt;kalium&lt;/artifactId&gt;
-    &lt;version&gt;0.1.3-SNAPSHOT&lt;/version&gt;
-    &lt;scope&gt;compile&lt;/scope&gt;
+            </code></pre>
+            
+            <p>Add as a Maven dependency at your project:</p>
+            
+            <pre><code class="java">
+&lt;dependency&gt;
+  &lt;groupId&gt;org.abstractj.kalium&lt;/groupId&gt;
+  &lt;artifactId&gt;kalium&lt;/artifactId&gt;
+  &lt;version&gt;0.1.3-SNAPSHOT&lt;/version&gt;
+  &lt;scope&gt;compile&lt;/scope&gt;
 &lt;/dependency&gt;
-</code></pre>
+            </code></pre>
+            
+            <h3>Notes</h3>
+            
+            <p>kalium is a work in progress, maintained by <a href="https://github.com/abstractj">abstractj</a> and <a href="https://github.com/abstractj/kalium/graphs/contributors">contributors</a>. Feedback, bug reports and patches are always welcome.</p>
 
-<h4>Notes</h4>
-
-<p>kalium is a work in progress, maintained by <a href="https://github.com/abstractj">abstractj</a> and <a href="https://github.com/abstractj/kalium/graphs/contributors">contributors</a>. Feedback, bug reports and patches are always welcome.</p>
-
-        </section>
-
+          </section>
+        </div><!-- col -->      
+      </div><!-- row -->
+    </div><!-- container -->
   </body>
 </html>
