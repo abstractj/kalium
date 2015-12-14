@@ -11,7 +11,11 @@ public class Password {
     }
 
     public String hash(byte[] passwd, Encoder encoder, byte[] salt, int opslimit, long memlimit) {
-        byte[] buffer = new byte[PWHASH_SCRYPTSALSA208SHA256_OUTBYTES];
+        return hash(PWHASH_SCRYPTSALSA208SHA256_OUTBYTES, passwd, encoder, salt, opslimit, memlimit);
+    }
+
+    public String hash(int length, byte[] passwd, Encoder encoder, byte[] salt, int opslimit, long memlimit) {
+        byte[] buffer = new byte[length];
         sodium().crypto_pwhash_scryptsalsa208sha256(buffer, buffer.length, passwd, passwd.length, salt, opslimit, memlimit);
         return encoder.encode(buffer);
     }
