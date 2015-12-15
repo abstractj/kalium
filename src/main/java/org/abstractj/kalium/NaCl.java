@@ -146,6 +146,26 @@ public class NaCl {
         int crypto_sign_ed25519(@Out byte[] buffer, @Out LongLongByReference bufferLen, @In byte[] message, @u_int64_t long length, @In byte[] secretKey);
 
         int crypto_sign_ed25519_open(@Out byte[] buffer, @Out LongLongByReference bufferLen, @In byte[] sigAndMsg, @u_int64_t long length, @In byte[] key);
+
+        int crypto_sign_ed25519_keypair(@Out byte[] publicKey, @Out byte[] secretKey);
+
+        int crypto_sign_ed25519_detached(@Out byte[] buffer, @Out LongLongByReference bufferLen, @In byte[] message, @u_int64_t long length, @In byte[] secretKey);
+
+        int crypto_sign_ed25519_verify_detached(@In byte[] buffer, @In byte[] message, @u_int64_t long length, @In byte[] publicKey);
+
+        // Helper methods all call the equivalent ed25519 methods
+        int crypto_sign_seed_keypair(@Out byte[] publicKey, @Out byte[] secretKey, @In byte[] seed);
+
+        int crypto_sign(@Out byte[] buffer, @Out LongLongByReference bufferLen, @In byte[] message, @u_int64_t long length, @In byte[] secretKey);
+
+        int crypto_sign_open(@Out byte[] buffer, @Out LongLongByReference bufferLen, @In byte[] sigAndMsg, @u_int64_t long length, @In byte[] key);
+
+        int crypto_sign_keypair(@Out byte[] publicKey, @Out byte[] secretKey);
+
+        int crypto_sign_detached(@Out byte[] buffer, @Out LongLongByReference bufferLen, @In byte[] message, @u_int64_t long length, @In byte[] secretKey);
+
+        int crypto_sign_verify_detached(@In byte[] buffer, @In byte[] message, @u_int64_t long length, @In byte[] publicKey);
+        // end of ed25519 helper methods
     }
 
     /**
