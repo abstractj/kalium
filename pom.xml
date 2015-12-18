@@ -4,7 +4,7 @@
 
     <groupId>org.abstractj.kalium</groupId>
     <artifactId>kalium</artifactId>
-    <version>0.4.1-SNAPSHOT</version>
+    <version>0.5.0.Alpha1</version>
     <packaging>jar</packaging>
 
     <name>kalium</name>
@@ -44,7 +44,7 @@
         <connection>scm:git:git@github.com:abstractj/kalium.git</connection>
         <developerConnection>scm:git:git@github.com:abstractj/kalium.git</developerConnection>
         <url>https://github.com/abstractj/kalium</url>
-        <tag>HEAD</tag>
+        <tag>0.5.0.Alpha1</tag>
     </scm>
 
     <licenses>
