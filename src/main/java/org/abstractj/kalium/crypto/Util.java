@@ -34,7 +34,7 @@ public class Util {
 
     public static void checkLength(byte[] data, int size) {
         if (data == null || data.length != size)
-            throw new RuntimeException("Invalid size: " + data.length);
+            throw new RuntimeException("Invalid size");
     }
 
     public static byte[] zeros(int n) {
