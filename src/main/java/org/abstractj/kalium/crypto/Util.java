@@ -57,4 +57,40 @@ public class Util {
         System.arraycopy(message, 0, result, signature.length, message.length);
         return result;
     }
+
+    public static boolean constantTimeEquals(byte[] b1, byte[] b2) {
+        if (b1.length != b2.length) {
+            return false;
+        }
+        int d = 0;
+        for (int i = 0; i < b1.length; i++) {
+            d |= (b1[i] ^ b2[i]);
+        }
+        return d == 0;
+    }
+
+    public static int constantTimeCompare(byte[] b1, byte[] b2) {
+        if (b1.length < b2.length) {
+            return -1;
+        } else if (b1.length < b2.length) {
+            return 1;
+        }
+        int gt = 0;
+        int eq = 1;
+        int i = b1.length;
+        while (i != 0) {
+            i--;
+            gt |= ((b2[i] - b1[i]) >> 8) & eq;
+            eq &= ((b2[i] ^ b1[i]) - 1) >> 8;
+        }
+        return (gt + gt + eq) - 1;
+    }
+
+    public static boolean constantTimeIsZero(byte[] n) {
+        int d = 0;
+        for (int i = 0; i < n.length; i++) {
+            d |= n[i];
+        }
+        return d == 0;
+    }
 }
