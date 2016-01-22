@@ -119,14 +119,24 @@ public class NaCl {
         public static final int NONCE_BYTES = 24;
         public static final int ZERO_BYTES = 32;
         public static final int BOXZERO_BYTES = 16;
+        public static final int BEFORENMBYTES = 32;
 
         public void randombytes(@Out byte[] buffer, @u_int64_t long size);
+
+        public int crypto_box_curve25519xsalsa20poly1305_beforenm(@Out byte[] sharedkey,
+                                                         @In byte[] publicKey, @In byte[] privateKey);
 
         public int crypto_box_curve25519xsalsa20poly1305(@Out byte[] ct, @In byte[] msg, @u_int64_t long length, @In byte[] nonce,
                                                          @In byte[] publicKey, @In byte[] privateKey);
 
+        public int crypto_box_curve25519xsalsa20poly1305_afternm(@Out byte[] ct, @In byte[] msg, @u_int64_t long length, @In byte[] nonce,
+                                                                 @In byte[] shared);
+
         public int crypto_box_curve25519xsalsa20poly1305_open(@Out byte[] message, @In byte[] ct, @u_int64_t long length,
                                                               @In byte[] nonce, @In byte[] publicKey, @In byte[] privateKey);
+
+        public int crypto_box_curve25519xsalsa20poly1305_open_afternm(@Out byte[] message, @In byte[] ct, @u_int64_t long length,
+                                                              @In byte[] nonce, @In byte[] shared);
 
         public static final int SCALAR_BYTES = 32;
 
