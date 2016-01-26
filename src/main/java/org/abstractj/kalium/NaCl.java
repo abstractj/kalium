@@ -27,7 +27,7 @@ public class NaCl {
     public static Sodium sodium() {
         Sodium sodium = SingletonHolder.SODIUM_INSTANCE;
 
-        if(!(sodium.sodium_version_string().compareTo("0.4.0") >= 0)){
+        if(!(sodium.sodium_version_string().compareTo("1.0.3") >= 0)){
             String message = String.format("Unsupported libsodium version: %s. Please update",
                     sodium.sodium_version_string());
             throw new UnsupportedOperationException(message);
@@ -119,6 +119,8 @@ public class NaCl {
         public static final int NONCE_BYTES = 24;
         public static final int ZERO_BYTES = 32;
         public static final int BOXZERO_BYTES = 16;
+        public static final int MAC_BYTES = ZERO_BYTES - BOXZERO_BYTES;
+        public static final int SEAL_BYTES = PUBLICKEY_BYTES + MAC_BYTES;
 
         public void randombytes(@Out byte[] buffer, @u_int64_t long size);
 
@@ -127,6 +129,10 @@ public class NaCl {
 
         public int crypto_box_curve25519xsalsa20poly1305_open(@Out byte[] message, @In byte[] ct, @u_int64_t long length,
                                                               @In byte[] nonce, @In byte[] publicKey, @In byte[] privateKey);
+
+        public int crypto_box_seal(@Out byte[] ct, @In byte[] message, @In @u_int64_t int length, @In byte[] publicKey);
+
+        public int crypto_box_seal_open(@Out byte[] message, @In byte[] c, @In @u_int64_t int length, @In byte[] publicKey, @In byte[] privateKey);
 
         public static final int SCALAR_BYTES = 32;
 
