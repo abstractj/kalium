@@ -192,7 +192,23 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Secret-key cryptography: AEAD
 
-        // TODO
+        int CRYPTO_AEAD_CHACHA20POLY1305_KEYBYTES = 32;
+
+        int CRYPTO_AEAD_CHACHA20POLY1305_NPUBBYTES = 8;
+
+        int CRYPTO_AEAD_CHACHA20POLY1305_ABYTES = 16;
+
+        int crypto_aead_chacha20poly1305_encrypt(
+                @Out byte[] ct, @Out LongLongByReference ctLength,
+                @In byte[] message, @In @u_int64_t int messageLength,
+                @In byte[] additionalData, @In @u_int64_t int adLength,
+                @In byte[] nsec, @In byte[] npub, @In byte[] key);
+
+        int crypto_aead_chacha20poly1305_decrypt(
+                @Out byte[] message, @Out LongLongByReference messageLength,
+                @In byte[] nsec, @In byte[] ct, @In @u_int64_t int ctLength,
+                @In byte[] additionalData, @In @u_int64_t int adLength,
+                @In byte[] npub, @In byte[] key);
 
         // ---------------------------------------------------------------------
         // Public-key cryptography: Authenticated encryption

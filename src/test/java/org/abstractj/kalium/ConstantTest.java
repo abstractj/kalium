@@ -49,6 +49,21 @@ public class ConstantTest {
                 NaCl.Sodium.CRYPTO_AUTH_KEYBYTES);
     }
 
+    @Test
+    public void testSecretAEADConstants() throws Exception {
+        assertEquals("CRYPTO_AEAD_CHACHA20POLY1305_KEYBYTES",
+                lib.crypto_aead_chacha20poly1305_keybytes(),
+                NaCl.Sodium.CRYPTO_AEAD_CHACHA20POLY1305_KEYBYTES);
+
+        assertEquals("CRYPTO_AEAD_CHACHA20POLY1305_NPUBBYTES",
+                lib.crypto_aead_chacha20poly1305_npubbytes(),
+                NaCl.Sodium.CRYPTO_AEAD_CHACHA20POLY1305_NPUBBYTES);
+
+        assertEquals("CRYPTO_AEAD_CHACHA20POLY1305_ABYTES",
+                lib.crypto_aead_chacha20poly1305_abytes(),
+                NaCl.Sodium.CRYPTO_AEAD_CHACHA20POLY1305_ABYTES);
+    }
+
     public interface SodiumConstants {
         @size_t
         int crypto_secretbox_keybytes();
@@ -70,5 +85,14 @@ public class ConstantTest {
 
         @size_t
         int crypto_auth_keybytes();
+
+        @size_t
+        int crypto_aead_chacha20poly1305_keybytes();
+
+        @size_t
+        int crypto_aead_chacha20poly1305_npubbytes();
+
+        @size_t
+        int crypto_aead_chacha20poly1305_abytes();
     }
 }
