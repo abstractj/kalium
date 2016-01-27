@@ -73,20 +73,20 @@ public class NaCl {
          *
          * Check libsodium's documentation for more info.
          */
-        public int sodium_init();
+        int sodium_init();
 
-        public String sodium_version_string();
+        String sodium_version_string();
 
         // ---------------------------------------------------------------------
         // Generating Random Data
 
-        public void randombytes(@Out byte[] buffer, @u_int64_t long size);
+        void randombytes(@Out byte[] buffer, @u_int64_t long size);
 
         // ---------------------------------------------------------------------
         // Secret-key cryptography: Authenticated encryption
 
-        public static final int XSALSA20_POLY1305_SECRETBOX_KEYBYTES = 32;
-        public static final int XSALSA20_POLY1305_SECRETBOX_NONCEBYTES = 24;
+        int XSALSA20_POLY1305_SECRETBOX_KEYBYTES = 32;
+        int XSALSA20_POLY1305_SECRETBOX_NONCEBYTES = 24;
 
         int crypto_secretbox_xsalsa20poly1305(
                 @Out byte[] ct, @In byte[] msg, @u_int64_t long length,
@@ -99,15 +99,15 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Secret-key cryptography: Authentication
 
-        public static final int HMACSHA512256_BYTES = 32;
+        int HMACSHA512256_BYTES = 32;
 
-        public static final int HMACSHA512256_KEYBYTES = 32;
+        int HMACSHA512256_KEYBYTES = 32;
 
-        public int crypto_auth_hmacsha512256(
+        int crypto_auth_hmacsha512256(
                 @Out byte[] mac, @In byte[] message, @u_int64_t long sizeof,
                 @In byte[] key);
 
-        public int crypto_auth_hmacsha512256_verify(
+        int crypto_auth_hmacsha512256_verify(
                 @In byte[] mac, @In byte[] message, @u_int64_t long sizeof,
                 @In byte[] key);
 
@@ -119,43 +119,43 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Public-key cryptography: Authenticated encryption
 
-        public static final int PUBLICKEY_BYTES = 32;
-        public static final int SECRETKEY_BYTES = 32;
+        int PUBLICKEY_BYTES = 32;
+        int SECRETKEY_BYTES = 32;
 
-        public int crypto_box_curve25519xsalsa20poly1305_keypair(
+        int crypto_box_curve25519xsalsa20poly1305_keypair(
                 @Out byte[] publicKey, @Out byte[] secretKey);
 
-        public static final int NONCE_BYTES = 24;
-        public static final int ZERO_BYTES = 32;
-        public static final int BOXZERO_BYTES = 16;
-        public static final int BEFORENMBYTES = 32;
-        public static final int MAC_BYTES = ZERO_BYTES - BOXZERO_BYTES;
-        public static final int SEAL_BYTES = PUBLICKEY_BYTES + MAC_BYTES;
+        int NONCE_BYTES = 24;
+        int ZERO_BYTES = 32;
+        int BOXZERO_BYTES = 16;
+        int BEFORENMBYTES = 32;
+        int MAC_BYTES = ZERO_BYTES - BOXZERO_BYTES;
+        int SEAL_BYTES = PUBLICKEY_BYTES + MAC_BYTES;
 
-        public int crypto_box_curve25519xsalsa20poly1305_beforenm(
+        int crypto_box_curve25519xsalsa20poly1305_beforenm(
                 @Out byte[] sharedkey, @In byte[] publicKey,
                 @In byte[] privateKey);
 
-        public int crypto_box_curve25519xsalsa20poly1305(
+        int crypto_box_curve25519xsalsa20poly1305(
                 @Out byte[] ct, @In byte[] msg, @u_int64_t long length,
                 @In byte[] nonce, @In byte[] publicKey, @In byte[] privateKey);
 
-        public int crypto_box_curve25519xsalsa20poly1305_afternm(
+        int crypto_box_curve25519xsalsa20poly1305_afternm(
                 @Out byte[] ct, @In byte[] msg, @u_int64_t long length,
                 @In byte[] nonce, @In byte[] shared);
 
-        public int crypto_box_curve25519xsalsa20poly1305_open(
+        int crypto_box_curve25519xsalsa20poly1305_open(
                 @Out byte[] message, @In byte[] ct, @u_int64_t long length,
                 @In byte[] nonce, @In byte[] publicKey, @In byte[] privateKey);
 
-        public int crypto_box_curve25519xsalsa20poly1305_open_afternm(
+        int crypto_box_curve25519xsalsa20poly1305_open_afternm(
                 @Out byte[] message, @In byte[] ct, @u_int64_t long length,
                 @In byte[] nonce, @In byte[] shared);
 
         // ---------------------------------------------------------------------
         // Public-key cryptography: Public-key signatures
 
-        public static final int SIGNATURE_BYTES = 64;
+        int SIGNATURE_BYTES = 64;
 
         int crypto_sign_ed25519_seed_keypair(
                 @Out byte[] publicKey, @Out byte[] secretKey, @In byte[] seed);
@@ -172,25 +172,25 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Public-key cryptography: Sealed boxes
 
-        public int crypto_box_seal(
+        int crypto_box_seal(
                 @Out byte[] ct, @In byte[] message, @In @u_int64_t int length,
                 @In byte[] publicKey);
 
-        public int crypto_box_seal_open(
-                @Out byte[] message, @In byte[] c,@In @u_int64_t int length,
+        int crypto_box_seal_open(
+                @Out byte[] message, @In byte[] c, @In @u_int64_t int length,
                 @In byte[] publicKey, @In byte[] privateKey);
 
         // ---------------------------------------------------------------------
         // Hashing: Generic hashing
 
-        public static final int BLAKE2B_OUTBYTES = 32;
+        int BLAKE2B_OUTBYTES = 32;
 
-        public int crypto_generichash_blake2b(
+        int crypto_generichash_blake2b(
                 @Out byte[] buffer, @u_int64_t long outLen, @In byte[] message,
                 @u_int64_t long messageLen, @In byte[] key,
                 @u_int64_t long keyLen);
 
-        public int crypto_generichash_blake2b_salt_personal(
+        int crypto_generichash_blake2b_salt_personal(
                 @Out byte[] buffer, @u_int64_t long outLen, @In byte[] message,
                 @u_int64_t long messageLen, @In byte[] key,
                 @u_int64_t long keyLen, @In byte[] salt, @In byte[] personal);
@@ -203,22 +203,22 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Password hashing
 
-        public static final int PWHASH_SCRYPTSALSA208SHA256_STRBYTES = 102;
-        public static final int PWHASH_SCRYPTSALSA208SHA256_OUTBYTES = 64;
-        public static final int PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE = 524288;
-        public static final int PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE = 16777216;
+        int PWHASH_SCRYPTSALSA208SHA256_STRBYTES = 102;
+        int PWHASH_SCRYPTSALSA208SHA256_OUTBYTES = 64;
+        int PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE = 524288;
+        int PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE = 16777216;
 
-        public int crypto_pwhash_scryptsalsa208sha256(
+        int crypto_pwhash_scryptsalsa208sha256(
                 @Out byte[] buffer, @u_int64_t long outlen, @In byte[] passwd,
                 @u_int64_t long passwdlen, @In byte[] salt,
                 @u_int64_t long opslimit, @u_int64_t long memlimit);
 
-        public int crypto_pwhash_scryptsalsa208sha256_str(
+        int crypto_pwhash_scryptsalsa208sha256_str(
                 @Out byte[] buffer, @In byte[] passwd,
                 @u_int64_t long passwdlen, @u_int64_t long opslimit,
                 @u_int64_t long memlimit);
 
-        public int crypto_pwhash_scryptsalsa208sha256_str_verify(
+        int crypto_pwhash_scryptsalsa208sha256_str_verify(
                 @In byte[] buffer, @In byte[] passwd, @u_int64_t long passwdlen);
 
         // ---------------------------------------------------------------------
@@ -229,14 +229,14 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Advanced: SHA-2
 
-        public static final int SHA256BYTES = 32;
+        int SHA256BYTES = 32;
 
-        public int crypto_hash_sha256(
+        int crypto_hash_sha256(
                 @Out byte[] buffer, @In byte[] message, @u_int64_t long sizeof);
 
-        public static final int SHA512BYTES = 64;
+        int SHA512BYTES = 64;
 
-        public int crypto_hash_sha512(
+        int crypto_hash_sha512(
                 @Out byte[] buffer, @In byte[] message, @u_int64_t long sizeof);
 
         // ---------------------------------------------------------------------
@@ -252,9 +252,9 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Advanced: Diffie-Hellman
 
-        public static final int SCALAR_BYTES = 32;
+        int SCALAR_BYTES = 32;
 
-        public int crypto_scalarmult_curve25519(
+        int crypto_scalarmult_curve25519(
                 @Out byte[] result, @In byte[] intValue, @In byte[] point);
 
         // ---------------------------------------------------------------------
