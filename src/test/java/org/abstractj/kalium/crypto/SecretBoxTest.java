@@ -20,13 +20,10 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
+import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_SECRETBOX_MACBYTES;
 import static org.abstractj.kalium.encoders.Encoder.HEX;
-import static org.abstractj.kalium.fixture.TestVectors.BOX_CIPHERTEXT;
-import static org.abstractj.kalium.fixture.TestVectors.BOX_MESSAGE;
-import static org.abstractj.kalium.fixture.TestVectors.BOX_NONCE;
-import static org.abstractj.kalium.fixture.TestVectors.SECRET_KEY;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.abstractj.kalium.fixture.TestVectors.*;
+import static org.junit.Assert.*;
 
 public class SecretBoxTest {
 
@@ -66,6 +63,23 @@ public class SecretBoxTest {
     }
 
     @Test
+    public void testEncryptDetached() throws Exception {
+        SecretBox box = new SecretBox(SECRET_KEY, HEX);
+
+        byte[] nonce = HEX.decode(BOX_NONCE);
+        byte[] message = HEX.decode(BOX_MESSAGE);
+        byte[] ciphertext = new byte[message.length];
+        byte[] mac = new byte[CRYPTO_SECRETBOX_MACBYTES];
+        System.arraycopy(HEX.decode(BOX_CIPHERTEXT), CRYPTO_SECRETBOX_MACBYTES, ciphertext, 0, message.length);
+        System.arraycopy(HEX.decode(BOX_CIPHERTEXT), 0, mac, 0, CRYPTO_SECRETBOX_MACBYTES);
+
+        byte[][] result = box.encryptDetached(nonce, message);
+
+        assertArrayEquals("failed to generate ciphertext", ciphertext, result[0]);
+        assertArrayEquals("failed to generate mac", mac, result[1]);
+    }
+
+    @Test
     public void testDecrypt() throws Exception {
 
         SecretBox box = new SecretBox(SECRET_KEY, HEX);
@@ -75,6 +89,23 @@ public class SecretBoxTest {
         byte[] ciphertext = box.encrypt(nonce, expectedMessage);
 
         byte[] message = box.decrypt(nonce, ciphertext);
+
+        assertTrue("failed to decrypt ciphertext", Arrays.equals(message, expectedMessage));
+    }
+
+    @Test
+    public void testDecryptDetached() throws Exception {
+
+        SecretBox box = new SecretBox(SECRET_KEY, HEX);
+
+        byte[] nonce = HEX.decode(BOX_NONCE);
+        byte[] expectedMessage = HEX.decode(BOX_MESSAGE);
+        byte[] ciphertext = new byte[expectedMessage.length];
+        byte[] mac = new byte[CRYPTO_SECRETBOX_MACBYTES];
+        System.arraycopy(HEX.decode(BOX_CIPHERTEXT), CRYPTO_SECRETBOX_MACBYTES, ciphertext, 0, expectedMessage.length);
+        System.arraycopy(HEX.decode(BOX_CIPHERTEXT), 0, mac, 0, CRYPTO_SECRETBOX_MACBYTES);
+
+        byte[] message = box.decryptDetached(nonce, ciphertext, mac);
 
         assertTrue("failed to decrypt ciphertext", Arrays.equals(message, expectedMessage));
     }

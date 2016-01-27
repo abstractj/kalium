@@ -18,14 +18,9 @@ package org.abstractj.kalium.crypto;
 
 import org.abstractj.kalium.encoders.Encoder;
 
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BOXZEROBYTES;
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_SECRETBOX_XSALSA20POLY1305_NONCEBYTES;
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_SECRETBOX_XSALSA20POLY1305_KEYBYTES;
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_ZEROBYTES;
+import static org.abstractj.kalium.NaCl.Sodium.*;
 import static org.abstractj.kalium.NaCl.sodium;
-import static org.abstractj.kalium.crypto.Util.checkLength;
-import static org.abstractj.kalium.crypto.Util.isValid;
-import static org.abstractj.kalium.crypto.Util.removeZeros;
+import static org.abstractj.kalium.crypto.Util.*;
 
 public class SecretBox {
 
@@ -33,7 +28,7 @@ public class SecretBox {
 
     public SecretBox(byte[] key) {
         this.key = key;
-        checkLength(key, CRYPTO_SECRETBOX_XSALSA20POLY1305_KEYBYTES);
+        checkLength(key, CRYPTO_SECRETBOX_KEYBYTES);
     }
 
     public SecretBox(String key, Encoder encoder) {
@@ -41,20 +36,38 @@ public class SecretBox {
     }
 
     public byte[] encrypt(byte[] nonce, byte[] message) {
-        checkLength(nonce, CRYPTO_SECRETBOX_XSALSA20POLY1305_NONCEBYTES);
-        byte[] msg = Util.prependZeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_ZEROBYTES, message);
-        byte[] ct = Util.zeros(msg.length);
-        isValid(sodium().crypto_secretbox_xsalsa20poly1305(ct, msg, msg.length,
+        checkLength(nonce, CRYPTO_SECRETBOX_NONCEBYTES);
+        byte[] ct = zeros(message.length + CRYPTO_SECRETBOX_MACBYTES);
+        isValid(sodium().crypto_secretbox_easy(ct, message, message.length,
                 nonce, key), "Encryption failed");
-        return removeZeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BOXZEROBYTES, ct);
+        return ct;
+    }
+
+    public byte[][] encryptDetached(byte[] nonce, byte[] message) {
+        checkLength(nonce, CRYPTO_SECRETBOX_NONCEBYTES);
+        byte[] ct = zeros(message.length) ;
+        byte[] mac = zeros(CRYPTO_SECRETBOX_MACBYTES);
+        isValid(sodium().crypto_secretbox_detached(ct, mac, message,
+                        message.length, nonce, key),
+                "Encryption failed");
+        return new byte[][] { ct, mac };
     }
 
     public byte[] decrypt(byte[] nonce, byte[] ciphertext) {
-        checkLength(nonce, CRYPTO_SECRETBOX_XSALSA20POLY1305_NONCEBYTES);
-        byte[] ct = Util.prependZeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BOXZEROBYTES, ciphertext);
-        byte[] message = Util.zeros(ct.length);
-        isValid(sodium().crypto_secretbox_xsalsa20poly1305_open(message, ct,
-                ct.length, nonce, key), "Decryption failed. Ciphertext failed verification");
-        return removeZeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_ZEROBYTES, message);
+        checkLength(nonce, CRYPTO_SECRETBOX_NONCEBYTES);
+        byte[] message = zeros(ciphertext.length - CRYPTO_SECRETBOX_MACBYTES);
+        isValid(sodium().crypto_secretbox_open_easy(message, ciphertext,
+                        ciphertext.length, nonce, key),
+                "Decryption failed. Ciphertext failed verification");
+        return message;
+    }
+
+    public byte[] decryptDetached(byte[] nonce, byte[] ciphertext, byte[] mac) {
+        checkLength(nonce, CRYPTO_SECRETBOX_NONCEBYTES);
+        byte[] message = zeros(ciphertext.length);
+        isValid(sodium().crypto_secretbox_open_detached(message, ciphertext,
+                        mac, ciphertext.length, nonce, key),
+                "Decryption failed. Ciphertext failed verification");
+        return message;
     }
 }

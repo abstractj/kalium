@@ -71,17 +71,76 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Secret-key cryptography: Authenticated encryption
 
+        /**
+         * @deprecated use CRYPTO_SECRETBOX_KEYBYTES
+         */
+        @Deprecated
+        int XSALSA20_POLY1305_SECRETBOX_KEYBYTES = 32;
+
+        /**
+         * @deprecated use CRYPTO_SECRETBOX_NONCEBYTES
+         */
+        @Deprecated
+        int XSALSA20_POLY1305_SECRETBOX_NONCEBYTES = 24;
+
         int CRYPTO_SECRETBOX_XSALSA20POLY1305_KEYBYTES = 32;
 
         int CRYPTO_SECRETBOX_XSALSA20POLY1305_NONCEBYTES = 24;
 
-        int crypto_secretbox_xsalsa20poly1305(
+        int CRYPTO_SECRETBOX_XSALSA20POLY1305_ZEROBYTES = 32;
+
+        int CRYPTO_SECRETBOX_XSALSA20POLY1305_BOXZEROBYTES = 16;
+
+        int CRYPTO_SECRETBOX_XSALSA20POLY1305_MACBYTES =
+                CRYPTO_SECRETBOX_XSALSA20POLY1305_ZEROBYTES -
+                        CRYPTO_SECRETBOX_XSALSA20POLY1305_BOXZEROBYTES;
+
+        int CRYPTO_SECRETBOX_KEYBYTES =
+                CRYPTO_SECRETBOX_XSALSA20POLY1305_KEYBYTES;
+
+        int CRYPTO_SECRETBOX_NONCEBYTES =
+                CRYPTO_SECRETBOX_XSALSA20POLY1305_NONCEBYTES;
+
+        int CRYPTO_SECRETBOX_ZEROBYTES =
+                CRYPTO_SECRETBOX_XSALSA20POLY1305_ZEROBYTES;
+
+        int CRYPTO_SECRETBOX_BOXZEROBYTES =
+                CRYPTO_SECRETBOX_XSALSA20POLY1305_BOXZEROBYTES;
+
+        int CRYPTO_SECRETBOX_MACBYTES =
+                CRYPTO_SECRETBOX_XSALSA20POLY1305_MACBYTES;
+
+        /**
+         * @deprecated This is the original NaCl interface and not recommended
+         */
+        @Deprecated
+        int crypto_secretbox_xsalsa20poly1305( // crypto_secretbox
                 @Out byte[] ct, @In byte[] msg, @In @u_int64_t int length,
                 @In byte[] nonce, @In byte[] key);
 
-        int crypto_secretbox_xsalsa20poly1305_open(
+        /**
+         * @deprecated This is the original NaCl interface and not recommended
+         */
+        @Deprecated
+        int crypto_secretbox_xsalsa20poly1305_open( // crypto_secretbox_open
                 @Out byte[] message, @In byte[] ct, @In @u_int64_t int length,
                 @In byte[] nonce, @In byte[] key);
+
+        int crypto_secretbox_easy(
+                @Out byte[] ct, @In byte[] msg, @In @u_int64_t int length,
+                @In byte[] nonce, @In byte[] key);
+
+        int crypto_secretbox_open_easy(
+                @Out byte[] message, @In byte[] ct, @In @u_int64_t int length,
+                @In byte[] nonce, @In byte[] key);
+
+        int crypto_secretbox_detached(
+                @Out byte[] ct, @Out byte[] mac, @In byte[] msg,
+                @In @u_int64_t int length, @In byte[] nonce, @In byte[] key);
+
+        int crypto_secretbox_open_detached(
+                @Out byte[] message, @In byte[] ct, @In byte[] mac,
+                @In @u_int64_t int length, @In byte[] nonce, @In byte[] key);
 
         // ---------------------------------------------------------------------
         // Secret-key cryptography: Authentication
