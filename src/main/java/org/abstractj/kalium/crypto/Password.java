@@ -1,7 +1,7 @@
 package org.abstractj.kalium.crypto;
 
-import static org.abstractj.kalium.NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_OUTBYTES;
-import static org.abstractj.kalium.NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_STRBYTES;
+import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_PWHASH_SCRYPTSALSA208SHA256_OUTBYTES;
+import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_PWHASH_SCRYPTSALSA208SHA256_STRBYTES;
 import static org.abstractj.kalium.NaCl.sodium;
 import org.abstractj.kalium.encoders.Encoder;
 
@@ -11,7 +11,7 @@ public class Password {
     }
 
     public String hash(byte[] passwd, Encoder encoder, byte[] salt, int opslimit, long memlimit) {
-        return hash(PWHASH_SCRYPTSALSA208SHA256_OUTBYTES, passwd, encoder, salt, opslimit, memlimit);
+        return hash(CRYPTO_PWHASH_SCRYPTSALSA208SHA256_OUTBYTES, passwd, encoder, salt, opslimit, memlimit);
     }
 
     public String hash(int length, byte[] passwd, Encoder encoder, byte[] salt, int opslimit, long memlimit) {
@@ -21,7 +21,7 @@ public class Password {
     }
 
     public String hash(byte[] passwd, Encoder encoder, int opslimit, long memlimit) {
-        byte[] buffer = new byte[PWHASH_SCRYPTSALSA208SHA256_STRBYTES];
+        byte[] buffer = new byte[CRYPTO_PWHASH_SCRYPTSALSA208SHA256_STRBYTES];
         sodium().crypto_pwhash_scryptsalsa208sha256_str(buffer, passwd, passwd.length, opslimit, memlimit);
         return encoder.encode(buffer);
     }

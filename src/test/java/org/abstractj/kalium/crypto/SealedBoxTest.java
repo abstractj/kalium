@@ -4,8 +4,8 @@ import org.junit.Test;
 
 import java.security.SecureRandom;
 
-import static org.abstractj.kalium.NaCl.Sodium.PUBLICKEY_BYTES;
-import static org.abstractj.kalium.NaCl.Sodium.SECRETKEY_BYTES;
+import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES;
+import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES;
 import static org.abstractj.kalium.NaCl.sodium;
 import static org.junit.Assert.assertArrayEquals;
 
@@ -14,8 +14,8 @@ public class SealedBoxTest {
     @Test
     public void testEncryptDecrypt() throws Exception {
         SecureRandom r = new SecureRandom();
-        byte[] pk = new byte[PUBLICKEY_BYTES];
-        byte[] sk = new byte[SECRETKEY_BYTES];
+        byte[] pk = new byte[CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES];
+        byte[] sk = new byte[CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES];
         byte[] m = new byte[r.nextInt(1000)];
 
         sodium().crypto_box_curve25519xsalsa20poly1305_keypair(pk, sk);
@@ -32,8 +32,8 @@ public class SealedBoxTest {
     @Test(expected = RuntimeException.class)
     public void testDecryptFailsFlippedKeys() throws Exception {
         SecureRandom r = new SecureRandom();
-        byte[] pk = new byte[PUBLICKEY_BYTES];
-        byte[] sk = new byte[SECRETKEY_BYTES];
+        byte[] pk = new byte[CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES];
+        byte[] sk = new byte[CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES];
         byte[] m = new byte[r.nextInt(1000)];
 
         sodium().crypto_box_curve25519xsalsa20poly1305_keypair(pk, sk);

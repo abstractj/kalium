@@ -71,8 +71,9 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Secret-key cryptography: Authenticated encryption
 
-        int XSALSA20_POLY1305_SECRETBOX_KEYBYTES = 32;
-        int XSALSA20_POLY1305_SECRETBOX_NONCEBYTES = 24;
+        int CRYPTO_SECRETBOX_XSALSA20POLY1305_KEYBYTES = 32;
+
+        int CRYPTO_SECRETBOX_XSALSA20POLY1305_NONCEBYTES = 24;
 
         int crypto_secretbox_xsalsa20poly1305(
                 @Out byte[] ct, @In byte[] msg, @u_int64_t long length,
@@ -85,9 +86,9 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Secret-key cryptography: Authentication
 
-        int HMACSHA512256_BYTES = 32;
+        int CRYPTO_AUTH_HMACSHA512256_BYTES = 32;
 
-        int HMACSHA512256_KEYBYTES = 32;
+        int CRYPTO_AUTH_HMACSHA512256_KEYBYTES = 32;
 
         int crypto_auth_hmacsha512256(
                 @Out byte[] mac, @In byte[] message, @u_int64_t long sizeof,
@@ -105,18 +106,24 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Public-key cryptography: Authenticated encryption
 
-        int PUBLICKEY_BYTES = 32;
-        int SECRETKEY_BYTES = 32;
+        int CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES = 32;
+
+        int CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES = 32;
+
+        int CRYPTO_BOX_CURVE25519XSALSA20POLY1305_ZEROBYTES = 32;
+
+        int CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BOXZEROBYTES = 16;
+
+        int CRYPTO_BOX_CURVE25519XSALSA20POLY1305_MACBYTES =
+                CRYPTO_BOX_CURVE25519XSALSA20POLY1305_ZEROBYTES -
+                        CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BOXZEROBYTES;
+
+        int CRYPTO_BOX_CURVE25519XSALSA20POLY1305_NONCEBYTES = 24;
+
+        int CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BEFORENMBYTES = 32;
 
         int crypto_box_curve25519xsalsa20poly1305_keypair(
                 @Out byte[] publicKey, @Out byte[] secretKey);
-
-        int NONCE_BYTES = 24;
-        int ZERO_BYTES = 32;
-        int BOXZERO_BYTES = 16;
-        int BEFORENMBYTES = 32;
-        int MAC_BYTES = ZERO_BYTES - BOXZERO_BYTES;
-        int SEAL_BYTES = PUBLICKEY_BYTES + MAC_BYTES;
 
         int crypto_box_curve25519xsalsa20poly1305_beforenm(
                 @Out byte[] sharedkey, @In byte[] publicKey,
@@ -141,7 +148,11 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Public-key cryptography: Public-key signatures
 
-        int SIGNATURE_BYTES = 64;
+        int CRYPTO_SIGN_ED25519_PUBLICKEYBYTES = 32;
+
+        int CRYPTO_SIGN_ED25519_SECRETKEYBYTES = 64;
+
+        int CRYPTO_SIGN_ED25519_BYTES = 64;
 
         int crypto_sign_ed25519_seed_keypair(
                 @Out byte[] publicKey, @Out byte[] secretKey, @In byte[] seed);
@@ -158,6 +169,10 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Public-key cryptography: Sealed boxes
 
+        int CRYPTO_BOX_SEALBYTES =
+                CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES +
+                        CRYPTO_BOX_CURVE25519XSALSA20POLY1305_MACBYTES;
+
         int crypto_box_seal(
                 @Out byte[] ct, @In byte[] message, @In @u_int64_t int length,
                 @In byte[] publicKey);
@@ -169,7 +184,18 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Hashing: Generic hashing
 
-        int BLAKE2B_OUTBYTES = 64;
+//        int CRYPTO_GENERICHASH_BLAKE2B_BYTES = 32; libsodium defines it as 32
+        int CRYPTO_GENERICHASH_BLAKE2B_BYTES = 64;
+
+        int CRYPTO_GENERICHASH_BLAKE2B_BYTES_MIN = 16;
+
+        int CRYPTO_GENERICHASH_BLAKE2B_BYTES_MAX = 64;
+
+        int CRYPTO_GENERICHASH_BLAKE2B_KEYBYTES = 32;
+
+        int CRYPTO_GENERICHASH_BLAKE2B_KEYBYTES_MIN = 16;
+
+        int CRYPTO_GENERICHASH_BLAKE2B_KEYBYTES_MAX = 64;
 
         int crypto_generichash_blake2b(
                 @Out byte[] buffer, @u_int64_t long outLen, @In byte[] message,
@@ -189,10 +215,13 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Password hashing
 
-        int PWHASH_SCRYPTSALSA208SHA256_STRBYTES = 102;
-        int PWHASH_SCRYPTSALSA208SHA256_OUTBYTES = 64;
-        int PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE = 524288;
-        int PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE = 16777216;
+        int CRYPTO_PWHASH_SCRYPTSALSA208SHA256_STRBYTES = 102;
+
+        int CRYPTO_PWHASH_SCRYPTSALSA208SHA256_OUTBYTES = 64;
+
+        int CRYPTO_PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE = 524288;
+
+        int CRYPTO_PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE = 16777216;
 
         int crypto_pwhash_scryptsalsa208sha256(
                 @Out byte[] buffer, @u_int64_t long outlen, @In byte[] passwd,
@@ -215,12 +244,12 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Advanced: SHA-2
 
-        int SHA256BYTES = 32;
+        int CRYPTO_HASH_SHA256_BYTES = 32;
 
         int crypto_hash_sha256(
                 @Out byte[] buffer, @In byte[] message, @u_int64_t long sizeof);
 
-        int SHA512BYTES = 64;
+        int CRYPTO_HASH_SHA512_BYTES = 64;
 
         int crypto_hash_sha512(
                 @Out byte[] buffer, @In byte[] message, @u_int64_t long sizeof);
@@ -238,7 +267,9 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Advanced: Diffie-Hellman
 
-        int SCALAR_BYTES = 32;
+        int CRYPTO_SCALARMULT_CURVE25519_SCALARBYTES = 32;
+
+        int CRYPTO_SCALARMULT_CURVE25519_BYTES = 32;
 
         int crypto_scalarmult_curve25519(
                 @Out byte[] result, @In byte[] intValue, @In byte[] point);
