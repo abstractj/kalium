@@ -278,12 +278,12 @@ public class NaCl {
     }
 
     /**
-     * This function isn't thread safe. Be sure to call it once, and before
-     * performing other operations.
+     * This is a Java synchronized wrapper around libsodium's init function.
+     * LibSodium's init function is not thread-safe.
      *
-     * Check libsodium's <i>sodium_init()</i> documentation for more info.
+     * Check libsodium's documentation for more info.
      */
-    public static int init() {
+    public static synchronized int init() {
         return sodium().sodium_init();
     }
 }
