@@ -66,7 +66,7 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Generating Random Data
 
-        void randombytes(@Out byte[] buffer, @u_int64_t long size);
+        void randombytes(@Out byte[] buffer, @u_int64_t int size);
 
         // ---------------------------------------------------------------------
         // Secret-key cryptography: Authenticated encryption
@@ -76,11 +76,11 @@ public class NaCl {
         int CRYPTO_SECRETBOX_XSALSA20POLY1305_NONCEBYTES = 24;
 
         int crypto_secretbox_xsalsa20poly1305(
-                @Out byte[] ct, @In byte[] msg, @u_int64_t long length,
+                @Out byte[] ct, @In byte[] msg, @u_int64_t int length,
                 @In byte[] nonce, @In byte[] key);
 
         int crypto_secretbox_xsalsa20poly1305_open(
-                @Out byte[] message, @In byte[] ct, @u_int64_t long length,
+                @Out byte[] message, @In byte[] ct, @u_int64_t int length,
                 @In byte[] nonce, @In byte[] key);
 
         // ---------------------------------------------------------------------
@@ -91,11 +91,11 @@ public class NaCl {
         int CRYPTO_AUTH_HMACSHA512256_KEYBYTES = 32;
 
         int crypto_auth_hmacsha512256(
-                @Out byte[] mac, @In byte[] message, @u_int64_t long sizeof,
+                @Out byte[] mac, @In byte[] message, @u_int64_t int sizeof,
                 @In byte[] key);
 
         int crypto_auth_hmacsha512256_verify(
-                @In byte[] mac, @In byte[] message, @u_int64_t long sizeof,
+                @In byte[] mac, @In byte[] message, @u_int64_t int sizeof,
                 @In byte[] key);
 
         // ---------------------------------------------------------------------
@@ -130,19 +130,19 @@ public class NaCl {
                 @In byte[] privateKey);
 
         int crypto_box_curve25519xsalsa20poly1305(
-                @Out byte[] ct, @In byte[] msg, @u_int64_t long length,
+                @Out byte[] ct, @In byte[] msg, @u_int64_t int length,
                 @In byte[] nonce, @In byte[] publicKey, @In byte[] privateKey);
 
         int crypto_box_curve25519xsalsa20poly1305_afternm(
-                @Out byte[] ct, @In byte[] msg, @u_int64_t long length,
+                @Out byte[] ct, @In byte[] msg, @u_int64_t int length,
                 @In byte[] nonce, @In byte[] shared);
 
         int crypto_box_curve25519xsalsa20poly1305_open(
-                @Out byte[] message, @In byte[] ct, @u_int64_t long length,
+                @Out byte[] message, @In byte[] ct, @u_int64_t int length,
                 @In byte[] nonce, @In byte[] publicKey, @In byte[] privateKey);
 
         int crypto_box_curve25519xsalsa20poly1305_open_afternm(
-                @Out byte[] message, @In byte[] ct, @u_int64_t long length,
+                @Out byte[] message, @In byte[] ct, @u_int64_t int length,
                 @In byte[] nonce, @In byte[] shared);
 
         // ---------------------------------------------------------------------
@@ -159,12 +159,12 @@ public class NaCl {
 
         int crypto_sign_ed25519(
                 @Out byte[] buffer, @Out LongLongByReference bufferLen,
-                @In byte[] message, @u_int64_t long length,
+                @In byte[] message, @u_int64_t int length,
                 @In byte[] secretKey);
 
         int crypto_sign_ed25519_open(
                 @Out byte[] buffer, @Out LongLongByReference bufferLen,
-                @In byte[] sigAndMsg, @u_int64_t long length, @In byte[] key);
+                @In byte[] sigAndMsg, @u_int64_t int length, @In byte[] key);
 
         // ---------------------------------------------------------------------
         // Public-key cryptography: Sealed boxes
@@ -198,14 +198,14 @@ public class NaCl {
         int CRYPTO_GENERICHASH_BLAKE2B_KEYBYTES_MAX = 64;
 
         int crypto_generichash_blake2b(
-                @Out byte[] buffer, @u_int64_t long outLen, @In byte[] message,
-                @u_int64_t long messageLen, @In byte[] key,
-                @u_int64_t long keyLen);
+                @Out byte[] buffer, @u_int64_t int outLen, @In byte[] message,
+                @u_int64_t int messageLen, @In byte[] key,
+                @u_int64_t int keyLen);
 
         int crypto_generichash_blake2b_salt_personal(
-                @Out byte[] buffer, @u_int64_t long outLen, @In byte[] message,
-                @u_int64_t long messageLen, @In byte[] key,
-                @u_int64_t long keyLen, @In byte[] salt, @In byte[] personal);
+                @Out byte[] buffer, @u_int64_t int outLen, @In byte[] message,
+                @u_int64_t int messageLen, @In byte[] key,
+                @u_int64_t int keyLen, @In byte[] salt, @In byte[] personal);
 
         // ---------------------------------------------------------------------
         // Hashing: Short-input hashing
@@ -224,17 +224,17 @@ public class NaCl {
         int CRYPTO_PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE = 16777216;
 
         int crypto_pwhash_scryptsalsa208sha256(
-                @Out byte[] buffer, @u_int64_t long outlen, @In byte[] passwd,
-                @u_int64_t long passwdlen, @In byte[] salt,
+                @Out byte[] buffer, @u_int64_t int outlen, @In byte[] passwd,
+                @u_int64_t int passwdlen, @In byte[] salt,
                 @u_int64_t long opslimit, @u_int64_t long memlimit);
 
         int crypto_pwhash_scryptsalsa208sha256_str(
                 @Out byte[] buffer, @In byte[] passwd,
-                @u_int64_t long passwdlen, @u_int64_t long opslimit,
+                @u_int64_t int passwdlen, @u_int64_t long opslimit,
                 @u_int64_t long memlimit);
 
         int crypto_pwhash_scryptsalsa208sha256_str_verify(
-                @In byte[] buffer, @In byte[] passwd, @u_int64_t long passwdlen);
+                @In byte[] buffer, @In byte[] passwd, @u_int64_t int passwdlen);
 
         // ---------------------------------------------------------------------
         // Advanced: AES256-GCM
@@ -247,12 +247,12 @@ public class NaCl {
         int CRYPTO_HASH_SHA256_BYTES = 32;
 
         int crypto_hash_sha256(
-                @Out byte[] buffer, @In byte[] message, @u_int64_t long sizeof);
+                @Out byte[] buffer, @In byte[] message, @u_int64_t int sizeof);
 
         int CRYPTO_HASH_SHA512_BYTES = 64;
 
         int crypto_hash_sha512(
-                @Out byte[] buffer, @In byte[] message, @u_int64_t long sizeof);
+                @Out byte[] buffer, @In byte[] message, @u_int64_t int sizeof);
 
         // ---------------------------------------------------------------------
         // Advanced: HMAC-SHA-2
