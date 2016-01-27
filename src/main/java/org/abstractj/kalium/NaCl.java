@@ -74,6 +74,24 @@ public class NaCl {
 
         public String sodium_version_string();
 
+        // ---------------------------------------------------------------------
+        // Generating Random Data
+
+        public void randombytes(@Out byte[] buffer, @u_int64_t long size);
+
+        // ---------------------------------------------------------------------
+        // Secret-key cryptography: Authenticated encryption
+
+        public static final int XSALSA20_POLY1305_SECRETBOX_KEYBYTES = 32;
+        public static final int XSALSA20_POLY1305_SECRETBOX_NONCEBYTES = 24;
+
+        int crypto_secretbox_xsalsa20poly1305(@Out byte[] ct, @In byte[] msg, @u_int64_t long length, @In byte[] nonce, @In byte[] key);
+
+        int crypto_secretbox_xsalsa20poly1305_open(@Out byte[] message, @In byte[] ct, @u_int64_t long length, @In byte[] nonce, @In byte[] key);
+
+        // ---------------------------------------------------------------------
+        // Secret-key cryptography: Authentication
+
         public static final int HMACSHA512256_BYTES = 32;
 
         public static final int HMACSHA512256_KEYBYTES = 32;
@@ -82,15 +100,64 @@ public class NaCl {
 
         public int crypto_auth_hmacsha512256_verify(@In byte[] mac, @In byte[] message, @u_int64_t long sizeof, @In byte[] key);
 
-        public static final int SHA256BYTES = 32;
+        // ---------------------------------------------------------------------
+        // Secret-key cryptography: AEAD
 
-        public int crypto_hash_sha256(@Out byte[] buffer, @In byte[] message, @u_int64_t long sizeof);
+        // TODO
 
-        public static final int SHA512BYTES = 64;
+        // ---------------------------------------------------------------------
+        // Public-key cryptography: Authenticated encryption
 
-        public int crypto_hash_sha512(@Out byte[] buffer, @In byte[] message, @u_int64_t long sizeof);
+        public static final int PUBLICKEY_BYTES = 32;
+        public static final int SECRETKEY_BYTES = 32;
+
+        public int crypto_box_curve25519xsalsa20poly1305_keypair(@Out byte[] publicKey, @Out byte[] secretKey);
+
+        public static final int NONCE_BYTES = 24;
+        public static final int ZERO_BYTES = 32;
+        public static final int BOXZERO_BYTES = 16;
+        public static final int BEFORENMBYTES = 32;
+        public static final int MAC_BYTES = ZERO_BYTES - BOXZERO_BYTES;
+        public static final int SEAL_BYTES = PUBLICKEY_BYTES + MAC_BYTES;
+
+        public int crypto_box_curve25519xsalsa20poly1305_beforenm(@Out byte[] sharedkey,
+                                                                  @In byte[] publicKey, @In byte[] privateKey);
+
+        public int crypto_box_curve25519xsalsa20poly1305(@Out byte[] ct, @In byte[] msg, @u_int64_t long length, @In byte[] nonce,
+                                                         @In byte[] publicKey, @In byte[] privateKey);
+
+        public int crypto_box_curve25519xsalsa20poly1305_afternm(@Out byte[] ct, @In byte[] msg, @u_int64_t long length, @In byte[] nonce,
+                                                                 @In byte[] shared);
+
+        public int crypto_box_curve25519xsalsa20poly1305_open(@Out byte[] message, @In byte[] ct, @u_int64_t long length,
+                                                              @In byte[] nonce, @In byte[] publicKey, @In byte[] privateKey);
+
+        public int crypto_box_curve25519xsalsa20poly1305_open_afternm(@Out byte[] message, @In byte[] ct, @u_int64_t long length,
+                                                                      @In byte[] nonce, @In byte[] shared);
+
+        // ---------------------------------------------------------------------
+        // Public-key cryptography: Public-key signatures
+
+        public static final int SIGNATURE_BYTES = 64;
+
+        int crypto_sign_ed25519_seed_keypair(@Out byte[] publicKey, @Out byte[] secretKey, @In byte[] seed);
+
+        int crypto_sign_ed25519(@Out byte[] buffer, @Out LongLongByReference bufferLen, @In byte[] message, @u_int64_t long length, @In byte[] secretKey);
+
+        int crypto_sign_ed25519_open(@Out byte[] buffer, @Out LongLongByReference bufferLen, @In byte[] sigAndMsg, @u_int64_t long length, @In byte[] key);
+
+        // ---------------------------------------------------------------------
+        // Public-key cryptography: Sealed boxes
+
+        public int crypto_box_seal(@Out byte[] ct, @In byte[] message, @In @u_int64_t int length, @In byte[] publicKey);
+
+        public int crypto_box_seal_open(@Out byte[] message, @In byte[] c, @In @u_int64_t int length, @In byte[] publicKey, @In byte[] privateKey);
+
+        // ---------------------------------------------------------------------
+        // Hashing: Generic hashing
 
         public static final int BLAKE2B_OUTBYTES = 32;
+
         public int crypto_generichash_blake2b(@Out byte[] buffer, @u_int64_t long outLen,
                                               @In byte[] message, @u_int64_t long messageLen,
                                               @In byte[] key, @u_int64_t long keyLen);
@@ -99,6 +166,14 @@ public class NaCl {
                                                             @In byte[] key,  @u_int64_t long keyLen,
                                                             @In byte[] salt,
                                                             @In byte[] personal);
+
+        // ---------------------------------------------------------------------
+        // Hashing: Short-input hashing
+
+        // TODO
+
+        // ---------------------------------------------------------------------
+        // Password hashing
 
         public static final int PWHASH_SCRYPTSALSA208SHA256_STRBYTES = 102;
         public static final int PWHASH_SCRYPTSALSA208SHA256_OUTBYTES = 64;
@@ -122,58 +197,58 @@ public class NaCl {
         public int crypto_pwhash_scryptsalsa208sha256_str_verify(@In byte[] buffer,
                                                                  @In byte[] passwd,
                                                                  @u_int64_t long passwdlen);
-        
-        public static final int PUBLICKEY_BYTES = 32;
-        public static final int SECRETKEY_BYTES = 32;
 
-        public int crypto_box_curve25519xsalsa20poly1305_keypair(@Out byte[] publicKey, @Out byte[] secretKey);
+        // ---------------------------------------------------------------------
+        // Advanced: AES256-GCM
 
+        // TODO
 
-        public static final int NONCE_BYTES = 24;
-        public static final int ZERO_BYTES = 32;
-        public static final int BOXZERO_BYTES = 16;
-        public static final int BEFORENMBYTES = 32;
-        public static final int MAC_BYTES = ZERO_BYTES - BOXZERO_BYTES;
-        public static final int SEAL_BYTES = PUBLICKEY_BYTES + MAC_BYTES;
+        // ---------------------------------------------------------------------
+        // Advanced: SHA-2
 
-        public void randombytes(@Out byte[] buffer, @u_int64_t long size);
+        public static final int SHA256BYTES = 32;
 
-        public int crypto_box_curve25519xsalsa20poly1305_beforenm(@Out byte[] sharedkey,
-                                                         @In byte[] publicKey, @In byte[] privateKey);
+        public int crypto_hash_sha256(@Out byte[] buffer, @In byte[] message, @u_int64_t long sizeof);
 
-        public int crypto_box_curve25519xsalsa20poly1305(@Out byte[] ct, @In byte[] msg, @u_int64_t long length, @In byte[] nonce,
-                                                         @In byte[] publicKey, @In byte[] privateKey);
+        public static final int SHA512BYTES = 64;
 
-        public int crypto_box_curve25519xsalsa20poly1305_afternm(@Out byte[] ct, @In byte[] msg, @u_int64_t long length, @In byte[] nonce,
-                                                                 @In byte[] shared);
+        public int crypto_hash_sha512(@Out byte[] buffer, @In byte[] message, @u_int64_t long sizeof);
 
-        public int crypto_box_curve25519xsalsa20poly1305_open(@Out byte[] message, @In byte[] ct, @u_int64_t long length,
-                                                              @In byte[] nonce, @In byte[] publicKey, @In byte[] privateKey);
+        // ---------------------------------------------------------------------
+        // Advanced: HMAC-SHA-2
 
-        public int crypto_box_curve25519xsalsa20poly1305_open_afternm(@Out byte[] message, @In byte[] ct, @u_int64_t long length,
-                                                              @In byte[] nonce, @In byte[] shared);
-        public int crypto_box_seal(@Out byte[] ct, @In byte[] message, @In @u_int64_t int length, @In byte[] publicKey);
+        // TODO
 
-        public int crypto_box_seal_open(@Out byte[] message, @In byte[] c, @In @u_int64_t int length, @In byte[] publicKey, @In byte[] privateKey);
+        // ---------------------------------------------------------------------
+        // Advanced: One-time authentication
+
+        // TODO
+
+        // ---------------------------------------------------------------------
+        // Advanced: Diffie-Hellman
 
         public static final int SCALAR_BYTES = 32;
 
         public int crypto_scalarmult_curve25519(@Out byte[] result, @In byte[] intValue, @In byte[] point);
 
-        public static final int XSALSA20_POLY1305_SECRETBOX_KEYBYTES = 32;
-        public static final int XSALSA20_POLY1305_SECRETBOX_NONCEBYTES = 24;
+        // ---------------------------------------------------------------------
+        // Advanced: Stream ciphers: ChaCha20
 
-        int crypto_secretbox_xsalsa20poly1305(@Out byte[] ct, @In byte[] msg, @u_int64_t long length, @In byte[] nonce, @In byte[] key);
+        // TODO
 
-        int crypto_secretbox_xsalsa20poly1305_open(@Out byte[] message, @In byte[] ct, @u_int64_t long length, @In byte[] nonce, @In byte[] key);
+        // ---------------------------------------------------------------------
+        // Advanced: Stream ciphers: Salsa20
 
-        public static final int SIGNATURE_BYTES = 64;
+        // TODO
 
-        int crypto_sign_ed25519_seed_keypair(@Out byte[] publicKey, @Out byte[] secretKey, @In byte[] seed);
+        // ---------------------------------------------------------------------
+        // Advanced: Stream ciphers: XSalsa20
 
-        int crypto_sign_ed25519(@Out byte[] buffer, @Out LongLongByReference bufferLen, @In byte[] message, @u_int64_t long length, @In byte[] secretKey);
+        // TODO
 
-        int crypto_sign_ed25519_open(@Out byte[] buffer, @Out LongLongByReference bufferLen, @In byte[] sigAndMsg, @u_int64_t long length, @In byte[] key);
+        // ---------------------------------------------------------------------
+        // Advanced: Ed25519 to Curve25519
+
     }
 
     /**
