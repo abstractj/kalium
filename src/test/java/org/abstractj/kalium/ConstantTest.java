@@ -38,6 +38,17 @@ public class ConstantTest {
                 NaCl.Sodium.CRYPTO_SECRETBOX_MACBYTES);
     }
 
+    @Test
+    public void testSecretAuthConstants() throws Exception {
+        assertEquals("CRYPTO_AUTH_BYTES",
+                lib.crypto_auth_bytes(),
+                NaCl.Sodium.CRYPTO_AUTH_BYTES);
+
+        assertEquals("CRYPTO_AUTH_KEYBYTES",
+                lib.crypto_auth_keybytes(),
+                NaCl.Sodium.CRYPTO_AUTH_KEYBYTES);
+    }
+
     public interface SodiumConstants {
         @size_t
         int crypto_secretbox_keybytes();
@@ -53,5 +64,11 @@ public class ConstantTest {
 
         @size_t
         int crypto_secretbox_macbytes();
+
+        @size_t
+        int crypto_auth_bytes();
+
+        @size_t
+        int crypto_auth_keybytes();
     }
 }

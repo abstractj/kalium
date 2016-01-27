@@ -145,15 +145,47 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Secret-key cryptography: Authentication
 
+        /**
+         * @deprecated use CRYPTO_AUTH_BYTES
+         */
+        @Deprecated
+        int HMACSHA512256_BYTES = 32;
+
+        /**
+         * @deprecated use CRYPTO_AUTH_KEYBYTES
+         */
+        @Deprecated
+        int HMACSHA512256_KEYBYTES = 32;
+
         int CRYPTO_AUTH_HMACSHA512256_BYTES = 32;
 
         int CRYPTO_AUTH_HMACSHA512256_KEYBYTES = 32;
 
+        int CRYPTO_AUTH_BYTES = CRYPTO_AUTH_HMACSHA512256_BYTES;
+
+        int CRYPTO_AUTH_KEYBYTES = CRYPTO_AUTH_HMACSHA512256_KEYBYTES;
+
+        /**
+         * @deprecated use the documented crypto_auth
+         */
+        @Deprecated
         int crypto_auth_hmacsha512256(
                 @Out byte[] mac, @In byte[] message, @In @u_int64_t int sizeof,
                 @In byte[] key);
 
+        /**
+         * @deprecated use the documented crypto_auth_verify
+         */
+        @Deprecated
         int crypto_auth_hmacsha512256_verify(
+                @In byte[] mac, @In byte[] message, @In @u_int64_t int sizeof,
+                @In byte[] key);
+
+        int crypto_auth(
+                @Out byte[] mac, @In byte[] message, @In @u_int64_t int sizeof,
+                @In byte[] key);
+
+        int crypto_auth_verify(
                 @In byte[] mac, @In byte[] message, @In @u_int64_t int sizeof,
                 @In byte[] key);
 
