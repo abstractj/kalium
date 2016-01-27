@@ -4,7 +4,7 @@
 
     <groupId>org.abstractj.kalium</groupId>
     <artifactId>kalium</artifactId>
-    <version>0.5.1.Alpha1-SNAPSHOT</version>
+    <version>0.6.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>kalium</name>
