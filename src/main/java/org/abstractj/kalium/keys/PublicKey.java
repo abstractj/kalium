@@ -16,7 +16,7 @@
 
 package org.abstractj.kalium.keys;
 
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES;
+import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_PUBLICKEYBYTES;
 import static org.abstractj.kalium.crypto.Util.checkLength;
 import static org.abstractj.kalium.encoders.Encoder.HEX;
 
@@ -26,7 +26,7 @@ public class PublicKey implements Key {
 
     public PublicKey(byte[] publicKey) {
         this.publicKey = publicKey;
-        checkLength(publicKey, CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES);
+        checkLength(publicKey, CRYPTO_BOX_PUBLICKEYBYTES);
     }
 
     public PublicKey(String publicKey) {

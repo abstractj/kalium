@@ -19,8 +19,8 @@ package org.abstractj.kalium.keys;
 import org.abstractj.kalium.crypto.Point;
 import org.abstractj.kalium.encoders.Encoder;
 
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES;
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES;
+import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_PUBLICKEYBYTES;
+import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_SECRETKEYBYTES;
 import static org.abstractj.kalium.NaCl.sodium;
 import static org.abstractj.kalium.crypto.Util.checkLength;
 import static org.abstractj.kalium.crypto.Util.zeros;
@@ -31,16 +31,28 @@ public class KeyPair {
     private final byte[] secretKey;
 
     public KeyPair() {
-        this.secretKey = zeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES);
-        this.publicKey = zeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES);
-        sodium().crypto_box_curve25519xsalsa20poly1305_keypair(publicKey, secretKey);
+        this.secretKey = zeros(CRYPTO_BOX_SECRETKEYBYTES);
+        this.publicKey = zeros(CRYPTO_BOX_PUBLICKEYBYTES);
+        sodium().crypto_box_keypair(publicKey, secretKey);
     }
 
     public KeyPair(byte[] secretKey) {
         this.secretKey = secretKey;
-        checkLength(this.secretKey, CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES);
+        checkLength(this.secretKey, CRYPTO_BOX_SECRETKEYBYTES);
         Point point = new Point();
         this.publicKey = point.mult(secretKey).toBytes();
+    }
+
+    private KeyPair(byte[] publicKey, byte[] secretKey) {
+        this.publicKey = publicKey;
+        this.secretKey = secretKey;
+    }
+
+    public static KeyPair seeded(byte[] seed) {
+        byte[] secretKey = zeros(CRYPTO_BOX_SECRETKEYBYTES);
+        byte[] publicKey = zeros(CRYPTO_BOX_PUBLICKEYBYTES);
+        sodium().crypto_box_seed_keypair(publicKey, secretKey, seed);
+        return new KeyPair(publicKey, secretKey);
     }
 
     public KeyPair(String secretKey, Encoder encoder) {

@@ -213,6 +213,36 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Public-key cryptography: Authenticated encryption
 
+        /**
+         * @deprecated use CRYPTO_BOX_PUBLICKEYBYTES
+         */
+        @Deprecated
+        int PUBLICKEY_BYTES = 32;
+
+        /**
+         * @deprecated use CRYPTO_BOX_SECRETKEYBYTES
+         */
+        @Deprecated
+        int SECRETKEY_BYTES = 32;
+
+        /**
+         * @deprecated use CRYPTO_BOX_NONCEBYTES
+         */
+        @Deprecated
+        int NONCE_BYTES = 24;
+
+        /**
+         * @deprecated use CRYPTO_BOX_ZEROBYTES
+         */
+        @Deprecated
+        int ZERO_BYTES = 32;
+
+        /**
+         * @deprecated use CRYPTO_BOX_BOXZEROBYTES
+         */
+        @Deprecated
+        int BOXZERO_BYTES = 16;
+
         int CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES = 32;
 
         int CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES = 32;
@@ -229,28 +259,95 @@ public class NaCl {
 
         int CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BEFORENMBYTES = 32;
 
+        int CRYPTO_BOX_PUBLICKEYBYTES =
+                CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES;
+
+        int CRYPTO_BOX_SECRETKEYBYTES =
+                CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES;
+
+        int CRYPTO_BOX_ZEROBYTES =
+                CRYPTO_BOX_CURVE25519XSALSA20POLY1305_ZEROBYTES;
+
+        int CRYPTO_BOX_BOXZEROBYTES =
+                CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BOXZEROBYTES;
+
+        int CRYPTO_BOX_MACBYTES =
+                CRYPTO_BOX_CURVE25519XSALSA20POLY1305_MACBYTES;
+
+        int CRYPTO_BOX_NONCEBYTES =
+                CRYPTO_BOX_CURVE25519XSALSA20POLY1305_NONCEBYTES;
+
+        int CRYPTO_BOX_BEFORENMBYTES =
+                CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BEFORENMBYTES;
+
+        /**
+         * @deprecated use the documented crypto_box_keypair
+         */
+        @Deprecated
         int crypto_box_curve25519xsalsa20poly1305_keypair(
                 @Out byte[] publicKey, @Out byte[] secretKey);
 
-        int crypto_box_curve25519xsalsa20poly1305_beforenm(
+        int crypto_box_keypair(
+                @Out byte[] publicKey, @Out byte[] secretKey);
+
+        int crypto_box_seed_keypair(
+                @Out byte[] publicKey, @Out byte[] secretKey, @In byte[] seed);
+
+        int crypto_box_beforenm(
                 @Out byte[] sharedkey, @In byte[] publicKey,
                 @In byte[] privateKey);
 
+        /**
+         * @deprecated This is the original NaCl interface and not recommended
+         *             use crypto_box_easy
+         */
+        @Deprecated
         int crypto_box_curve25519xsalsa20poly1305(
                 @Out byte[] ct, @In byte[] msg, @In @u_int64_t int length,
                 @In byte[] nonce, @In byte[] publicKey, @In byte[] privateKey);
 
-        int crypto_box_curve25519xsalsa20poly1305_afternm(
+        int crypto_box_easy(
+                @Out byte[] ct, @In byte[] msg, @In @u_int64_t int length,
+                @In byte[] nonce, @In byte[] publicKey, @In byte[] privateKey);
+
+        int crypto_box_detached(
+                @Out byte[] ct, @Out byte[] mac, @In byte[] message,
+                @In @u_int64_t int length, @In byte[] nonce,
+                @In byte[] publicKey, @In byte[] privateKey);
+
+        int crypto_box_easy_afternm(
                 @Out byte[] ct, @In byte[] msg, @In @u_int64_t int length,
                 @In byte[] nonce, @In byte[] shared);
 
+        int crypto_box_detached_afternm(
+                @Out byte[] ct, @Out byte[] mac, @In byte[] message,
+                @In @u_int64_t int length, @In byte[] nonce, @In byte[] key);
+
+        /**
+         * @deprecated This is the original NaCl interface and not recommended
+         *             use crypto_box_easy_open
+         */
+        @Deprecated
         int crypto_box_curve25519xsalsa20poly1305_open(
                 @Out byte[] message, @In byte[] ct, @In @u_int64_t int length,
                 @In byte[] nonce, @In byte[] publicKey, @In byte[] privateKey);
 
-        int crypto_box_curve25519xsalsa20poly1305_open_afternm(
+        int crypto_box_open_easy(
+                @Out byte[] message, @In byte[] ct, @In @u_int64_t int length,
+                @In byte[] nonce, @In byte[] publicKey, @In byte[] privateKey);
+
+        int crypto_box_open_detached(
+                @Out byte[] message, @In byte[] ct, @In byte[] mac,
+                @In @u_int64_t int length, @In byte[] nonce,
+                @In byte[] publicKey, @In byte[] privateKey);
+
+        int crypto_box_open_easy_afternm(
                 @Out byte[] message, @In byte[] ct, @In @u_int64_t int length,
                 @In byte[] nonce, @In byte[] shared);
+
+        int crypto_box_open_detached_afternm(
+                @Out byte[] message, @In byte[] ct, @In byte[] mac,
+                @In @u_int64_t int length, @In byte[] nonce, @In byte[] key);
 
         // ---------------------------------------------------------------------
         // Public-key cryptography: Public-key signatures
