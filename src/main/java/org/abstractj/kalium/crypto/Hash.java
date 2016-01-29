@@ -18,10 +18,11 @@ package org.abstractj.kalium.crypto;
 
 import org.abstractj.kalium.encoders.Encoder;
 
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_GENERICHASH_BYTES_MAX;
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_HASH_SHA256_BYTES;
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_HASH_SHA512_BYTES;
+import static org.abstractj.kalium.NaCl.Sodium.*;
 import static org.abstractj.kalium.NaCl.sodium;
+import static org.abstractj.kalium.crypto.Util.checkLength;
+import static org.abstractj.kalium.crypto.Util.isValid;
+import static org.abstractj.kalium.crypto.Util.zeros;
 
 public class Hash {
 
@@ -66,5 +67,15 @@ public class Hash {
                                                           key, key.length,
                                                           salt, personal);
         return buffer;
+    }
+
+    public byte[] shortHash(byte[] message, byte[] key) {
+        checkLength(key, CRYPTO_SHORTHASH_KEYBYTES);
+        byte[] out = zeros(CRYPTO_SHORTHASH_BYTES);
+
+        // Always returns 0 but check it for consistency
+        isValid(sodium().crypto_shorthash(out, message, message.length, key),
+                "Failed to generate hash.");
+        return out;
     }
 }

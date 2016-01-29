@@ -21,12 +21,14 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.abstractj.kalium.NaCl.sodium;
 import static org.abstractj.kalium.crypto.Util.isValid;
 import static org.abstractj.kalium.encoders.Encoder.HEX;
 import static org.abstractj.kalium.fixture.TestVectors.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.fail;
 
 public class HashTest {
 
@@ -160,5 +162,15 @@ public class HashTest {
                 "final failed");
 
         assertArrayEquals(HEX.decode(Blake2_DIGEST), out);
+    }
+
+    @Test
+    public void testShortHash() throws Exception {
+        byte[] key = HEX.decode(SHORTHASH_KEY);
+        for(int i = 0; i < SHORTHASH_MESSAGES.length; i++) {
+            byte[] msg = HEX.decode(SHORTHASH_MESSAGES[i]);
+            byte[] result = hash.shortHash(msg, key);
+            assertEquals(SHORTHASH_HASHES[i], HEX.encode(result));
+        }
     }
 }

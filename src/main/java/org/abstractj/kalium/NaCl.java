@@ -520,7 +520,13 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Hashing: Short-input hashing
 
-        // TODO
+        int CRYPTO_SHORTHASH_BYTES = 8;
+
+        int CRYPTO_SHORTHASH_KEYBYTES = 16;
+
+        int crypto_shorthash(
+                @Out byte[] out, @In byte[] in, @In @u_int64_t int inLen,
+                @In byte[] key);
 
         // ---------------------------------------------------------------------
         // Password hashing
