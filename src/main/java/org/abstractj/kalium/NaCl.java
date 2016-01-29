@@ -352,24 +352,83 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Public-key cryptography: Public-key signatures
 
+        /**
+         * @deprecated use the documented CRYPTO_SIGN_BYTES
+         */
+        @Deprecated
+        int SIGNATURE_BYTES = 64;
+
         int CRYPTO_SIGN_ED25519_PUBLICKEYBYTES = 32;
 
         int CRYPTO_SIGN_ED25519_SECRETKEYBYTES = 64;
 
         int CRYPTO_SIGN_ED25519_BYTES = 64;
 
+        int CRYPTO_SIGN_ED25519_SEEDBYTES = 32;
+
+        int CRYPTO_SIGN_PUBLICKEYBYTES = CRYPTO_SIGN_ED25519_PUBLICKEYBYTES;
+
+        int CRYPTO_SIGN_SECRETKEYBYTES = CRYPTO_SIGN_ED25519_SECRETKEYBYTES;
+
+        int CRYPTO_SIGN_BYTES = CRYPTO_SIGN_ED25519_BYTES;
+
+        int CRYPTO_SIGN_SEEDBYTES = CRYPTO_SIGN_ED25519_SEEDBYTES;
+
+        int crypto_sign_keypair(
+                @Out byte[] publicKey, @Out byte[] secretKey);
+
+        /**
+         * @deprecated use the documented crypto_sign_seed_keypair
+         */
+        @Deprecated
         int crypto_sign_ed25519_seed_keypair(
                 @Out byte[] publicKey, @Out byte[] secretKey, @In byte[] seed);
 
+        int crypto_sign_seed_keypair(
+                @Out byte[] publicKey, @Out byte[] secretKey, @In byte[] seed);
+
+        /**
+         * @deprecated use the documented crypto_sign
+         */
+        @Deprecated
         int crypto_sign_ed25519(
                 @Out byte[] buffer, @Out LongLongByReference bufferLen,
                 @In byte[] message, @In @u_int64_t int length,
                 @In byte[] secretKey);
 
+        int crypto_sign(
+                @Out byte[] buffer, @Out LongLongByReference bufferLen,
+                @In byte[] message, @In @u_int64_t int length,
+                @In byte[] secretKey);
+
+        int crypto_sign_detached(
+                @Out byte[] sig, @Out LongLongByReference sigLen,
+                @In byte[] message, @In @u_int64_t int messageLen,
+                @In byte[] secretKey);
+
+        /**
+         * @deprecated use the documented crypto_sign_open
+         */
+        @Deprecated
         int crypto_sign_ed25519_open(
                 @Out byte[] buffer, @Out LongLongByReference bufferLen,
                 @In byte[] sigAndMsg, @In @u_int64_t int length,
                 @In byte[] key);
+
+        int crypto_sign_open(
+                @Out byte[] buffer, @Out LongLongByReference bufferLen,
+                @In byte[] sigAndMsg, @In @u_int64_t int length,
+                @In byte[] key);
+
+        int crypto_sign_verify_detached(
+                @In byte[] sig, @In byte[] message,
+                @In @u_int64_t int messageLen, @In byte[] publicKey);
+
+        int crypto_sign_ed25519_sk_to_seed(
+                @Out byte[] seed, @In byte[] secretKey);
+
+        int crypto_sign_ed25519_sk_to_pk(
+                @Out byte[] publicKey, @In byte[] secretKey);
 
         // ---------------------------------------------------------------------
         // Public-key cryptography: Sealed boxes
