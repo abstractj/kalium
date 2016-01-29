@@ -21,6 +21,7 @@ import jnr.ffi.annotations.In;
 import jnr.ffi.annotations.Out;
 import jnr.ffi.byref.LongLongByReference;
 import jnr.ffi.types.u_int64_t;
+import jnr.ffi.types.size_t;
 
 public class NaCl {
 
@@ -448,8 +449,13 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Hashing: Generic hashing
 
-//        int CRYPTO_GENERICHASH_BLAKE2B_BYTES = 32; libsodium defines it as 32
-        int CRYPTO_GENERICHASH_BLAKE2B_BYTES = 64;
+        /**
+         * @deprecated use CRYPTO_GENERICHASH_BYTES_MAX
+         */
+        @Deprecated
+        int BLAKE2B_OUTBYTES = 64;
+
+        int CRYPTO_GENERICHASH_BLAKE2B_BYTES = 32;
 
         int CRYPTO_GENERICHASH_BLAKE2B_BYTES_MIN = 16;
 
@@ -461,7 +467,34 @@ public class NaCl {
 
         int CRYPTO_GENERICHASH_BLAKE2B_KEYBYTES_MAX = 64;
 
+        int CRYPTO_GENERICHASH_BYTES =
+                CRYPTO_GENERICHASH_BLAKE2B_BYTES;
+
+        int CRYPTO_GENERICHASH_BYTES_MIN =
+                CRYPTO_GENERICHASH_BLAKE2B_BYTES_MIN;
+
+        int CRYPTO_GENERICHASH_BYTES_MAX =
+                CRYPTO_GENERICHASH_BLAKE2B_BYTES_MAX;
+
+        int CRYPTO_GENERICHASH_KEYBYTES =
+                CRYPTO_GENERICHASH_BLAKE2B_KEYBYTES;
+
+        int CRYPTO_GENERICHASH_KEYBYTES_MIN =
+                CRYPTO_GENERICHASH_BLAKE2B_KEYBYTES_MIN;
+
+        int CRYPTO_GENERICHASH_KEYBYTES_MAX =
+                CRYPTO_GENERICHASH_BLAKE2B_KEYBYTES_MAX;
+
+        /**
+         * @deprecated use the documented crypto_generichash
+         */
+        @Deprecated
         int crypto_generichash_blake2b(
+                @Out byte[] buffer, @In @u_int64_t int outLen,
+                @In byte[] message, @u_int64_t int messageLen, @In byte[] key,
+                @In @u_int64_t int keyLen);
+
+        int crypto_generichash(
                 @Out byte[] buffer, @In @u_int64_t int outLen,
                 @In byte[] message, @u_int64_t int messageLen, @In byte[] key,
                 @In @u_int64_t int keyLen);
@@ -471,6 +504,18 @@ public class NaCl {
                 @In byte[] message, @u_int64_t int messageLen, @In byte[] key,
                 @In @u_int64_t int keyLen, @In byte[] salt,
                 @In byte[] personal);
+
+        int crypto_generichash_statebytes();
+
+        int crypto_generichash_init(
+                @In @Out byte[] state, @In byte[] key, @In @size_t int keyLen,
+                @In @size_t int outLen);
+
+        int crypto_generichash_update(
+                @In @Out byte[] state, @In byte[] in, @In @u_int64_t int inLen);
+
+        int crypto_generichash_final(
+                @In @Out byte[] state, @Out byte[] out, @In @size_t int outLen);
 
         // ---------------------------------------------------------------------
         // Hashing: Short-input hashing

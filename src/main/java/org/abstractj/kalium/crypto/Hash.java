@@ -18,7 +18,7 @@ package org.abstractj.kalium.crypto;
 
 import org.abstractj.kalium.encoders.Encoder;
 
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_GENERICHASH_BLAKE2B_BYTES;
+import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_GENERICHASH_BYTES_MAX;
 import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_HASH_SHA256_BYTES;
 import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_HASH_SHA512_BYTES;
 import static org.abstractj.kalium.NaCl.sodium;
@@ -49,8 +49,8 @@ public class Hash {
 
 
     public byte[] blake2(byte[] message) throws UnsupportedOperationException {
-        byte[] buffer = new byte[CRYPTO_GENERICHASH_BLAKE2B_BYTES];
-        sodium().crypto_generichash_blake2b(buffer, CRYPTO_GENERICHASH_BLAKE2B_BYTES, message, message.length, null, 0);
+        byte[] buffer = new byte[CRYPTO_GENERICHASH_BYTES_MAX];
+        sodium().crypto_generichash(buffer, CRYPTO_GENERICHASH_BYTES_MAX, message, message.length, null, 0);
         return buffer;
     }
 
@@ -60,8 +60,8 @@ public class Hash {
     }
 
     public byte[] blake2(byte[] message, byte[] key, byte[] salt, byte[] personal) throws UnsupportedOperationException {
-        byte[] buffer = new byte[CRYPTO_GENERICHASH_BLAKE2B_BYTES];
-        sodium().crypto_generichash_blake2b_salt_personal(buffer, CRYPTO_GENERICHASH_BLAKE2B_BYTES,
+        byte[] buffer = new byte[CRYPTO_GENERICHASH_BYTES_MAX];
+        sodium().crypto_generichash_blake2b_salt_personal(buffer, CRYPTO_GENERICHASH_BYTES_MAX,
                                                           message, message.length,
                                                           key, key.length,
                                                           salt, personal);

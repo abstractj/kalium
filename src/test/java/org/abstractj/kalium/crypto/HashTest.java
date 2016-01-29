@@ -16,28 +16,17 @@
 
 package org.abstractj.kalium.crypto;
 
+import org.abstractj.kalium.NaCl;
 import org.junit.Test;
 
 import java.util.Arrays;
 
 import static junit.framework.Assert.assertTrue;
+import static org.abstractj.kalium.NaCl.sodium;
+import static org.abstractj.kalium.crypto.Util.isValid;
 import static org.abstractj.kalium.encoders.Encoder.HEX;
-import static org.abstractj.kalium.fixture.TestVectors.SHA256_DIGEST;
-import static org.abstractj.kalium.fixture.TestVectors.SHA256_DIGEST_EMPTY_STRING;
-import static org.abstractj.kalium.fixture.TestVectors.SHA256_MESSAGE;
-import static org.abstractj.kalium.fixture.TestVectors.SHA512_DIGEST;
-import static org.abstractj.kalium.fixture.TestVectors.SHA512_DIGEST_EMPTY_STRING;
-import static org.abstractj.kalium.fixture.TestVectors.SHA512_MESSAGE;
-import static org.abstractj.kalium.fixture.TestVectors.Blake2_MESSAGE;
-import static org.abstractj.kalium.fixture.TestVectors.Blake2_DIGEST;
-import static org.abstractj.kalium.fixture.TestVectors.Blake2_DIGEST_EMPTY_STRING;
-import static org.abstractj.kalium.fixture.TestVectors.Blake2_DIGEST_WITH_SALT_PERSONAL;
-import static org.abstractj.kalium.fixture.TestVectors.Blake2_KEY;
-import static org.abstractj.kalium.fixture.TestVectors.Blake2_SALT;
-import static org.abstractj.kalium.fixture.TestVectors.Blake2_PERSONAL;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.abstractj.kalium.fixture.TestVectors.*;
+import static org.junit.Assert.*;
 
 public class HashTest {
 
@@ -151,5 +140,25 @@ public class HashTest {
                 Blake2_SALT.getBytes(),
                 Blake2_PERSONAL.getBytes());
         assertEquals("Hash is invalid", Blake2_DIGEST_WITH_SALT_PERSONAL, HEX.encode(result));
+    }
+
+    @Test
+    public void testBlakeInteractive() throws Exception {
+        byte[] state = new byte[sodium().crypto_generichash_statebytes()];
+        isValid(sodium().crypto_generichash_init(
+                        state, null, 0, NaCl.Sodium.CRYPTO_GENERICHASH_BYTES_MAX),
+                "init failed");
+
+        byte[] msg = Blake2_MESSAGE.getBytes();
+        isValid(sodium().crypto_generichash_update(
+                        state, msg, msg.length),
+                "update failed");
+
+        byte[] out = new byte[NaCl.Sodium.CRYPTO_GENERICHASH_BLAKE2B_BYTES_MAX];
+        isValid(sodium().crypto_generichash_final(
+                        state, out, out.length),
+                "final failed");
+
+        assertArrayEquals(HEX.decode(Blake2_DIGEST), out);
     }
 }
