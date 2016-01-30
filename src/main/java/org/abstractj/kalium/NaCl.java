@@ -531,6 +531,30 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Password hashing
 
+        /**
+         * @deprecated use CRYPTO_PWHASH_SCRYPTSALSA208SHA256_STRBYTES
+         */
+        @Deprecated
+        int PWHASH_SCRYPTSALSA208SHA256_STRBYTES = 102;
+
+        /**
+         * @deprecated use CRYPTO_PWHASH_SCRYPTSALSA208SHA256_OUTBYTES
+         */
+        @Deprecated
+        int PWHASH_SCRYPTSALSA208SHA256_OUTBYTES = 64;
+
+        /**
+         * @deprecated use CRYPTO_PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE
+         */
+        @Deprecated
+        int PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE = 524288;
+
+        /**
+         * @deprecated use CRYPTO_PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE
+         */
+        @Deprecated
+        int PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE = 16777216;
+
         int CRYPTO_PWHASH_SCRYPTSALSA208SHA256_STRBYTES = 102;
 
         int CRYPTO_PWHASH_SCRYPTSALSA208SHA256_OUTBYTES = 64;
