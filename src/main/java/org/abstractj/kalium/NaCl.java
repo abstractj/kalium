@@ -28,7 +28,7 @@ public class NaCl {
     public static Sodium sodium() {
         Sodium sodium = SingletonHolder.SODIUM_INSTANCE;
 
-        if (!(sodium.sodium_version_string().compareTo("1.0.3") >= 0)) {
+        if (!(sodium.sodium_version_string().compareTo("1.0.4") >= 0)) {
             String message = String.format(
                     "Unsupported libsodium version: %s. Please update",
                     sodium.sodium_version_string());
