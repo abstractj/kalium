@@ -557,7 +557,45 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Advanced: AES256-GCM
 
-        // TODO
+        int CRYPTO_AEAD_AES256GCM_KEYBYTES = 32;
+
+        int CRYPTO_AEAD_AES256GCM_NPUBBYTES = 12;
+
+        int CRYPTO_AEAD_AES256GCM_ABYTES = 16;
+
+        /**
+         * @return 1 if the current CPU supports the AES256-GCM implementation,
+         *         and 0 if it doesn't.
+         */
+        int crypto_aead_aes256gcm_is_available();
+
+        int crypto_aead_aes256gcm_encrypt(
+                @Out byte[] ct, @Out LongLongByReference ctLen, @In byte[] msg,
+                @In @u_int64_t int msgLen, @In byte[] ad,
+                @In @u_int64_t int adLen, @In byte[] nsec, @In byte[] npub,
+                @In byte[] key);
+
+        int crypto_aead_aes256gcm_decrypt(
+                @Out byte[] msg, @Out LongLongByReference msgLen, @In byte[] nsec,
+                @In byte[] ct, @In @u_int64_t int ctLen, @In byte[] ad,
+                @In @u_int64_t int adLen, @In byte[] npub, @In byte[] key);
+
+        int crypto_aead_aes256gcm_statebytes();
+
+        int crypto_aead_aes256gcm_beforenm(
+                @Out byte[] state, @In byte[] key);
+
+        int crypto_aead_aes256gcm_encrypt_afternm(
+                @Out byte[] ct, @Out LongLongByReference ctLen, @In byte[] msg,
+                @In @u_int64_t int msgLen, @In byte[] ad,
+                @In @u_int64_t int adLen, @In byte[] nsec, @In byte[] npub,
+                @In @Out byte[] state);
+
+        int crypto_aead_aes256gcm_decrypt_afternm(
+                @Out byte[] ct, @Out LongLongByReference ctLen, @In byte[] msg,
+                @In @u_int64_t int msgLen, @In byte[] ad,
+                @In @u_int64_t int adLen, @In byte[] nsec, @In byte[] npub,
+                @In @Out byte[] state);
 
         // ---------------------------------------------------------------------
         // Advanced: SHA-2
