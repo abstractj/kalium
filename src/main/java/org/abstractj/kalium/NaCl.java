@@ -158,29 +158,9 @@ public class NaCl {
         @Deprecated
         int HMACSHA512256_KEYBYTES = 32;
 
-        int CRYPTO_AUTH_HMACSHA512256_BYTES = 32;
+        int CRYPTO_AUTH_BYTES = 32;
 
-        int CRYPTO_AUTH_HMACSHA512256_KEYBYTES = 32;
-
-        int CRYPTO_AUTH_BYTES = CRYPTO_AUTH_HMACSHA512256_BYTES;
-
-        int CRYPTO_AUTH_KEYBYTES = CRYPTO_AUTH_HMACSHA512256_KEYBYTES;
-
-        /**
-         * @deprecated use the documented crypto_auth
-         */
-        @Deprecated
-        int crypto_auth_hmacsha512256(
-                @Out byte[] mac, @In byte[] message, @In @u_int64_t int sizeof,
-                @In byte[] key);
-
-        /**
-         * @deprecated use the documented crypto_auth_verify
-         */
-        @Deprecated
-        int crypto_auth_hmacsha512256_verify(
-                @In byte[] mac, @In byte[] message, @In @u_int64_t int sizeof,
-                @In byte[] key);
+        int CRYPTO_AUTH_KEYBYTES = 32;
 
         int crypto_auth(
                 @Out byte[] mac, @In byte[] message, @In @u_int64_t int sizeof,
@@ -669,7 +649,83 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Advanced: HMAC-SHA-2
 
-        // TODO
+        int CRYPTO_AUTH_HMACSHA256_BYTES = 32;
+
+        int CRYPTO_AUTH_HMACSHA256_KEYBYTES = 32;
+
+        int CRYPTO_AUTH_HMACSHA512_BYTES = 64;
+
+        int CRYPTO_AUTH_HMACSHA512_KEYBYTES = 32;
+
+        int CRYPTO_AUTH_HMACSHA512256_BYTES = 32;
+
+        int CRYPTO_AUTH_HMACSHA512256_KEYBYTES = 32;
+
+        int crypto_auth_hmacsha256(
+                @Out byte[] mac, @In byte[] in, @In @u_int64_t int inLen,
+                @In byte[] key);
+
+        int crypto_auth_hmacsha256_verify(
+                @In byte[] mac, @In byte[] in, @In @u_int64_t int inLen,
+                @In byte[] key);
+
+        int crypto_hash_hmacsha256_statebytes();
+
+        int crypto_auth_hmacsha256_init(
+                @Out byte[] state, @In byte[] key, @In @size_t int keyLen);
+
+        int crypto_auth_hmacsha256_update(
+                @In @Out byte[] state, @In byte[] msg,
+                @In @u_int64_t int msgLen);
+
+        int crypto_auth_hmacsha256_final(
+                @In byte[] state, @Out byte[] hmac);
+
+        int crypto_auth_hmacsha512(
+                @Out byte[] mac, @In byte[] in, @In @u_int64_t int inLen,
+                @In byte[] key);
+
+        int crypto_auth_hmacsha512_verify(
+                @In byte[] mac, @In byte[] in, @In @u_int64_t int inLen,
+                @In byte[] key);
+
+        int crypto_hash_hmacsha512_statebytes();
+
+        int crypto_auth_hmacsha512_init(
+                @Out byte[] state, @In byte[] key, @In @size_t int keyLen);
+
+        int crypto_auth_hmacsha512_update(
+                @In @Out byte[] state, @In byte[] msg,
+                @In @u_int64_t int msgLen);
+
+        int crypto_auth_hmacsha512_final(
+                @In byte[] state, @Out byte[] hmac);
+
+        /**
+         * @deprecated you should probably use the documented crypto_auth
+         */
+        int crypto_auth_hmacsha512256(
+                @Out byte[] mac, @In byte[] message, @In @u_int64_t int sizeof,
+                @In byte[] key);
+
+        /**
+         * @deprecated you should probably use the documented crypto_auth_verify
+         */
+        int crypto_auth_hmacsha512256_verify(
+                @In byte[] mac, @In byte[] message, @In @u_int64_t int sizeof,
+                @In byte[] key);
+
+        int crypto_hash_hmacsha512256_statebytes();
+
+        int crypto_auth_hmacsha512256_init(
+                @Out byte[] state, @In byte[] key, @In @size_t int keyLen);
+
+        int crypto_auth_hmacsha512256_update(
+                @In @Out byte[] state, @In byte[] msg,
+                @In @u_int64_t int msgLen);
+
+        int crypto_auth_hmacsha512256_final(
+                @In byte[] state, @Out byte[] hmac);
 
         // ---------------------------------------------------------------------
         // Advanced: One-time authentication
