@@ -624,17 +624,47 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Advanced: SHA-2
 
+        /**
+         * @deprecated use CRYPTO_HASH_SHA256_BYTES
+         */
+        int SHA256BYTES = 32;
+
+        /**
+         * @deprecated use CRYPTO_HASH_SHA512_BYTES
+         */
+        int SHA512BYTES = 64;
+
         int CRYPTO_HASH_SHA256_BYTES = 32;
+
+        int CRYPTO_HASH_SHA512_BYTES = 64;
 
         int crypto_hash_sha256(
                 @Out byte[] buffer, @In byte[] message,
                 @In @u_int64_t int sizeof);
 
-        int CRYPTO_HASH_SHA512_BYTES = 64;
+        int crypto_hash_sha256_statebytes();
+
+        int crypto_hash_sha256_init(@Out byte[] state);
+
+        int crypto_hash_sha256_update(
+                @In @Out byte[] state, @In byte[] in, @In @u_int64_t int inLen);
+
+        int crypto_hash_sha256_final(
+                @In byte[] state, @Out byte[] out);
 
         int crypto_hash_sha512(
                 @Out byte[] buffer, @In byte[] message,
                 @In @u_int64_t int sizeof);
+
+        int crypto_hash_sha512_statebytes();
+
+        int crypto_hash_sha512_init(@Out byte[] state);
+
+        int crypto_hash_sha512_update(
+                @In @Out byte[] state, @In byte[] in, @In @u_int64_t int inLen);
+
+        int crypto_hash_sha512_final(
+                @In byte[] state, @Out byte[] out);
 
         // ---------------------------------------------------------------------
         // Advanced: HMAC-SHA-2

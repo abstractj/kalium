@@ -69,6 +69,15 @@ public class HashTest {
     }
 
     @Test
+    public void testSha256Interactive() throws Exception {
+        Hash.MultiPartHash sha256 = hash.sha256();
+        sha256.init();
+        sha256.update(SHA256_MESSAGE.getBytes());
+        byte[] out = sha256.done();
+        assertArrayEquals(SHA256_DIGEST.getBytes(), HEX.encode(out).getBytes());
+    }
+
+    @Test
     public void testSha512() throws Exception {
         final byte[] rawMessage = SHA512_MESSAGE.getBytes();
         String result = HEX.encode(hash.sha512(rawMessage));
@@ -100,6 +109,15 @@ public class HashTest {
         } catch (Exception e) {
             fail("Should not raise any exception on null byte");
         }
+    }
+
+    @Test
+    public void testSha512Interactive() throws Exception {
+        Hash.MultiPartHash sha512 = hash.sha512();
+        sha512.init();
+        sha512.update(SHA512_MESSAGE.getBytes());
+        byte[] out = sha512.done();
+        assertArrayEquals(SHA512_DIGEST.getBytes(), HEX.encode(out).getBytes());
     }
 
     @Test

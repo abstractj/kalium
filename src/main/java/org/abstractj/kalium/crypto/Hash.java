@@ -26,10 +26,66 @@ import static org.abstractj.kalium.crypto.Util.zeros;
 
 public class Hash {
 
+    public interface MultiPartHash {
+        MultiPartHash init();
+        MultiPartHash update(byte[] in);
+        byte[] done();
+    }
+
+    public MultiPartHash sha256() {
+        return new MultiPartHash() {
+            byte[] state = new byte[sodium().crypto_hash_sha256_statebytes()];
+
+            @Override
+            public MultiPartHash init() {
+                sodium().crypto_hash_sha256_init(state);
+                return this;
+            }
+
+            @Override
+            public MultiPartHash update(byte[] in) {
+                sodium().crypto_hash_sha256_update(state, in, in.length);
+                return this;
+            }
+
+            @Override
+            public byte[] done() {
+                byte[] out = zeros(CRYPTO_HASH_SHA256_BYTES);
+                sodium().crypto_hash_sha256_final(state, out);
+                return out;
+            }
+        };
+    }
+
     public byte[] sha256(byte[] message) {
         byte[] buffer = new byte[CRYPTO_HASH_SHA256_BYTES];
         sodium().crypto_hash_sha256(buffer, message, message.length);
         return buffer;
+    }
+
+    public MultiPartHash sha512() {
+        return new MultiPartHash() {
+            byte[] state = new byte[sodium().crypto_hash_sha512_statebytes()];
+
+            @Override
+            public MultiPartHash init() {
+                sodium().crypto_hash_sha512_init(state);
+                return this;
+            }
+
+            @Override
+            public MultiPartHash update(byte[] in) {
+                sodium().crypto_hash_sha512_update(state, in, in.length);
+                return this;
+            }
+
+            @Override
+            public byte[] done() {
+                byte[] out = zeros(CRYPTO_HASH_SHA512_BYTES);
+                sodium().crypto_hash_sha512_final(state, out);
+                return out;
+            }
+        };
     }
 
     public byte[] sha512(byte[] message) {
