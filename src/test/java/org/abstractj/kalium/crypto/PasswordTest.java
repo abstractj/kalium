@@ -3,7 +3,7 @@ package org.abstractj.kalium.crypto;
 import org.abstractj.kalium.NaCl;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
 import static org.abstractj.kalium.encoders.Encoder.HEX;
 import static org.abstractj.kalium.fixture.TestVectors.*;
 import static org.abstractj.kalium.fixture.TestVectors.PWHASH_MESSAGE;
