@@ -730,7 +730,28 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Advanced: One-time authentication
 
-        // TODO
+        int CRYPTO_ONETIMEAUTH_BYTES = 16;
+
+        int CRYPTO_ONETIMEAUTH_KEYBYTES = 32;
+
+        int crypto_onetimeauth(
+                @Out byte[] tag, @In byte in, @In @u_int64_t int inLen,
+                @In byte[] key);
+
+        int crypto_onetimeauth_verify(
+                @In byte[] tag, @In byte[] in, @In @u_int64_t int inLen,
+                @In byte[] key);
+
+        int crypto_onetimeauth_statebytes();
+
+        int crypto_onetimeauth_init(
+                @Out byte[] state, @In byte[] key);
+
+        int crypto_onetimeauth_update(
+                @In @Out byte[] state, @In byte[] in, @In @u_int64_t int inLen);
+
+        int crypto_onetimeauth_final(
+                @In byte[] state, @Out byte[] tag);
 
         // ---------------------------------------------------------------------
         // Advanced: Diffie-Hellman
