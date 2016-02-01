@@ -20,7 +20,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
 import static org.abstractj.kalium.encoders.Encoder.HEX;
 import static org.abstractj.kalium.fixture.TestVectors.SHA256_DIGEST;
 import static org.abstractj.kalium.fixture.TestVectors.SHA256_DIGEST_EMPTY_STRING;
