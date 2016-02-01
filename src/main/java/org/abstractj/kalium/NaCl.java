@@ -788,17 +788,55 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Advanced: Stream ciphers: ChaCha20
 
-        // TODO
+        int CRYPTO_STREAM_CHACHA20_KEYBYTES = 32;
+
+        int CRYPTO_STREAM_CHACHA20_NONCEBYTES = 8;
+
+        int crypto_stream_chacha20(
+                @Out byte[] c, @In @u_int64_t int cLen, @In byte[] nonce,
+                @In byte[] key);
+
+        int crypto_stream_chacha20_xor(
+                @Out byte[] c, @In byte[] msg, @In @u_int64_t int msgLen,
+                @In byte[] nonce, @In byte[] key);
+
+        int crypto_stream_chacha20_xor_ic(
+                @Out byte[] c, @In byte[] msg, @In @u_int64_t int msgLen,
+                @In byte[] nonce, @In @u_int64_t int ic, @In byte[] key);
 
         // ---------------------------------------------------------------------
         // Advanced: Stream ciphers: Salsa20
 
-        // TODO
+        int CRYPTO_STREAM_SALSA20_KEYBYTES = 32;
+
+        int CRYPTO_STREAM_SALSA20_NONCEBYTES = 8;
+
+        int crypto_stream_salsa20(
+                @Out byte[] c, @In @u_int64_t int cLen, @In byte[] nonce,
+                @In byte[] key);
+
+        int crypto_stream_salsa20_xor(
+                @Out byte[] c, @In byte[] msg, @In @u_int64_t int msgLen,
+                @In byte[] nonce, @In byte[] key);
+
+        int crypto_stream_salsa20_xor_ic(
+                @Out byte[] c, @In byte[] msg, @In @u_int64_t int msgLen,
+                @In byte[] nonce, @In @u_int64_t int ic, @In byte[] key);
 
         // ---------------------------------------------------------------------
         // Advanced: Stream ciphers: XSalsa20
 
-        // TODO
+        int CRYPTO_STREAM_KEYBYTES = 32;
+
+        int CRYPTO_STREAM_NONCEBYTES = 8;
+
+        int crypto_stream(
+                @Out byte[] c, @In @u_int64_t int cLen, @In byte[] nonce,
+                @In byte[] key);
+
+        int crypto_stream_xor(
+                @Out byte[] c, @In byte[] msg, @In @u_int64_t int msgLen,
+                @In byte[] nonce, @In byte[] key);
 
         // ---------------------------------------------------------------------
         // Advanced: Ed25519 to Curve25519
