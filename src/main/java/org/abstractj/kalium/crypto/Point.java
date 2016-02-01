@@ -18,7 +18,7 @@ package org.abstractj.kalium.crypto;
 
 import org.abstractj.kalium.encoders.Encoder;
 
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_SCALARMULT_CURVE25519_SCALARBYTES;
+import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_SCALARMULT_SCALARBYTES;
 import static org.abstractj.kalium.NaCl.sodium;
 import static org.abstractj.kalium.crypto.Util.zeros;
 import static org.abstractj.kalium.encoders.Encoder.HEX;
@@ -42,8 +42,8 @@ public class Point {
     }
 
     public Point mult(byte[] n) {
-        byte[] result = zeros(CRYPTO_SCALARMULT_CURVE25519_SCALARBYTES);
-        sodium().crypto_scalarmult_curve25519(result, n, point);
+        byte[] result = zeros(CRYPTO_SCALARMULT_SCALARBYTES);
+        sodium().crypto_scalarmult(result, n, point);
         return new Point(result);
     }
 

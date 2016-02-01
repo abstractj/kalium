@@ -756,12 +756,34 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Advanced: Diffie-Hellman
 
-        int CRYPTO_SCALARMULT_CURVE25519_SCALARBYTES = 32;
-
+        /**
+         * @deprecated use CRYPTO_SCALARMULT_BYTES
+         */
+        @Deprecated
         int CRYPTO_SCALARMULT_CURVE25519_BYTES = 32;
 
+        /**
+         * @deprecated use CRYPTO_SCALARMULT_SCALARBYTES
+         */
+        @Deprecated
+        int CRYPTO_SCALARMULT_CURVE25519_SCALARBYTES = 32;
+
+        int CRYPTO_SCALARMULT_BYTES = 32;
+
+        int CRYPTO_SCALARMULT_SCALARBYTES = 32;
+
+        /**
+         * @deprecated use crypto_scalarmult
+         */
+        @Deprecated
         int crypto_scalarmult_curve25519(
                 @Out byte[] result, @In byte[] intValue, @In byte[] point);
+
+        int crypto_scalarmult(
+                @Out byte[] q, @In byte[] n, @In byte[] p);
+
+        int crypto_scalarmult_base(
+                @Out byte[] q, @In byte[] n);
 
         // ---------------------------------------------------------------------
         // Advanced: Stream ciphers: ChaCha20
