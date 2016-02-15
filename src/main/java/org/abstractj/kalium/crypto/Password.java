@@ -10,13 +10,19 @@ public class Password {
     public Password() {
     }
 
+    public byte[] deriveKey(int length, byte[] passwd, byte[] salt, int opslimit, long memlimit) {
+        byte[] buffer = new byte[length];
+        sodium().crypto_pwhash_scryptsalsa208sha256(buffer, buffer.length, passwd, passwd.length, salt, opslimit, memlimit);
+        return buffer;
+    }
+
     public String hash(byte[] passwd, Encoder encoder, byte[] salt, int opslimit, long memlimit) {
-        return hash(PWHASH_SCRYPTSALSA208SHA256_OUTBYTES, passwd, encoder, salt, opslimit, memlimit);
+        byte[] buffer = deriveKey(PWHASH_SCRYPTSALSA208SHA256_OUTBYTES, passwd, salt, opslimit, memlimit);
+        return encoder.encode(buffer);
     }
 
     public String hash(int length, byte[] passwd, Encoder encoder, byte[] salt, int opslimit, long memlimit) {
-        byte[] buffer = new byte[length];
-        sodium().crypto_pwhash_scryptsalsa208sha256(buffer, buffer.length, passwd, passwd.length, salt, opslimit, memlimit);
+        byte[] buffer = deriveKey(length, passwd, salt, opslimit, memlimit);
         return encoder.encode(buffer);
     }
 

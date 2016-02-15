@@ -82,4 +82,16 @@ public class PasswordTest {
         // Must receive expected size
         assertEquals(NaCl.Sodium.XSALSA20_POLY1305_SECRETBOX_KEYBYTES, hashed.length);
     }
+
+    @Test
+    public void testPWHashKeyDerivationBytes() {
+        byte[] key = password.deriveKey(NaCl.Sodium.XSALSA20_POLY1305_SECRETBOX_KEYBYTES,
+                PWHASH_MESSAGE.getBytes(),
+                PWHASH_SALT.getBytes(),
+                NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE,
+                NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE);
+
+        // Must receive expected size
+        assertEquals(NaCl.Sodium.XSALSA20_POLY1305_SECRETBOX_KEYBYTES, key.length);
+    }
 }
