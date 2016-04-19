@@ -33,7 +33,7 @@ public class SigningKeyTest {
         try {
             new SigningKey();
         } catch (Exception e) {
-            fail("Should return a valid key size");
+            fail("Should return a valid key size, " + e.getMessage());
         }
     }
 

@@ -16,27 +16,18 @@
 
 package org.abstractj.kalium.crypto;
 
+import org.abstractj.kalium.NaCl;
 import org.junit.Test;
 
 import java.util.Arrays;
 
-import static junit.framework.Assert.assertTrue;
-import static org.abstractj.kalium.encoders.Encoder.HEX;
-import static org.abstractj.kalium.fixture.TestVectors.SHA256_DIGEST;
-import static org.abstractj.kalium.fixture.TestVectors.SHA256_DIGEST_EMPTY_STRING;
-import static org.abstractj.kalium.fixture.TestVectors.SHA256_MESSAGE;
-import static org.abstractj.kalium.fixture.TestVectors.SHA512_DIGEST;
-import static org.abstractj.kalium.fixture.TestVectors.SHA512_DIGEST_EMPTY_STRING;
-import static org.abstractj.kalium.fixture.TestVectors.SHA512_MESSAGE;
-import static org.abstractj.kalium.fixture.TestVectors.Blake2_MESSAGE;
-import static org.abstractj.kalium.fixture.TestVectors.Blake2_DIGEST;
-import static org.abstractj.kalium.fixture.TestVectors.Blake2_DIGEST_EMPTY_STRING;
-import static org.abstractj.kalium.fixture.TestVectors.Blake2_DIGEST_WITH_SALT_PERSONAL;
-import static org.abstractj.kalium.fixture.TestVectors.Blake2_KEY;
-import static org.abstractj.kalium.fixture.TestVectors.Blake2_SALT;
-import static org.abstractj.kalium.fixture.TestVectors.Blake2_PERSONAL;
-
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.abstractj.kalium.NaCl.sodium;
+import static org.abstractj.kalium.crypto.Util.isValid;
+import static org.abstractj.kalium.encoders.Encoder.HEX;
+import static org.abstractj.kalium.fixture.TestVectors.*;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.fail;
 
 public class HashTest {
@@ -78,6 +69,15 @@ public class HashTest {
     }
 
     @Test
+    public void testSha256Interactive() throws Exception {
+        Hash.MultiPartHash sha256 = hash.sha256();
+        sha256.init();
+        sha256.update(SHA256_MESSAGE.getBytes());
+        byte[] out = sha256.done();
+        assertArrayEquals(SHA256_DIGEST.getBytes(), HEX.encode(out).getBytes());
+    }
+
+    @Test
     public void testSha512() throws Exception {
         final byte[] rawMessage = SHA512_MESSAGE.getBytes();
         String result = HEX.encode(hash.sha512(rawMessage));
@@ -109,6 +109,15 @@ public class HashTest {
         } catch (Exception e) {
             fail("Should not raise any exception on null byte");
         }
+    }
+
+    @Test
+    public void testSha512Interactive() throws Exception {
+        Hash.MultiPartHash sha512 = hash.sha512();
+        sha512.init();
+        sha512.update(SHA512_MESSAGE.getBytes());
+        byte[] out = sha512.done();
+        assertArrayEquals(SHA512_DIGEST.getBytes(), HEX.encode(out).getBytes());
     }
 
     @Test
@@ -151,5 +160,35 @@ public class HashTest {
                 Blake2_SALT.getBytes(),
                 Blake2_PERSONAL.getBytes());
         assertEquals("Hash is invalid", Blake2_DIGEST_WITH_SALT_PERSONAL, HEX.encode(result));
+    }
+
+    @Test
+    public void testBlakeInteractive() throws Exception {
+        byte[] state = new byte[sodium().crypto_generichash_statebytes()];
+        isValid(sodium().crypto_generichash_init(
+                        state, null, 0, NaCl.Sodium.CRYPTO_GENERICHASH_BYTES_MAX),
+                "init failed");
+
+        byte[] msg = Blake2_MESSAGE.getBytes();
+        isValid(sodium().crypto_generichash_update(
+                        state, msg, msg.length),
+                "update failed");
+
+        byte[] out = new byte[NaCl.Sodium.CRYPTO_GENERICHASH_BLAKE2B_BYTES_MAX];
+        isValid(sodium().crypto_generichash_final(
+                        state, out, out.length),
+                "final failed");
+
+        assertArrayEquals(HEX.decode(Blake2_DIGEST), out);
+    }
+
+    @Test
+    public void testShortHash() throws Exception {
+        byte[] key = HEX.decode(SHORTHASH_KEY);
+        for(int i = 0; i < SHORTHASH_MESSAGES.length; i++) {
+            byte[] msg = HEX.decode(SHORTHASH_MESSAGES[i]);
+            byte[] result = hash.shortHash(msg, key);
+            assertEquals(SHORTHASH_HASHES[i], HEX.encode(result));
+        }
     }
 }

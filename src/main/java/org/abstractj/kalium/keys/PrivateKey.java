@@ -16,7 +16,7 @@
 
 package org.abstractj.kalium.keys;
 
-import static org.abstractj.kalium.NaCl.Sodium.SECRETKEY_BYTES;
+import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_SECRETKEYBYTES;
 import static org.abstractj.kalium.crypto.Util.checkLength;
 import static org.abstractj.kalium.encoders.Encoder.HEX;
 
@@ -26,12 +26,12 @@ public class PrivateKey implements Key {
 
     public PrivateKey(byte[] secretKey) {
         this.secretKey = secretKey;
-        checkLength(secretKey, SECRETKEY_BYTES);
+        checkLength(secretKey, CRYPTO_BOX_SECRETKEYBYTES);
     }
 
     public PrivateKey(String secretKey) {
         this.secretKey = HEX.decode(secretKey);
-        checkLength(this.secretKey, SECRETKEY_BYTES);
+        checkLength(this.secretKey, CRYPTO_BOX_SECRETKEYBYTES);
     }
 
     @Override
