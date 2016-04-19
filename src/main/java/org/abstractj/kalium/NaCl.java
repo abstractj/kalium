@@ -27,7 +27,7 @@ public class NaCl {
     public static Sodium sodium() {
         Sodium sodium = SingletonHolder.SODIUM_INSTANCE;
 
-        if(!(sodium.sodium_version_string().compareTo("1.0.3") >= 0)){
+        if(!(sodium.sodium_version_string().compareTo("1.0.10") >= 0)){
             String message = String.format("Unsupported libsodium version: %s. Please update",
                     sodium.sodium_version_string());
             throw new UnsupportedOperationException(message);
@@ -59,6 +59,8 @@ public class NaCl {
         public int sodium_init();
 
         public String sodium_version_string();
+
+        public int sodium_is_zero(@In byte[] n, @In @u_int64_t int nlen);
 
         public static final int HMACSHA512256_BYTES = 32;
 
