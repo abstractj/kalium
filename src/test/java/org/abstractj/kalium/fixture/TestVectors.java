@@ -53,14 +53,12 @@ public class TestVectors {
      */
 
     public static final String Blake2_MESSAGE = "The quick brown fox jumps over the lazy dog";
-    public static final String Blake2_DIGEST = "a8add4bdddfd93e4877d2746e62817b116364a1fa7bc148d95090bc7333b3673f82401" +
-            "cf7aa2e4cb1ecd90296e3f14cb5413f8ed77be73045b13914cdcd6a918";
-    public static final String Blake2_DIGEST_EMPTY_STRING = "786a02f742015903c6c6fd852552d272912f4740e15847618a86e217f" +
-            "71f5419d25e1031afee585313896444934eb04b903a685b1448b755d56f701afe9be2ce";
+    public static final String Blake2_DIGEST = "01718cec35cd3d796dd00020e0bfecb473ad23457d063b75eff29c0ffa2e58a9";
+    public static final String Blake2_DIGEST_EMPTY_STRING = "0e5751c026e543b2e8ab2eb06099daa1d1e5df47778f7787faab45cdf12fe3a8";
     public static final String Blake2_KEY = "This is a super secret key. Ssshh!";
     public static final String Blake2_SALT = "0123456789abcdef";
     public static final String Blake2_PERSONAL = "fedcba9876543210";
-    public static final String Blake2_DIGEST_WITH_SALT_PERSONAL = "9479874d504f0447d43d72a969c989c34032172276ac50077e0027277c3c8d867bee9ee314c8506e4e4a9b3030b989d3eb7b4c1826c8e0d56e6aa71b1d4cf388";
+    public static final String Blake2_DIGEST_WITH_SALT_PERSONAL = "108e81d0c7b0487de45c54554ea35b427f886b098d792497c6a803bbac7a5f7c";
 
 
     /**

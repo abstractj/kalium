@@ -90,7 +90,7 @@ public class NaCl {
 
         public int crypto_hash_sha512(@Out byte[] buffer, @In byte[] message, @u_int64_t long sizeof);
 
-        public static final int BLAKE2B_OUTBYTES = 64;
+        public static final int BLAKE2B_OUTBYTES = 32;
         public int crypto_generichash_blake2b(@Out byte[] buffer, @u_int64_t long outLen,
                                               @In byte[] message, @u_int64_t long messageLen,
                                               @In byte[] key, @u_int64_t long keyLen);
