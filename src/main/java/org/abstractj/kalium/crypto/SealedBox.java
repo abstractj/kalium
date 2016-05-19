@@ -30,6 +30,8 @@ public class SealedBox {
     }
 
     public byte[] encrypt(byte[] message) {
+        if (publicKey == null)
+            throw new RuntimeException("Encryption failed. Public key not available.");
         byte[] ct = new byte[message.length + SEAL_BYTES];
         isValid(sodium().crypto_box_seal(
                         ct, message, message.length, publicKey),
