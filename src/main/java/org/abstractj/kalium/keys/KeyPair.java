@@ -19,8 +19,8 @@ package org.abstractj.kalium.keys;
 import org.abstractj.kalium.crypto.Point;
 import org.abstractj.kalium.encoders.Encoder;
 
-import static org.abstractj.kalium.NaCl.Sodium.PUBLICKEY_BYTES;
-import static org.abstractj.kalium.NaCl.Sodium.SECRETKEY_BYTES;
+import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES;
+import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES;
 import static org.abstractj.kalium.NaCl.sodium;
 import static org.abstractj.kalium.crypto.Util.checkLength;
 import static org.abstractj.kalium.crypto.Util.zeros;
@@ -31,14 +31,14 @@ public class KeyPair {
     private final byte[] secretKey;
 
     public KeyPair() {
-        this.secretKey = zeros(SECRETKEY_BYTES);
-        this.publicKey = zeros(PUBLICKEY_BYTES);
+        this.secretKey = zeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES);
+        this.publicKey = zeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES);
         sodium().crypto_box_curve25519xsalsa20poly1305_keypair(publicKey, secretKey);
     }
 
     public KeyPair(byte[] secretKey) {
         this.secretKey = secretKey;
-        checkLength(this.secretKey, SECRETKEY_BYTES);
+        checkLength(this.secretKey, CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES);
         Point point = new Point();
         this.publicKey = point.mult(secretKey).toBytes();
     }

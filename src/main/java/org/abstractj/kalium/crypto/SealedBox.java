@@ -2,7 +2,7 @@ package org.abstractj.kalium.crypto;
 
 import org.abstractj.kalium.encoders.Encoder;
 
-import static org.abstractj.kalium.NaCl.Sodium.SEAL_BYTES;
+import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_SEALBYTES;
 import static org.abstractj.kalium.NaCl.sodium;
 import static org.abstractj.kalium.crypto.Util.isValid;
 
@@ -30,7 +30,7 @@ public class SealedBox {
     }
 
     public byte[] encrypt(byte[] message) {
-        byte[] ct = new byte[message.length + SEAL_BYTES];
+        byte[] ct = new byte[message.length + CRYPTO_BOX_SEALBYTES];
         isValid(sodium().crypto_box_seal(
                         ct, message, message.length, publicKey),
                 "Encryption failed");
@@ -41,7 +41,7 @@ public class SealedBox {
         if (privateKey == null)
             throw new RuntimeException("Decryption failed. Private key not available.");
 
-        byte[] message = new byte[ciphertext.length - SEAL_BYTES];
+        byte[] message = new byte[ciphertext.length - CRYPTO_BOX_SEALBYTES];
         isValid(sodium().crypto_box_seal_open(
                         message, ciphertext, ciphertext.length, publicKey, privateKey),
                 "Decryption failed. Ciphertext failed verification");
