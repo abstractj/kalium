@@ -1,5 +1,6 @@
 package org.abstractj.kalium.crypto;
 
+import org.abstractj.kalium.keys.KeyPair;
 import org.junit.Test;
 
 import java.security.SecureRandom;
@@ -14,11 +15,16 @@ public class SealedBoxTest {
     @Test
     public void testEncryptDecrypt() throws Exception {
         SecureRandom r = new SecureRandom();
+<<<<<<< Updated upstream
         byte[] pk = new byte[PUBLICKEY_BYTES];
         byte[] sk = new byte[SECRETKEY_BYTES];
+=======
+        KeyPair keyPair = new KeyPair(new byte[CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES]);
+        byte[] sk = keyPair.getPrivateKey().toBytes();
+        byte[] pk = keyPair.getPublicKey().toBytes();
+>>>>>>> Stashed changes
         byte[] m = new byte[r.nextInt(1000)];
 
-        sodium().crypto_box_curve25519xsalsa20poly1305_keypair(pk, sk);
         r.nextBytes(m);
 
         SealedBox sb = new SealedBox(pk);
@@ -38,6 +44,19 @@ public class SealedBoxTest {
 
         sodium().crypto_box_curve25519xsalsa20poly1305_keypair(pk, sk);
         r.nextBytes(m);
+
+        SealedBox sb = new SealedBox(pk);
+        byte[] c = sb.encrypt(m);
+        SealedBox sb2 = new SealedBox(sk, pk);
+        sb2.decrypt(c);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testDecryptFailsWithNull() throws Exception {
+        SecureRandom r = new SecureRandom();
+        byte[] pk = null;
+        byte[] sk = null;
+        byte[] m = new byte[r.nextInt(1000)];
 
         SealedBox sb = new SealedBox(pk);
         byte[] c = sb.encrypt(m);
