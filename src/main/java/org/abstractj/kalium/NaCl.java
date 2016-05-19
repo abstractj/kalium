@@ -145,7 +145,7 @@ public class NaCl {
         // Public-key cryptography: Authenticated encryption
 
         /**
-         * @deprecated use CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTESS
+         * @deprecated use CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES
          */
         @Deprecated
         int PUBLICKEY_BYTES = 32;
