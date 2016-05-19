@@ -18,8 +18,8 @@ package org.abstractj.kalium.keys;
 
 import org.abstractj.kalium.encoders.Encoder;
 
-import static org.abstractj.kalium.NaCl.Sodium.HMACSHA512256_BYTES;
-import static org.abstractj.kalium.NaCl.Sodium.HMACSHA512256_KEYBYTES;
+import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_AUTH_HMACSHA512256_BYTES;
+import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_AUTH_HMACSHA512256_KEYBYTES;
 import static org.abstractj.kalium.NaCl.sodium;
 import static org.abstractj.kalium.crypto.Util.checkLength;
 import static org.abstractj.kalium.crypto.Util.isValid;
@@ -32,7 +32,7 @@ public class AuthenticationKey implements Key {
 
     public AuthenticationKey(byte[] key) {
         this.key = key;
-        checkLength(key, HMACSHA512256_KEYBYTES);
+        checkLength(key, CRYPTO_AUTH_HMACSHA512256_KEYBYTES);
     }
 
     public AuthenticationKey(String key, Encoder encoder) {
@@ -40,7 +40,7 @@ public class AuthenticationKey implements Key {
     }
 
     public byte[] sign(byte[] message) {
-        byte[] mac = new byte[HMACSHA512256_BYTES];
+        byte[] mac = new byte[CRYPTO_AUTH_HMACSHA512256_BYTES];
         sodium().crypto_auth_hmacsha512256(mac, message, message.length, key);
         return mac;
     }
@@ -51,7 +51,7 @@ public class AuthenticationKey implements Key {
     }
 
     public boolean verify(byte[] message, byte[] signature) {
-        checkLength(signature, HMACSHA512256_BYTES);
+        checkLength(signature, CRYPTO_AUTH_HMACSHA512256_BYTES);
         return isValid(sodium().crypto_auth_hmacsha512256_verify(signature, message, message.length, key), "signature was forged or corrupted");
     }
 

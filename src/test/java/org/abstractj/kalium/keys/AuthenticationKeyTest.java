@@ -20,9 +20,9 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.abstractj.kalium.NaCl.Sodium.HMACSHA512256_KEYBYTES;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
+import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_AUTH_HMACSHA512256_KEYBYTES;
 import static org.abstractj.kalium.encoders.Encoder.HEX;
 import static org.abstractj.kalium.fixture.TestVectors.AUTH_HMAC_SHA512256;
 import static org.abstractj.kalium.fixture.TestVectors.AUTH_KEY;
@@ -66,7 +66,7 @@ public class AuthenticationKeyTest {
 
     @Test(expected = RuntimeException.class)
     public void testRejectLongKey() throws Exception {
-        byte[] key = new byte[HMACSHA512256_KEYBYTES + 1];
+        byte[] key = new byte[CRYPTO_AUTH_HMACSHA512256_KEYBYTES + 1];
         new AuthenticationKey(key);
         fail("Should reject long keys");
     }

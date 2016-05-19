@@ -23,8 +23,8 @@ public class PasswordTest {
         String result = password.hash(PWHASH_MESSAGE.getBytes(),
                 HEX,
                 PWHASH_SALT.getBytes(),
-                NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE,
-                NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE);
+                NaCl.Sodium.CRYPTO_PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE,
+                NaCl.Sodium.CRYPTO_PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE);
         assertEquals("Hash is invalid", PWHASH_DIGEST, result);
     }
 
@@ -33,8 +33,8 @@ public class PasswordTest {
         String result = password.hash("".getBytes(),
                 HEX,
                 PWHASH_SALT.getBytes(),
-                NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE,
-                NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE);
+                NaCl.Sodium.CRYPTO_PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE,
+                NaCl.Sodium.CRYPTO_PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE);
         assertEquals("Hash is invalid", PWHASH_DIGEST_EMPTY_STRING, result);
     }
 
@@ -44,8 +44,8 @@ public class PasswordTest {
             password.hash("\0".getBytes(),
                     HEX,
                     PWHASH_SALT.getBytes(),
-                    NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE,
-                    NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE);
+                    NaCl.Sodium.CRYPTO_PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE,
+                    NaCl.Sodium.CRYPTO_PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE);
         } catch (Exception e) {
             fail("Should not raise any exception on null byte");
         }
@@ -55,8 +55,8 @@ public class PasswordTest {
     public void testPWHashStorage(){
         String result = password.hash(PWHASH_MESSAGE.getBytes(),
                 HEX,
-                NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE,
-                NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE);
+                NaCl.Sodium.CRYPTO_PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE,
+                NaCl.Sodium.CRYPTO_PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE);
         byte[] hashed = HEX.decode(result);
 
         // Must return true
@@ -70,27 +70,27 @@ public class PasswordTest {
 
     @Test
     public void testPWHashKeyDerivation() {
-        String result = password.hash(NaCl.Sodium.XSALSA20_POLY1305_SECRETBOX_KEYBYTES,
+        String result = password.hash(NaCl.Sodium.CRYPTO_SECRETBOX_XSALSA20POLY1305_KEYBYTES,
                 PWHASH_MESSAGE.getBytes(),
                 HEX,
                 PWHASH_SALT.getBytes(),
-                NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE,
-                NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE);
+                NaCl.Sodium.CRYPTO_PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE,
+                NaCl.Sodium.CRYPTO_PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE);
         byte[] hashed = HEX.decode(result);
 
         // Must receive expected size
-        assertEquals(NaCl.Sodium.XSALSA20_POLY1305_SECRETBOX_KEYBYTES, hashed.length);
+        assertEquals(NaCl.Sodium.CRYPTO_SECRETBOX_XSALSA20POLY1305_KEYBYTES, hashed.length);
     }
 
     @Test
     public void testPWHashKeyDerivationBytes() {
-        byte[] key = password.deriveKey(NaCl.Sodium.XSALSA20_POLY1305_SECRETBOX_KEYBYTES,
+        byte[] key = password.deriveKey(NaCl.Sodium.CRYPTO_SECRETBOX_XSALSA20POLY1305_KEYBYTES,
                 PWHASH_MESSAGE.getBytes(),
                 PWHASH_SALT.getBytes(),
-                NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE,
-                NaCl.Sodium.PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE);
+                NaCl.Sodium.CRYPTO_PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE,
+                NaCl.Sodium.CRYPTO_PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE);
 
         // Must receive expected size
-        assertEquals(NaCl.Sodium.XSALSA20_POLY1305_SECRETBOX_KEYBYTES, key.length);
+        assertEquals(NaCl.Sodium.CRYPTO_SECRETBOX_XSALSA20POLY1305_KEYBYTES, key.length);
     }
 }

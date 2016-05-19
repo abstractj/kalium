@@ -21,9 +21,9 @@ import org.abstractj.kalium.crypto.Random;
 import org.abstractj.kalium.crypto.Util;
 import org.abstractj.kalium.encoders.Encoder;
 
-import static org.abstractj.kalium.NaCl.Sodium.PUBLICKEY_BYTES;
-import static org.abstractj.kalium.NaCl.Sodium.SECRETKEY_BYTES;
-import static org.abstractj.kalium.NaCl.Sodium.SIGNATURE_BYTES;
+import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES;
+import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES;
+import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_SIGN_ED25519_BYTES;
 import static org.abstractj.kalium.NaCl.sodium;
 import static org.abstractj.kalium.crypto.Util.checkLength;
 import static org.abstractj.kalium.crypto.Util.isValid;
@@ -38,10 +38,10 @@ public class SigningKey {
     private final VerifyKey verifyKey;
 
     public SigningKey(byte[] seed) {
-        checkLength(seed, SECRETKEY_BYTES);
+        checkLength(seed, CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES);
         this.seed = seed;
-        this.secretKey = zeros(SECRETKEY_BYTES * 2);
-        byte[] publicKey = zeros(PUBLICKEY_BYTES);
+        this.secretKey = zeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES * 2);
+        byte[] publicKey = zeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES);
         isValid(sodium().crypto_sign_ed25519_seed_keypair(publicKey, secretKey, seed),
                 "Failed to generate a key pair");
 
@@ -49,7 +49,7 @@ public class SigningKey {
     }
 
     public SigningKey() {
-        this(new Random().randomBytes(SECRETKEY_BYTES));
+        this(new Random().randomBytes(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES));
     }
 
     public SigningKey(String seed, Encoder encoder) {
@@ -61,10 +61,10 @@ public class SigningKey {
     }
 
     public byte[] sign(byte[] message) {
-        byte[] signature = Util.prependZeros(SIGNATURE_BYTES, message);
+        byte[] signature = Util.prependZeros(CRYPTO_SIGN_ED25519_BYTES, message);
         LongLongByReference bufferLen = new LongLongByReference(0);
         sodium().crypto_sign_ed25519(signature, bufferLen, message, message.length, secretKey);
-        signature = slice(signature, 0, SIGNATURE_BYTES);
+        signature = slice(signature, 0, CRYPTO_SIGN_ED25519_BYTES);
         return signature;
     }
 
