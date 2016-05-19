@@ -85,6 +85,18 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Secret-key cryptography: Authenticated encryption
 
+        /**
+         * @deprecated use CRYPTO_SECRETBOX_XSALSA20POLY1305_KEYBYTES
+         */
+        @Deprecated
+        int XSALSA20_POLY1305_SECRETBOX_KEYBYTES = 32;
+
+        /**
+         * @deprecated use CRYPTO_SECRETBOX_XSALSA20POLY1305_NONCEBYTES
+         */
+        @Deprecated
+        int XSALSA20_POLY1305_SECRETBOX_NONCEBYTES = 24;
+
         int CRYPTO_SECRETBOX_XSALSA20POLY1305_KEYBYTES = 32;
 
         int CRYPTO_SECRETBOX_XSALSA20POLY1305_NONCEBYTES = 24;
@@ -99,6 +111,18 @@ public class NaCl {
 
         // ---------------------------------------------------------------------
         // Secret-key cryptography: Authentication
+
+        /**
+         * @deprecated use CRYPTO_AUTH_HMACSHA512256_BYTESS
+         */
+        @Deprecated
+        int HMACSHA512256_BYTES = 32;
+
+        /**
+         * @deprecated use CRYPTO_AUTH_HMACSHA512256_KEYBYTESS
+         */
+        @Deprecated
+        int HMACSHA512256_KEYBYTES = 32;
 
         int CRYPTO_AUTH_HMACSHA512256_BYTES = 32;
 
@@ -119,6 +143,36 @@ public class NaCl {
 
         // ---------------------------------------------------------------------
         // Public-key cryptography: Authenticated encryption
+
+        /**
+         * @deprecated use CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTESS
+         */
+        @Deprecated
+        int PUBLICKEY_BYTES = 32;
+
+        /**
+         * @deprecated use CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTESS
+         */
+        @Deprecated
+        int SECRETKEY_BYTES = 32;
+
+        /**
+         * @deprecated use CRYPTO_BOX_CURVE25519XSALSA20POLY1305_NONCEBYTES
+         */
+        @Deprecated
+        int NONCE_BYTES = 24;
+
+        /**
+         * @deprecated use CRYPTO_BOX_CURVE25519XSALSA20POLY1305_ZEROBYTESS
+         */
+        @Deprecated
+        int ZERO_BYTES = 32;
+
+        /**
+         * @deprecated use CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BOXZEROBYTES
+         */
+        @Deprecated
+        int BOXZERO_BYTES = 16;
 
         int CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES = 32;
 
@@ -162,6 +216,12 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Public-key cryptography: Public-key signatures
 
+        /**
+         * @deprecated use the documented CRYPTO_SIGN_ED25519_BYTES.
+         */
+        @Deprecated
+        int SIGNATURE_BYTES = 64;
+
         int CRYPTO_SIGN_ED25519_PUBLICKEYBYTES = 32;
 
         int CRYPTO_SIGN_ED25519_SECRETKEYBYTES = 64;
@@ -199,6 +259,13 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Hashing: Generic hashing
 
+        /**
+         * @deprecated use CRYPTO_GENERICHASH_BLAKE2B_BYTES_MAX. Note that
+         * the Libsodium standard value is '32' and not '64' as defined here.
+         */
+        @Deprecated
+        int BLAKE2B_OUTBYTES = 64;
+
         int CRYPTO_GENERICHASH_BLAKE2B_BYTES = 32;
 
         int CRYPTO_GENERICHASH_BLAKE2B_BYTES_MIN = 16;
@@ -230,6 +297,31 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Password hashing
 
+        /**
+         * @deprecated use CRYPTO_PWHASH_SCRYPTSALSA208SHA256_STRBYTES
+         */
+        @Deprecated
+        int PWHASH_SCRYPTSALSA208SHA256_STRBYTES = 102;
+
+        /**
+         * @deprecated use CRYPTO_PWHASH_SCRYPTSALSA208SHA256_OUTBYTES
+         */
+        @Deprecated
+        int PWHASH_SCRYPTSALSA208SHA256_OUTBYTES = 64;
+
+        /**
+         * @deprecated use CRYPTO_PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE
+         */
+        @Deprecated
+        int PWHASH_SCRYPTSALSA208SHA256_OPSLIMIT_INTERACTIVE = 524288;
+
+        /**
+         * @deprecated use CRYPTO_PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE
+         */
+        @Deprecated
+        int PWHASH_SCRYPTSALSA208SHA256_MEMLIMIT_INTERACTIVE = 16777216;
+
+
         int CRYPTO_PWHASH_SCRYPTSALSA208SHA256_STRBYTES = 102;
 
         int CRYPTO_PWHASH_SCRYPTSALSA208SHA256_OUTBYTES = 64;
@@ -260,6 +352,16 @@ public class NaCl {
 
         // ---------------------------------------------------------------------
         // Advanced: SHA-2
+
+        /**
+         * @deprecated use CRYPTO_HASH_SHA256_BYTES
+         */
+        int SHA256BYTES = 32;
+
+        /**
+         * @deprecated use CRYPTO_HASH_SHA512_BYTES
+         */
+        int SHA512BYTES = 64;
 
         int CRYPTO_HASH_SHA256_BYTES = 32;
 
