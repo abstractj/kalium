@@ -138,6 +138,12 @@ public class SigningKeyTest {
     }
 
     @Test
+    public void testGetPrivateKey() {
+        SigningKey key = new SigningKey(SIGN_PRIVATE, HEX);
+        assertEquals(key.getPrivateKey().toString(), SIGN_PRIVATE_PRIVATE);
+    }
+
+    @Test
     public void testRoundTrip() {
         SigningKey key = new SigningKey(SIGN_PRIVATE, HEX);
         String signature = key.sign(SIGN_MESSAGE, HEX);

@@ -413,6 +413,11 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Advanced: Ed25519 to Curve25519
 
+        int crypto_sign_ed25519_sk_to_curve25519(@Out byte[] curve25519SK,
+                                                 @In  byte[] ed25519SK);
+
+        int crypto_sign_ed25519_pk_to_curve25519(@Out byte[] curve25519PK,
+                                                 @In  byte[] ed25519PK);
     }
 
     /**
