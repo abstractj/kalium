@@ -17,6 +17,7 @@
 package org.abstractj.kalium;
 
 import jnr.ffi.LibraryLoader;
+import jnr.ffi.Platform;
 import jnr.ffi.annotations.In;
 import jnr.ffi.annotations.Out;
 import jnr.ffi.byref.LongLongByReference;
@@ -30,7 +31,16 @@ public class NaCl {
         return sodium;
     }
 
-    private static final String LIBRARY_NAME = "sodium";
+    private static final String LIBRARY_NAME = libraryName();
+
+    private static String libraryName() {
+        switch (Platform.getNativePlatform().getOS()) {
+            case WINDOWS:
+                return "libsodium";
+            default:
+                return "sodium";
+        }
+    }
 
     private static final class SingletonHolder {
         public static final Sodium SODIUM_INSTANCE =
