@@ -27,7 +27,7 @@ import static org.abstractj.kalium.crypto.Util.zeros;
 
 public class KeyPair {
 
-    private byte[] publicKey;
+    private final byte[] publicKey;
     private final byte[] secretKey;
 
     public KeyPair() {
