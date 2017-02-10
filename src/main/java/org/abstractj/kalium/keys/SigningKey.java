@@ -61,10 +61,9 @@ public class SigningKey {
     }
 
     public byte[] sign(byte[] message) {
-        byte[] signature = Util.prependZeros(CRYPTO_SIGN_ED25519_BYTES, message);
+        byte[] signature = new byte[CRYPTO_SIGN_ED25519_BYTES];
         LongLongByReference bufferLen = new LongLongByReference(0);
-        sodium().crypto_sign_ed25519(signature, bufferLen, message, message.length, secretKey);
-        signature = slice(signature, 0, CRYPTO_SIGN_ED25519_BYTES);
+        sodium().crypto_sign_ed25519_detached(signature, bufferLen, message, message.length, secretKey);
         return signature;
     }
 
