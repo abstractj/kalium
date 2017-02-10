@@ -251,6 +251,14 @@ public class NaCl {
                 @In byte[] sigAndMsg, @In @u_int64_t int length,
                 @In byte[] key);
 
+        int crypto_sign_ed25519_detached(@Out byte[] sig, @Out LongLongByReference sigLen,
+                @In byte[] message, @In @u_int64_t int length,
+                @In byte[] secretKey);
+
+        int crypto_sign_ed25519_verify_detached(@In byte[] sig,
+                @In byte[] message, @In @u_int64_t int length,
+                @In byte[] key);
+
         // ---------------------------------------------------------------------
         // Public-key cryptography: Sealed boxes
 
