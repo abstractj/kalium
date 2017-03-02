@@ -413,7 +413,14 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Advanced: Stream ciphers: Salsa20
 
-        // TODO
+        int CRYPTO_STREAM_KEYBYTES = 32;
+
+        int CRYPTO_STREAM_NONCEBYTES = 24;
+
+        int crypto_stream_xor(
+                @Out byte[] result, @In byte[] message,
+                @In @u_int64_t int mlen,
+                @In byte[] nonce, @In byte[] key);
 
         // ---------------------------------------------------------------------
         // Advanced: Stream ciphers: XSalsa20
