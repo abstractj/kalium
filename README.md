@@ -19,15 +19,20 @@ OS X users can get libsodium via [homebrew](http://mxcl.github.com/homebrew/) wi
 
 ### kalium installation
 
-Add as a Maven dependency at your project:
+Add as a [Maven dependency](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.abstractj.kalium%22%20AND%20a%3A%22kalium%22) at your project.
 
-    <dependency>
-        <groupId>org.abstractj.kalium</groupId>
-        <artifactId>kalium</artifactId>
-        <version>0.4.0</version>
-        <scope>compile</scope>
-    </dependency>
+### FAQ
 
+#### Is Android supported?
+  No.
+
+#### Would be nice to have some documentation. Do you have some?
+
+  Look at the libsodium docs, they are self explanatory. Or, contribute with docs.
+
+#### I'm experiencing some issues on Windows. Do you have any idea?
+
+  I'm sorry but I'm completely clueless about Windows environment, but if you have any suggestions or PR changes. They will be more than welcome.
 
 ### Notes
 
