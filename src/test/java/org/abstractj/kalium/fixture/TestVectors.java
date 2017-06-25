@@ -60,6 +60,14 @@ public class TestVectors {
     public static final String Blake2_PERSONAL = "fedcba9876543210";
     public static final String Blake2_DIGEST_WITH_SALT_PERSONAL = "108e81d0c7b0487de45c54554ea35b427f886b098d792497c6a803bbac7a5f7c";
 
+    /**
+     * SipHash-2-4 test vectors
+     */
+
+    public static final String SIPHASH24_KEY = "000102030405060708090a0b0c0d0e0f";
+    public static final String SIPHASH24_MESSAGE = "000102030405060708090a0b0c0d0e";
+    public static final String SIPHASH24_DIGEST = "e545be4961ca29a1";
+    public static final String SIPHASH24_DIGEST_EMPTY_STRING = "310e0edd47db6f72";
 
     /**
      * pwhash test vectors

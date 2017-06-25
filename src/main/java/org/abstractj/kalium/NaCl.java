@@ -302,7 +302,11 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Hashing: Short-input hashing
 
-        // TODO
+        int CRYPTO_SHORTHASH_SIPHASH24_BYTES = 8;
+
+        int CRYPTO_SHORTHASH_SIPHASH24_KEYBYTES = 16;
+
+        int crypto_shorthash_siphash24(@Out byte[] out, @In byte[] in, @u_int64_t int inLen, @In byte[] key);
 
         // ---------------------------------------------------------------------
         // Password hashing
