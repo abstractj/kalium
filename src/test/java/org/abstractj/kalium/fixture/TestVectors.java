@@ -105,4 +105,16 @@ public class TestVectors {
     public static final String SIGN_SIGNATURE = "6bd710a368c1249923fc7a1610747403040f0cc30815a00f9ff548a896bbda0b" +
             "4eb2ca19ebcf917f0f34200a9edbad3901b64ab09cc5ef7b9bcc3c40c0ff7509";
     public static final String SIGN_PUBLIC = "77f48b59caeda77751ed138b0ec667ff50f8768c25d48309a8f386a2bad187fb";
+
+
+
+    /**
+     * AEAD test vectors
+     */
+
+    public static final String AEAD_KEY = "4290bcb154173531f314af57f3be3b5006da371ece272afa1b5dbdd1100a1007";
+    public static final String AEAD_MESSAGE = "86d09974840bded2a5ca";
+    public static final String AEAD_NONCE = "cd7cf67be39c794a";
+    public static final String AEAD_AD = "87e229d4500845a079c0";
+    public static final String AEAD_CT = "e3e446f7ede9a19b62a4677dabf4e3d24b876bb284753896e1d6";
 }
