@@ -13,9 +13,34 @@ A Java binding to [Networking and Cryptography](http://nacl.cr.yp.to/) library b
 
 kalium is implemented using [jnr-ffi](https://github.com/jnr/jnr-ffi) to bind the shared libraries from [libsodium](https://github.com/jedisct1/libsodium). For a more detailed explanation, please refer to [RbNaCl's documentation](https://github.com/cryptosphere/rbnacl/blob/master/README.md).
 
+#### OSX
 OS X users can get libsodium via [homebrew](http://mxcl.github.com/homebrew/) with:
 
     brew install libsodium
+
+#### Windows
+Windows users will need to provide the pre-build binaries from `libsodium`.
+
+- Download `libsodium` from https://download.libsodium.org/libsodium/releases/
+- Choose the version of `libsodium` you wish to use
+    - The archives follow the following pattern: libsodium-{version}-msvc.zip
+- From the archive find the artifacts compiled for your architecture and then the MSVC tool set of your choice
+    - For example: `v141 // these were compiled against the MSVC v141 (i.e. Visual Studio 2017)`
+- Extract from the archive the `dll` library files into **one** of the following locations:
+    - into the `lib` at the root of the working directory directory of your project.
+    - into a location that is included in your `PATH` environment variable.
+
+For example, on my Windows 10 machine with a x64 architecture:
+```
+{archive root}
+└───x64
+    ...
+    └───Release
+        ...
+        └───v141
+            ...
+            └───dynamic <- copy the library files from this locaiton.
+```
 
 ### kalium installation
 
