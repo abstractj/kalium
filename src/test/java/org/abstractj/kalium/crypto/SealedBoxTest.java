@@ -1,14 +1,13 @@
 package org.abstractj.kalium.crypto;
 
-import org.abstractj.kalium.keys.KeyPair;
-import org.junit.Test;
-
-import java.security.SecureRandom;
-
 import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES;
 import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES;
 import static org.abstractj.kalium.NaCl.sodium;
 import static org.junit.Assert.assertArrayEquals;
+
+import java.security.SecureRandom;
+import org.abstractj.kalium.keys.KeyPair;
+import org.junit.Test;
 
 public class SealedBoxTest {
 
@@ -27,6 +26,32 @@ public class SealedBoxTest {
         SealedBox sb2 = new SealedBox(pk, sk);
         byte[] m2 = sb2.decrypt(c);
         assertArrayEquals(m, m2);
+    }
+
+    @Test
+    public void testEncryptDecryptMultPublicKeys() throws Exception {
+        SecureRandom r = new SecureRandom();
+        KeyPair keyPair = new KeyPair(new byte[CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES]);
+        byte[] sk = keyPair.getPrivateKey().toBytes();
+        byte[] pk1 = keyPair.getPublicKey().toBytes();
+        byte[] pk2 = new byte[pk1.length];
+
+        sodium().crypto_scalarmult_base(pk2, sk);
+
+        byte[] m = new byte[r.nextInt(1000)];
+        r.nextBytes(m);
+
+        SealedBox sb1 = new SealedBox(pk1);
+        byte[] c1 = sb1.encrypt(m);
+
+        SealedBox sb2 = new SealedBox(pk2);
+        byte[] c2 = sb2.encrypt(m);
+
+        SealedBox sb3 = new SealedBox(pk1, sk);
+        byte[] m2 = sb3.decrypt(c1);
+        byte[] m3 = sb3.decrypt(c2);
+        assertArrayEquals(m, m2);
+        assertArrayEquals(m2, m3);
     }
 
     @Test(expected = RuntimeException.class)
