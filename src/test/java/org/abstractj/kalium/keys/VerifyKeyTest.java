@@ -26,6 +26,7 @@ import static org.abstractj.kalium.encoders.Encoder.HEX;
 import static org.abstractj.kalium.fixture.TestVectors.SIGN_MESSAGE;
 import static org.abstractj.kalium.fixture.TestVectors.SIGN_PRIVATE;
 import static org.abstractj.kalium.fixture.TestVectors.SIGN_PUBLIC;
+import static org.abstractj.kalium.fixture.TestVectors.SIGN_PUBLIC_PUBLIC;
 import static org.abstractj.kalium.fixture.TestVectors.SIGN_SIGNATURE;
 import static org.junit.Assert.fail;
 
@@ -82,4 +83,9 @@ public class VerifyKeyTest {
         assertTrue(verifyKey.verify(SIGN_MESSAGE, SIGN_SIGNATURE, HEX));
     }
 
+    @Test
+    public void testGetPublicKey() {
+        VerifyKey verifyKey = new VerifyKey(SIGN_PUBLIC, HEX);
+        assertEquals(verifyKey.getPublicKey().toString(), SIGN_PUBLIC_PUBLIC);
+    }
 }
