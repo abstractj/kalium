@@ -200,6 +200,9 @@ public class NaCl {
 
         int CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BEFORENMBYTES = 32;
 
+        int crypto_scalarmult_base(
+            @Out byte[] publicKey, @In byte[] secretKey);
+
         int crypto_box_curve25519xsalsa20poly1305_keypair(
                 @Out byte[] publicKey, @Out byte[] secretKey);
 
