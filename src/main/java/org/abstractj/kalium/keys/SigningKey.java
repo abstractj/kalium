@@ -35,13 +35,14 @@ public class SigningKey {
 
     private final byte[] seed;
     private final byte[] secretKey;
+    private final byte[] publicKey;
     private final VerifyKey verifyKey;
 
     public SigningKey(byte[] seed) {
         checkLength(seed, CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES);
         this.seed = seed;
         this.secretKey = zeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES * 2);
-        byte[] publicKey = zeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES);
+        publicKey = zeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES);
         isValid(sodium().crypto_sign_ed25519_seed_keypair(publicKey, secretKey, seed),
                 "Failed to generate a key pair");
 
@@ -54,6 +55,13 @@ public class SigningKey {
 
     public SigningKey(String seed, Encoder encoder) {
         this(encoder.decode(seed));
+    }
+    
+    public SigningKey(KeyPair pair){
+    	this.secretKey = pair.getPrivateKey().toBytes();
+    	this.publicKey = pair.getPublicKey().toBytes();
+        this.verifyKey = new VerifyKey(this.publicKey);
+        this.seed = null;
     }
 
     public VerifyKey getVerifyKey() {

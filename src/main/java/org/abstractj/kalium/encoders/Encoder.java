@@ -24,7 +24,8 @@ public interface Encoder {
 
     public static final Hex HEX = new Hex();
     public static final Raw RAW = new Raw();
-
+    public static final Base_64 BASE64 = new Base_64();
+    
     public byte[] decode(String data);
 
     public String encode(final byte[] data);

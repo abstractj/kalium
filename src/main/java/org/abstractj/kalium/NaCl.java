@@ -484,7 +484,39 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Advanced: Ed25519 to Curve25519
 
+        int crypto_core_hsalsa20_OUTPUTBYTES = 32;
+        int crypto_core_hsalsa20_INPUTBYTES = 16;
+        int crypto_core_hsalsa20_KEYBYTES = 32;
+        int crypto_core_hsalsa20_CONSTBYTES = 16;
+
+        int crypto_core_hsalsa20_outputbytes();
+        int crypto_core_hsalsa20_inputbytes();
+        int crypto_core_hsalsa20_keybytes();
+
+        int crypto_core_hsalsa20_constbytes();
+
+        int crypto_core_hsalsa20(
+        			@Out byte[] out, @In byte[] nonce,
+                    @In byte[] key,  @In byte[] sigma);  
+
+
+	int crypto_core_salsa20_OUTPUTBYTES= 64;
+        int crypto_core_salsa20_INPUTBYTES= 16;
+        int crypto_core_salsa20_KEYBYTES=32;
+        int crypto_core_salsa20_CONSTBYTES= 16;
+
+	int crypto_core_salsa20_outputbytes();
+	int crypto_core_salsa20_inputbytes();
+	int crypto_core_salsa20_keybytes();
+	int crypto_core_salsa20_constbytes();
+
+	int crypto_core_salsa20(
+                                @Out byte[] out, @In byte[] nonce,
+                    		@In byte[] key,  @In byte[] sigma); 
+
     }
+    
+  
 
     /**
      * This is a Java synchronized wrapper around libsodium's init function.

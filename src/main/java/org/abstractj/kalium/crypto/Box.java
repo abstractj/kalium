@@ -82,4 +82,9 @@ public class Box {
     public byte[] decrypt(String nonce, String ciphertext, Encoder encoder) {
         return decrypt(encoder.decode(nonce), encoder.decode(ciphertext));
     }
+    
+    public byte[] getSharedSecret()
+    {
+    	return sharedKey;
+    }
 }
