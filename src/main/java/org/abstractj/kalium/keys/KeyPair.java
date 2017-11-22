@@ -47,6 +47,18 @@ public class KeyPair {
         this(encoder.decode(secretKey));
     }
 
+    private KeyPair(byte[] secretKey, byte[] publicKey) {
+        this.secretKey = secretKey;
+        this.publicKey = publicKey;
+    }
+
+    public static KeyPair seeded(byte[] seed) {
+        byte[] secretKey = zeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES);
+        byte[] publicKey = zeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES);
+        sodium().crypto_box_curve25519xsalsa20poly1305_seed_keypair(publicKey, secretKey, seed);
+        return new KeyPair(secretKey, publicKey);
+    }
+
     public PublicKey getPublicKey() {
         return new PublicKey(publicKey);
     }
