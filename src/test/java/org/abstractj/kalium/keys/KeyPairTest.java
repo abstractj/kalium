@@ -16,6 +16,8 @@
 
 package org.abstractj.kalium.keys;
 
+import org.abstractj.kalium.*;
+import org.abstractj.kalium.crypto.*;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -34,6 +36,18 @@ public class KeyPairTest {
     public void testGenerateKeyPair() {
         try {
             KeyPair key = new KeyPair();
+            assertTrue(key.getPrivateKey() != null);
+            assertTrue(key.getPublicKey() != null);
+        } catch (Exception e) {
+            fail("Should return a valid key size");
+        }
+    }
+
+    @Test
+    public void testGenerateSeededKeyPair() {
+        try {
+            byte[] seed = new Random().randomBytes(NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SEEDBYTES);
+            KeyPair key = KeyPair.seeded(seed);
             assertTrue(key.getPrivateKey() != null);
             assertTrue(key.getPublicKey() != null);
         } catch (Exception e) {

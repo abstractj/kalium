@@ -200,6 +200,8 @@ public class NaCl {
         @Deprecated
         int BOXZERO_BYTES = 16;
 
+        int CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SEEDBYTES = 32;
+
         int CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES = 32;
 
         int CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES = 32;
@@ -215,6 +217,9 @@ public class NaCl {
         int CRYPTO_BOX_CURVE25519XSALSA20POLY1305_NONCEBYTES = 24;
 
         int CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BEFORENMBYTES = 32;
+
+        int crypto_box_curve25519xsalsa20poly1305_seed_keypair(
+                @Out byte[] publicKey, @Out byte[] secretKey, @In byte[] seed);
 
         int crypto_box_curve25519xsalsa20poly1305_keypair(
                 @Out byte[] publicKey, @Out byte[] secretKey);
