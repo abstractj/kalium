@@ -43,12 +43,24 @@ public class NaCl {
     }
 
     private static final class SingletonHolder {
-        public static final Sodium SODIUM_INSTANCE =
-                LibraryLoader.create(Sodium.class)
-                        .search("/usr/local/lib")
-                        .search("/opt/local/lib")
-                        .search("lib")
-                        .load(LIBRARY_NAME);
+        public static final Sodium SODIUM_INSTANCE;
+
+        static {
+            LibraryLoader<Sodium> loader = LibraryLoader.create(Sodium.class);
+            // custom paths (if any)
+            String libPath = System.getenv("LD_LIBRARY_PATH");
+            if (libPath != null) {
+                for (String path : libPath.split(":")) {
+                    loader.search(path);
+                }
+            }
+            // std paths
+            loader.search("/usr/local/lib")
+                    .search("/opt/local/lib")
+                    .search("lib");
+
+            SODIUM_INSTANCE = loader.load(LIBRARY_NAME);
+        }
 
     }
 
