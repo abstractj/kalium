@@ -16,7 +16,6 @@
 
 package org.abstractj.kalium.keys;
 
-import jnr.ffi.byref.LongLongByReference;
 import org.abstractj.kalium.encoders.Encoder;
 
 import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES;
@@ -24,8 +23,6 @@ import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_SIGN_ED25519_BYTES;
 import static org.abstractj.kalium.NaCl.sodium;
 import static org.abstractj.kalium.crypto.Util.checkLength;
 import static org.abstractj.kalium.crypto.Util.isValid;
-import static org.abstractj.kalium.crypto.Util.merge;
-import static org.abstractj.kalium.crypto.Util.zeros;
 import static org.abstractj.kalium.encoders.Encoder.HEX;
 
 public class VerifyKey {
@@ -43,11 +40,7 @@ public class VerifyKey {
 
     public boolean verify(byte[] message, byte[] signature) {
         checkLength(signature, CRYPTO_SIGN_ED25519_BYTES);
-        byte[] sigAndMsg = merge(signature, message);
-        byte[] buffer = zeros(sigAndMsg.length);
-        LongLongByReference bufferLen = new LongLongByReference(0);
-
-        return isValid(sodium().crypto_sign_ed25519_open(buffer, bufferLen, sigAndMsg, sigAndMsg.length, key), "signature was forged or corrupted");
+        return isValid(sodium().crypto_sign_ed25519_verify_detached(signature, message, message.length, key), "signature was forged or corrupted");
     }
 
     public boolean verify(String message, String signature, Encoder encoder) {
