@@ -50,6 +50,10 @@ public class Util {
     public static byte[] slice(byte[] buffer, int start, int end) {
         return Arrays.copyOfRange(buffer, start, end);
     }
+    
+    public static byte[] copyOf(byte[] buffer) {
+        return slice(buffer, 0, buffer.length);
+    }
 
     public static byte[] merge(byte[] signature, byte[] message) {
         byte[] result = new byte[signature.length + message.length];
