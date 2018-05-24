@@ -19,6 +19,7 @@ package org.abstractj.kalium;
 import jnr.ffi.LibraryLoader;
 import jnr.ffi.Platform;
 import jnr.ffi.annotations.In;
+import jnr.ffi.annotations.LongLong;
 import jnr.ffi.annotations.Out;
 import jnr.ffi.byref.LongLongByReference;
 import jnr.ffi.types.u_int64_t;
@@ -267,6 +268,10 @@ public class NaCl {
                 @In byte[] sigAndMsg, @In @u_int64_t int length,
                 @In byte[] key);
 
+        int crypto_sign_ed25519_detached(@Out byte[] sig, @Out LongLongByReference siglen, @In byte[] msg, @In @LongLong long mlen, @In byte[] sk);
+
+        int crypto_sign_ed25519_verify_detached(@In byte[] sig, @In byte[] msg, @In @LongLong long mlen, @In byte[] pk);
+
         // ---------------------------------------------------------------------
         // Public-key cryptography: Sealed boxes
 
@@ -488,6 +493,28 @@ public class NaCl {
         // ---------------------------------------------------------------------
         // Advanced: Ed25519 to Curve25519
 
+        // ---------------------------------------------------------------------
+        // Key exchange: client session keys
+
+        int CRYPTO_KX_SESSIONKEYBYTES = 32;
+
+        int CRYPTO_KX_PUBLICKEYBYTES = 32;
+
+        int CRYPTO_KX_SECRETKEYBYTES = 32;
+
+        int crypto_kx_seed_keypair(@Out byte[] pk, @Out byte[] sk, @In byte[] seed);
+
+        int crypto_kx_keypair(@Out byte[] pk, @Out byte[] sk);
+
+        int crypto_kx_server_session_keys(
+            @Out byte[] rx, @Out byte[] tx,
+            @In byte[] server_pk, @In byte[] server_sk,
+            @In byte[] client_pk);
+
+        int crypto_kx_client_session_keys(
+            @Out byte[] rx, @Out byte[] tx,
+            @In byte[] client_pk, @In byte[] client_sk,
+            @In byte[] server_pk);
     }
 
     /**
