@@ -1,23 +1,24 @@
 language: java
 
 before_script:
-  - wget -c https://github.com/jedisct1/libsodium/releases/download/1.0.13/libsodium-1.0.13.tar.gz
-  - tar xzvf libsodium-1.0.13.tar.gz
-  - cd libsodium-1.0.13 && mkdir vendor
+  - wget -c https://download.libsodium.org/libsodium/releases/libsodium-stable-2018-05-25.tar.gz
+  - tar xzvf libsodium-stable-2018-05-25.tar.gz
+  - cd libsodium-stable && mkdir vendor
   - ./configure --prefix=`pwd`/vendor
   - make && make install
   - cd ../
 
 script:
-  - export LD_LIBRARY_PATH="/home/travis/build/abstractj/kalium/libsodium-1.0.13/vendor/lib"
+  - export LD_LIBRARY_PATH="/home/travis/build/abstractj/kalium/libsodium-stable/vendor/lib"
   - mvn clean install
 
-env: JAVA_OPTS="-Djava.library.path=/home/travis/build/abstractj/kalium/libsodium-1.0.13/vendor/lib"
+env: JAVA_OPTS="-Djava.library.path=/home/travis/build/abstractj/kalium/libsodium-stable/vendor/lib"
 
 jdk:
-  - oraclejdk7
-  - openjdk6
   - oraclejdk8
+  - oraclejdk9
+  - openjdk7
+  - openjdk8
 
 after_success:
-  - rm -rf libsodium-1.0.13*
+  - rm -rf libsodium-stable*
