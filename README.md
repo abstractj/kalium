@@ -1,3 +1,8 @@
+[![License](https://img.shields.io/:license-Apache2-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.abstractj.kalium/kalium/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.abstractj.kalium/kalium)
+[![Build Status](https://travis-ci.org/abstractj/kalium.png?branch=master)](https://travis-ci.org/abstractj/kalium)
+[![Build status](https://ci.appveyor.com/api/projects/status/github/abstractj/kalium?branch=master&svg=true)](https://ci.appveyor.com/project/abstractj/kalium/branch/master)
+
 # kalium - Java binding to the Networking and Cryptography (NaCl) library
 
 A Java binding to [Networking and Cryptography](http://nacl.cr.yp.to/) library by [Daniel J. Bernstein](http://cr.yp.to/djb.html). All the hard work of making a portable NaCl API version was done by [Frank Denis](https://github.com/jedisct1) on [libsodium](https://github.com/jedisct1/libsodium) and kalium was totally inspired by [Tony Arcieri's](https://github.com/tarcieri) work with [RbNaCl](https://github.com/cryptosphere/rbnacl).
@@ -44,7 +49,7 @@ For example, on my Windows 10 machine with a x64 architecture:
 
 ### kalium installation
 
-Add as a [Maven dependency](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.abstractj.kalium%22%20AND%20a%3A%22kalium%22) at your project.
+Add as a [Maven dependency](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.abstractj.kalium%22%20AND%20a%3A%22kalium%22) to your project.
 
 ### FAQ
 
@@ -61,7 +66,5 @@ Add as a [Maven dependency](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22o
 
 ### Notes
 
-kalium is a work in progress, feedback, bug reports and patches are always welcome.
+Kalium is the effort of a **really*** small group of people, feedback, bug reports and patches are always welcome.
 
-[![Build Status](https://travis-ci.org/abstractj/kalium.png?branch=master)](https://travis-ci.org/abstractj/kalium)
-[![Build status](https://ci.appveyor.com/api/projects/status/github/abstractj/kalium?branch=master&svg=true)](https://ci.appveyor.com/project/abstractj/kalium/branch/master)
