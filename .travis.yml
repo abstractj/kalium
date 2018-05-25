@@ -1,12 +1,7 @@
 language: java
 
 before_script:
-  - wget -c https://download.libsodium.org/libsodium/releases/libsodium-stable-2018-05-25.tar.gz
-  - tar xzvf libsodium-stable-2018-05-25.tar.gz
-  - cd libsodium-stable && mkdir vendor
-  - ./configure --prefix=`pwd`/vendor
-  - make && make install
-  - cd ../
+  - ./script/build.sh
 
 script:
   - export LD_LIBRARY_PATH="/home/travis/build/abstractj/kalium/libsodium-stable/vendor/lib"
