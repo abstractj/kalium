@@ -2,6 +2,7 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.abstractj.kalium/kalium/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.abstractj.kalium/kalium)
 [![Build Status](https://travis-ci.org/abstractj/kalium.png?branch=master)](https://travis-ci.org/abstractj/kalium)
 [![Build status](https://ci.appveyor.com/api/projects/status/github/abstractj/kalium?branch=master&svg=true)](https://ci.appveyor.com/project/abstractj/kalium/branch/master)
+[![Say Thanks](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/abstractj)
 
 # kalium - Java binding to the Networking and Cryptography (NaCl) library
 
@@ -35,7 +36,7 @@ Windows users will need to provide the pre-build binaries from `libsodium`.
     - into the `lib` at the root of the working directory directory of your project.
     - into a location that is included in your `PATH` environment variable.
 
-For example, on my Windows 10 machine with a x64 architecture:
+For example, on Windows 10 machine with a x64 architecture:
 ```
 {archive root}
 └───x64
@@ -66,5 +67,5 @@ Add as a [Maven dependency](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22o
 
 ### Notes
 
-Kalium is the effort of a **really*** small group of people, feedback, bug reports and patches are always welcome.
+Kalium is the effort of a **really** small group of people, feedback, bug reports and patches are always welcome.
 
