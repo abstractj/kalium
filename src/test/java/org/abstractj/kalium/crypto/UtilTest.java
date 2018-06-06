@@ -16,8 +16,11 @@
 
 package org.abstractj.kalium.crypto;
 
+import org.abstractj.kalium.NaCl;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.regex.Pattern;
 
 public class UtilTest {
     @Test
@@ -30,5 +33,11 @@ public class UtilTest {
     @Test(expected = RuntimeException.class)
     public void testDataNull() {
         Util.checkLength(null, 3);
+    }
+
+    @Test
+    public void testSodiumVersion() {
+        Assert.assertTrue(NaCl.sodium().sodium_version_string() + " did not match expected pattern.",
+            Pattern.matches("^\\d+\\.\\d+\\.\\d+$",NaCl.sodium().sodium_version_string()));
     }
 }

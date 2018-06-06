@@ -19,6 +19,7 @@ package org.abstractj.kalium;
 import jnr.ffi.LibraryLoader;
 import jnr.ffi.Platform;
 import jnr.ffi.annotations.In;
+import jnr.ffi.annotations.Encoding;
 import jnr.ffi.annotations.Out;
 import jnr.ffi.byref.LongLongByReference;
 import jnr.ffi.types.u_int64_t;
@@ -85,6 +86,7 @@ public class NaCl {
          */
         int sodium_init();
 
+        @Encoding("US-ASCII")
         String sodium_version_string();
 
         // ---------------------------------------------------------------------
