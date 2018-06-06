@@ -424,9 +424,9 @@ public class NaCl {
                 @In @Out byte[] state);
 
         int crypto_aead_aes256gcm_decrypt_afternm(
-                @Out byte[] ct, @Out LongLongByReference ctLen, @In byte[] msg,
-                @In @u_int64_t int msgLen, @In byte[] ad,
-                @In @u_int64_t int adLen, @In byte[] nsec, @In byte[] npub,
+                @Out byte[] msg, @Out LongLongByReference msgLen, @In byte[] nsec,
+                @In byte[] ct, @In @u_int64_t int ctLen, @In byte[] ad,
+                @In @u_int64_t int adLen, @In byte[] npub,
                 @In @Out byte[] state);
 
         // ---------------------------------------------------------------------
