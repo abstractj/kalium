@@ -1,5 +1,5 @@
 /**
- * Copyright 2013 Bruno Oliveira, and individual contributors
+ * Copyright 2013,2017 Bruno Oliveira, and individual contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,11 +20,12 @@ import org.abstractj.kalium.NaCl;
 import org.abstractj.kalium.encoders.Encoder;
 import org.abstractj.kalium.keys.PrivateKey;
 import org.abstractj.kalium.keys.PublicKey;
+import org.abstractj.kalium.keys.SharedKey;
 
+import static org.abstractj.kalium.encoders.Encoder.HEX;
+import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BEFORENMBYTES;
 import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BOXZEROBYTES;
 import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_NONCEBYTES;
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES;
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES;
 import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_ZEROBYTES;
 import static org.abstractj.kalium.NaCl.sodium;
 import static org.abstractj.kalium.crypto.Util.checkLength;
@@ -37,23 +38,30 @@ import static org.abstractj.kalium.crypto.Util.removeZeros;
  */
 public class Box {
 
-    private final byte[] sharedKey;
+    private final SharedKey sharedKey;
 
     public Box(byte[] publicKey, byte[] privateKey) {
-        checkLength(publicKey, CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES);
-        checkLength(privateKey, CRYPTO_BOX_CURVE25519XSALSA20POLY1305_SECRETKEYBYTES);
-
-        sharedKey = new byte[NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BEFORENMBYTES];
-        isValid(sodium().crypto_box_curve25519xsalsa20poly1305_beforenm(
-                sharedKey, publicKey, privateKey), "Key agreement failed");
+        this.sharedKey = new SharedKey(publicKey, privateKey);
     }
 
     public Box(PublicKey publicKey, PrivateKey privateKey) {
-        this(publicKey.toBytes(), privateKey.toBytes());
+        this.sharedKey = new SharedKey(publicKey, privateKey);
     }
 
     public Box(String publicKey, String privateKey, Encoder encoder) {
-        this(encoder.decode(publicKey), encoder.decode(privateKey));
+        this.sharedKey = new SharedKey(publicKey, privateKey, encoder);
+    }
+
+    public Box(byte[] sharedKey) {
+        this.sharedKey = new SharedKey(sharedKey);
+    }
+
+    public Box(String sharedKey, Encoder encoder) {
+        this.sharedKey = new SharedKey(sharedKey, encoder);
+    }
+
+    public Box(SharedKey sharedKey) {
+        this.sharedKey = sharedKey;
     }
 
     public byte[] encrypt(byte[] nonce, byte[] message) {
@@ -61,7 +69,7 @@ public class Box {
         byte[] msg = prependZeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_ZEROBYTES, message);
         byte[] ct = new byte[msg.length];
         isValid(sodium().crypto_box_curve25519xsalsa20poly1305_afternm(ct, msg,
-                msg.length, nonce, sharedKey), "Encryption failed");
+                msg.length, nonce, sharedKey.toBytes()), "Encryption failed");
         return removeZeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BOXZEROBYTES, ct);
     }
 
@@ -74,7 +82,7 @@ public class Box {
         byte[] ct = prependZeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_BOXZEROBYTES, ciphertext);
         byte[] message = new byte[ct.length];
         isValid(sodium().crypto_box_curve25519xsalsa20poly1305_open_afternm(
-                        message, ct, message.length, nonce, sharedKey),
+                        message, ct, message.length, nonce, sharedKey.toBytes()),
                 "Decryption failed. Ciphertext failed verification.");
         return removeZeros(CRYPTO_BOX_CURVE25519XSALSA20POLY1305_ZEROBYTES, message);
     }
