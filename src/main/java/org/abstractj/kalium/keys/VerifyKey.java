@@ -18,11 +18,9 @@ package org.abstractj.kalium.keys;
 
 import org.abstractj.kalium.encoders.Encoder;
 
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_BOX_CURVE25519XSALSA20POLY1305_PUBLICKEYBYTES;
-import static org.abstractj.kalium.NaCl.Sodium.CRYPTO_SIGN_ED25519_BYTES;
+import static org.abstractj.kalium.NaCl.Sodium.*;
 import static org.abstractj.kalium.NaCl.sodium;
-import static org.abstractj.kalium.crypto.Util.checkLength;
-import static org.abstractj.kalium.crypto.Util.isValid;
+import static org.abstractj.kalium.crypto.Util.*;
 import static org.abstractj.kalium.encoders.Encoder.HEX;
 
 public class VerifyKey {
@@ -36,6 +34,12 @@ public class VerifyKey {
 
     public VerifyKey(String key, Encoder encoder) {
         this(encoder.decode(key));
+    }
+
+    public PublicKey convertToCurve() {
+        byte[] publicKey = zeros(CRYPTO_SCALARMULT_CURVE25519_BYTES);
+        sodium().crypto_sign_ed25519_pk_to_curve25519(publicKey, key);
+        return new PublicKey(publicKey);
     }
 
     public boolean verify(byte[] message, byte[] signature) {
