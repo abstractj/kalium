@@ -20,14 +20,9 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
 import static org.abstractj.kalium.encoders.Encoder.HEX;
-import static org.abstractj.kalium.fixture.TestVectors.SIGN_MESSAGE;
-import static org.abstractj.kalium.fixture.TestVectors.SIGN_PRIVATE;
-import static org.abstractj.kalium.fixture.TestVectors.SIGN_PUBLIC;
-import static org.abstractj.kalium.fixture.TestVectors.SIGN_SIGNATURE;
-import static org.junit.Assert.fail;
+import static org.abstractj.kalium.fixture.TestVectors.*;
+import static org.junit.Assert.*;
 
 public class VerifyKeyTest {
 
@@ -80,6 +75,12 @@ public class VerifyKeyTest {
     public void testInitializeFromHex() throws Exception {
         VerifyKey verifyKey = new VerifyKey(SIGN_PUBLIC, HEX);
         assertTrue(verifyKey.verify(SIGN_MESSAGE, SIGN_SIGNATURE, HEX));
+    }
+
+    @Test
+    public void testConvertToCurve() {
+        VerifyKey verifyKey = new VerifyKey(SIGN_PUBLIC, HEX);
+        assertEquals(verifyKey.convertToCurve().toString(), SIGN_PUBLIC_CURVE25519);
     }
 
 }
